@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+	<persistence-unit name="jfinan">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>br.com.solimar.ofx4j.entity.Lancamento</class>
+		<class>br.com.solimar.ofx4j.entity.Conta</class>
+		<class>br.com.solimar.ofx4j.entity.ReceitaItem</class>
+		<class>br.com.solimar.ofx4j.entity.DespesaItem</class>
+		<class>br.com.solimar.ofx4j.entity.CartaoCredito</class>
+		<class>br.com.solimar.ofx4j.entity.CartaoCreditoFatura</class>
+		<class>br.com.solimar.ofx4j.entity.DespesaCategoria</class>
+		<class>br.com.solimar.ofx4j.entity.ReceitaCategoria</class>
+		<class>br.com.solimar.ofx4j.entity.ContaApp</class>
+		<class>br.com.solimar.ofx4j.entity.Usuario</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:/home/solimar/jfinandb;create=true" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="JC2000" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />		
+			<property name="hibernate.format_sql" value="true" />
+			
+		</properties>
+
+	</persistence-unit>
+</persistence>

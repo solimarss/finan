@@ -10,7 +10,26 @@
 
 		<h:form id="frm">
 
-			<div class="ui-fluid"> TESTE</div>
+			<div class="ui-fluid">
+				<h:form>
+					<p:fileUpload
+						fileUploadListener="#{fileUploadView.handleFileUpload}"
+						uploadLabel="#{msg['file_upload_upload_label']}"
+						cancelLabel="#{msg['file_upload_cancel_label']}"
+						label="#{msg['file_upload_label']}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+					<p:growl id="messages" showDetail="true" />
+				</h:form>
+			</div>
+
+		</h:form>
+		
+		<h:form >
+
+			<p:inputText required="true"/>
+			<p:commandButton value="ok" update="@form"/>
 
 		</h:form>
 	</ui:define>

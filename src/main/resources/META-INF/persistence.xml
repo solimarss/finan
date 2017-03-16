@@ -8,16 +8,16 @@
 	<persistence-unit name="jfinan">
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>br.com.solimar.ofx4j.entity.Lancamento</class>
-		<class>br.com.solimar.ofx4j.entity.Conta</class>
-		<class>br.com.solimar.ofx4j.entity.ReceitaItem</class>
-		<class>br.com.solimar.ofx4j.entity.DespesaItem</class>
-		<class>br.com.solimar.ofx4j.entity.CartaoCredito</class>
-		<class>br.com.solimar.ofx4j.entity.CartaoCreditoFatura</class>
-		<class>br.com.solimar.ofx4j.entity.DespesaCategoria</class>
-		<class>br.com.solimar.ofx4j.entity.ReceitaCategoria</class>
-		<class>br.com.solimar.ofx4j.entity.ContaApp</class>
-		<class>br.com.solimar.ofx4j.entity.Usuario</class>
+		<class>br.com.solimar.finan.entity.Lancamento</class>
+		<class>br.com.solimar.finan.entity.Conta</class>
+		<class>br.com.solimar.finan.entity.ReceitaItem</class>
+		<class>br.com.solimar.finan.entity.DespesaItem</class>
+		<class>br.com.solimar.finan.entity.CartaoCredito</class>
+		<class>br.com.solimar.finan.entity.CartaoCreditoFatura</class>
+		<class>br.com.solimar.finan.entity.DespesaCategoria</class>
+		<class>br.com.solimar.finan.entity.ReceitaCategoria</class>
+		<class>br.com.solimar.finan.entity.ContaApp</class>
+		<class>br.com.solimar.finan.entity.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />

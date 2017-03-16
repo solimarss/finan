@@ -1,9 +1,11 @@
 package br.com.solimar.finan.view;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
+@RequestScoped
 public class MenuControllerMB {
 	
 	
@@ -15,6 +17,8 @@ public class MenuControllerMB {
 		viewId = "/pages/" + viewId;
 		
 		//log.info("[getItemCssClass] currentViewId: "+currentViewId);
+		System.out.println("viewId "+viewId);
+		System.out.println("currentViewId "+currentViewId);
 		
 		return currentViewId.contains(viewId) ? "is-selected" : null;
 	}

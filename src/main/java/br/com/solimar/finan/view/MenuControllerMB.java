@@ -1,12 +1,14 @@
 package br.com.solimar.finan.view;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class MenuControllerMB {
+public class MenuControllerMB implements Serializable{
 	
 	
 	public String getItemCssClass(String viewId) {

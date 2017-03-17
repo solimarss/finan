@@ -60,6 +60,10 @@ public class Lancamento implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private CartaoCreditoFatura cartaoCreditoFatura;
+	
 
 	public Long getId() {
 		return id;
@@ -131,6 +135,14 @@ public class Lancamento implements Serializable {
 
 	public void setContaApp(ContaApp contaApp) {
 		this.contaApp = contaApp;
+	}
+
+	public CartaoCreditoFatura getCartaoCreditoFatura() {
+		return cartaoCreditoFatura;
+	}
+
+	public void setCartaoCreditoFatura(CartaoCreditoFatura cartaoCreditoFatura) {
+		this.cartaoCreditoFatura = cartaoCreditoFatura;
 	}
 	
 

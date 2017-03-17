@@ -31,6 +31,16 @@
 			<version>10.13.1.1</version>
 		</dependency>
 
+		<!-- OFX -->
+		<dependency>
+			<groupId>net.sf.ofx4j</groupId>
+			<artifactId>ofx4j</artifactId>
+			<version>1.6</version>
+		</dependency>
+
+
+
+
 
 	</dependencies>
 

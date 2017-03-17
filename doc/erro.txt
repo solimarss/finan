@@ -1,0 +1,4 @@
+
+
+WELD-000072: Bean declaring a passivating scope must be passivation capable.  Bean:  Managed Bean [class br.com.solimar.finan.view.upload.UploadMB] with qualifiers [@Default @Any @Named]
+SOLUÇÃO: Implementar Serializible

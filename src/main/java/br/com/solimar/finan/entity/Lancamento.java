@@ -13,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 
 @Entity
+@Table(name="LANCAMENTO")
 public class Lancamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -63,6 +65,9 @@ public class Lancamento implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private CartaoCreditoFatura cartaoCreditoFatura;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Item item;
 	
 
 	public Long getId() {

@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="ITEM")
 public class Item implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,9 @@ public class Item implements Serializable{
 
 	@Column(name = "NOME", length = 300)
 	private String nome;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Categoria categoria;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;

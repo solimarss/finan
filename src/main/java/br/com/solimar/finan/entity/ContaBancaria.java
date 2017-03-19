@@ -11,10 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import br.com.solimar.finan.enums.ContaTipoEnum;
 
 @Entity
+@Table(name="CONTA_BANCARIA")
 public class ContaBancaria implements Serializable {
 
 	private static final long serialVersionUID = 1L;

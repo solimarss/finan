@@ -28,8 +28,8 @@ public class ContaBancaria implements Serializable {
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "CONTA_TIPO", nullable = false, length = 30)
-	private ContaTipoEnum contaTipo;
+	@Column(name = "TIPO", nullable = false, length = 30)
+	private ContaTipoEnum tipo;
 
 	@Column(name = "CONTA_NUMERO", length = 70)
 	private String contaNumero;

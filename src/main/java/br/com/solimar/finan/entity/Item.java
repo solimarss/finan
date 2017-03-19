@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ReceitaCategoria implements Serializable {
+public class Item implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -20,7 +20,7 @@ public class ReceitaCategoria implements Serializable {
 
 	@Column(name = "NOME", length = 300)
 	private String nome;
-
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
 
@@ -47,5 +47,7 @@ public class ReceitaCategoria implements Serializable {
 	public void setContaApp(ContaApp contaApp) {
 		this.contaApp = contaApp;
 	}
+	
+	
 
 }

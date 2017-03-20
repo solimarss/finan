@@ -6,6 +6,11 @@
 	<artifactId>finan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	
+	 <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
 
 	<dependencies>
 
@@ -16,6 +21,10 @@
 			<scope>provided</scope>
 		</dependency>
 
+
+		<!-- Import the CDI API, we use provided scope as the API is included in 
+			WildFly <dependency> <groupId>javax.enterprise</groupId> <artifactId>cdi-api</artifactId> 
+			<version>1.2</version> <scope>provided</scope> </dependency> -->
 
 		<dependency>
 			<groupId>org.primefaces</groupId>

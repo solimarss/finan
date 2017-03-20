@@ -1,14 +1,17 @@
 package br.com.solimar.finan.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.management.relation.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +35,10 @@ public class Usuario implements Serializable {
 	@Column(name = "EMAIL", length = 300)
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private ContaApp contaApp;
+
+	@ManyToMany
+    @JoinTable(name = "USUARIO_TEM_CONTA_APP", joinColumns = { @JoinColumn(name = "USUARIO_ID") }, inverseJoinColumns = { @JoinColumn(name = "CONTA_APP_ID") })
+    private List<ContaApp> contas;
 
 	public Long getId() {
 		return id;
@@ -75,13 +80,15 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public ContaApp getContaApp() {
-		return contaApp;
+	public List<ContaApp> getContas() {
+		return contas;
 	}
 
-	public void setContaApp(ContaApp contaApp) {
-		this.contaApp = contaApp;
+	public void setContas(List<ContaApp> contas) {
+		this.contas = contas;
 	}
+
+	
 	
 	
 

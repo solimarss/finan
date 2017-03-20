@@ -17,6 +17,12 @@ public class ContaApp implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	
+	
+	public ContaApp() {
+		
+	}
+
 	public Long getId() {
 		return id;
 	}

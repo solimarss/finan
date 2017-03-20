@@ -2,3 +2,17 @@
 
 WELD-000072: Bean declaring a passivating scope must be passivation capable.  Bean:  Managed Bean [class br.com.solimar.finan.view.upload.UploadMB] with qualifiers [@Default @Any @Named]
 SOLUÇÃO: Implementar Serializible
+
+
+WELD-001408: Unsatisfied dependencies for type EntityManager with qualifiers @Default
+O que está acontecendo é que o CDI não está considerando a sua classe JPAUtil. A causa desse problema está no arquivo beans.xml. Na tag <beans> tem um atributo chamado bean-discovery-mode que no seu caso está configurado como annotated. Isso significa que o CDI só vai gerenciar os beans que estiverem configurados como algum bean do CDI. Como a classe JPAUtil não possui nenhuma anotação do CDI, essa classe é ignorada e o CDI não encontra o @Produces do EntityManager.
+Para corrigir esse problema você tem duas opções:
+Alterar o bean-discovery-mode para all para que o CDI considere todas as classes quando o servidor estiver subindo
+Manter o bean-discovery-mode como annotated e anotar a classe JPAUtil com @ApplicationScoped para que o CDI passe a considerá-la
+
+
+
+
+
+
+

@@ -28,6 +28,9 @@ public class CartaoCredito implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+	
+	
+	
 
 	public Long getId() {
 		return id;

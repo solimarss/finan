@@ -1,0 +1,16 @@
+            <datasources>
+               
+                <datasource jndi-name="java:/finanDS" pool-name="finanPool" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:derby:/home/solimar/jfinandb;create=true</connection-url>
+                    <driver>derby</driver>
+                    <security>
+                        <user-name>root</user-name>
+                        <password>JC2000</password>
+                    </security>
+                </datasource>
+                <drivers>
+                    <driver name="derby" module="org.apache.derby">
+                        <xa-datasource-class>org.apache.derby.jdbc.EmbeddedDriver</xa-datasource-class>
+                    </driver>
+                </drivers>
+            </datasources>

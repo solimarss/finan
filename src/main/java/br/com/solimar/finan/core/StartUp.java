@@ -4,8 +4,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+
+import br.com.solimar.finan.entity.ContaApp;
 
 /**
  * @author Solimar
@@ -14,14 +15,15 @@ import javax.persistence.Persistence;
 @Startup
 @Singleton
 public class StartUp {
+	
+	@PersistenceContext
+	private EntityManager em;
 
 	@PostConstruct
 	public void init() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jfinan");  
-		EntityManager em = emf.createEntityManager();                               
-		
-		em.close();                                                                 
-		emf.close();    
+	              
+		em.find(ContaApp.class, 1L);                                                         
+	
 
 	}
 

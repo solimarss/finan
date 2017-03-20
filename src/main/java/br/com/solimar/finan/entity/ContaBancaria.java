@@ -56,14 +56,6 @@ public class ContaBancaria implements Serializable {
 		this.nome = nome;
 	}
 
-	public ContaTipoEnum getContaTipo() {
-		return contaTipo;
-	}
-
-	public void setContaTipo(ContaTipoEnum contaTipo) {
-		this.contaTipo = contaTipo;
-	}
-
 	public String getContaNumero() {
 		return contaNumero;
 	}
@@ -86,6 +78,14 @@ public class ContaBancaria implements Serializable {
 
 	public void setContaApp(ContaApp contaApp) {
 		this.contaApp = contaApp;
+	}
+
+	public ContaTipoEnum getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(ContaTipoEnum tipo) {
+		this.tipo = tipo;
 	}
 
 }

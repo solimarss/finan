@@ -30,6 +30,9 @@ public class Lancamento implements Serializable {
 
 	@Column(name = "DESCRICAO", length = 300)
 	private String descricao;
+	
+	@Column(name = "TRANSACTIONID", length = 300)
+	private String transactionId;
 
 	@Column(name = "MEMO", length = 300)
 	private String memo;
@@ -64,10 +67,16 @@ public class Lancamento implements Serializable {
 	private ContaApp contaApp;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
+	private ContaBancaria contaBancaria;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	private CartaoCreditoFatura cartaoCreditoFatura;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Item item;
+	
+	@Column(name = "CATEGORIZADO")
+	private boolean categorizado = true;
 	
 
 	public Long getId() {
@@ -104,6 +113,14 @@ public class Lancamento implements Serializable {
 
 	public boolean isValorConsiderado() {
 		return valorConsiderado;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public void setValorConsiderado(boolean valorConsiderado) {
@@ -149,6 +166,32 @@ public class Lancamento implements Serializable {
 	public void setCartaoCreditoFatura(CartaoCreditoFatura cartaoCreditoFatura) {
 		this.cartaoCreditoFatura = cartaoCreditoFatura;
 	}
+
+	public ContaBancaria getContaBancaria() {
+		return contaBancaria;
+	}
+
+	public void setContaBancaria(ContaBancaria contaBancaria) {
+		this.contaBancaria = contaBancaria;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public boolean isCategorizado() {
+		return categorizado;
+	}
+
+	public void setCategorizado(boolean categorizado) {
+		this.categorizado = categorizado;
+	}
+
+	
 	
 
 }

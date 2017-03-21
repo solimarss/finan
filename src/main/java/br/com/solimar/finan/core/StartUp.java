@@ -23,15 +23,17 @@ public class StartUp {
 	
 	@PostConstruct
 	public void init() {
-
+		System.out.println("INIT");
 		ContaApp contaApp = em.find(ContaApp.class, 1L);
 
 		if (contaApp == null) {
+			
 			contaApp = new ContaApp();
 			contaApp.setId(1L);
 			contaApp = em.merge(contaApp);
 
 		}
+		
 
 
 	}

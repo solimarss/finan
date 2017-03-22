@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.TimeZone;
@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.solimar.finan.entity.CartaoCredito;
+import br.com.solimar.finan.entity.CartaoCreditoFatura;
 import br.com.solimar.finan.entity.ContaBancaria;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.ContaTipoEnum;
@@ -42,9 +43,12 @@ public class FileImportRN implements Serializable {
 
 	@Inject
 	private ContaBancariaRN contaBancariaRN;
-	
+
 	@Inject
 	private CartaoCreditoRN cartaoCreditoRN;
+
+	@Inject
+	private CartaoCreditoFaturaRN cartaoCreditoFaturaRN;
 
 	@Inject
 	private UserSession userSession;
@@ -84,11 +88,6 @@ public class FileImportRN implements Serializable {
 			System.out.println(
 					"INSTITUIÇÃO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 			System.out.println("");
-			
-			
-			
-			
-			
 
 			List<CreditCardStatementResponseTransaction> responses = messageSet.getStatementResponses();
 
@@ -100,17 +99,15 @@ public class FileImportRN implements Serializable {
 				System.out.println("TOTAL: " + message.getLedgerBalance().getAmount());
 				System.out.println("DATA DE VENCIMENTO: " + message.getLedgerBalance().getAsOfDate());
 				System.out.println("");
-				
-				
+
 				CartaoCredito cartaoCredito = new CartaoCredito();
 				cartaoCredito.setNumero(message.getAccount().getAccountNumber());
 				cartaoCredito.setContaApp(userSession.getContaApp());
 				cartaoCredito.setNome("");
-				
-				
+
 				List<CartaoCredito> listaCartoes = cartaoCreditoRN.findByNumero(cartaoCredito);
 				if (listaCartoes.size() == 0) {
-					//cartaoCreditoRN.insert(cartaoCredito);
+					cartaoCreditoRN.insert(cartaoCredito);
 					System.out.println("==> CARTÃO INSERIDA");
 
 				} else {
@@ -118,12 +115,29 @@ public class FileImportRN implements Serializable {
 					System.out.println("==> CARTÃO NÃO INSERIDA");
 
 				}
+
+				CartaoCreditoFatura fatura = new CartaoCreditoFatura();
+				fatura.setCartao(cartaoCredito);
+				fatura.setContaApp(userSession.getContaApp());
+				fatura.setDataVencimento(message.getLedgerBalance().getAsOfDate());
+				fatura.setValor(BigDecimal.valueOf(message.getLedgerBalance().getAmount()));
+
+				List<CartaoCreditoFatura> listaFaturas = cartaoCreditoFaturaRN.findByVencimentoAndCartao(fatura);
 				
-				
+				if (listaFaturas.size() == 0) {
+					cartaoCreditoFaturaRN.insert(fatura);
+					System.out.println("==> FATURA INSERIDA");
+
+				} else {
+					fatura = listaFaturas.get(0);
+					System.out.println("==> FATURA NÃO INSERIDA");
+
+				}
 
 				String currencyCode = message.getCurrencyCode();
 				List<Transaction> transactions = message.getTransactionList().getTransactions();
 
+				int qtdRegistros = 0;
 				for (Transaction transaction : transactions) {
 
 					System.out.println("ID:    " + transaction.getId());
@@ -134,7 +148,37 @@ public class FileImportRN implements Serializable {
 					System.out.println("VALOR: " + transaction.getAmount() + " " + currencyCode);
 					System.out.println("");
 
+					Lancamento lancamento = new Lancamento();
+					lancamento.setCategorizado(false);
+					lancamento.setContaApp(userSession.getContaApp());
+					lancamento.setCartaoCreditoFatura(fatura);
+					lancamento.setData(transaction.getDatePosted());
+					lancamento.setDataPagamento(fatura.getDataVencimento());
+					lancamento.setMemo(transaction.getMemo());
+					
+
+					if (transaction.getBigDecimalAmount().signum() == -1) {
+						lancamento.setTipo(LancamentoTipoEnum.S);
+					} else {
+						lancamento.setTipo(LancamentoTipoEnum.E);
+					}
+					lancamento.setTransactionId(transaction.getId());
+					lancamento.setValor(transaction.getBigDecimalAmount());
+
+					List<Lancamento> listaLancamentos = lancamentoRN.findByMemoAndTransactionIdAndContaApp(lancamento);
+					if (listaLancamentos.size() == 0) {
+						lancamentoRN.insert(lancamento);
+						qtdRegistros++;
+						System.out.println("==> INSERIDO");
+					} else {
+						System.out.println("==> NÃO INSERIDO");
+					}
+
+					System.out.println("-------------------------------------------------------------- ");
+
 				}
+
+				System.out.println("QUANTIDADE: " + qtdRegistros);
 			}
 
 			fileTarget.delete();

@@ -75,6 +75,16 @@ public class CartaoCreditoFatura implements Serializable {
 	}
 
 
+	public ContaApp getContaApp() {
+		return contaApp;
+	}
+
+
+	public void setContaApp(ContaApp contaApp) {
+		this.contaApp = contaApp;
+	}
+
+
 	public void setCartao(CartaoCredito cartao) {
 		this.cartao = cartao;
 	}

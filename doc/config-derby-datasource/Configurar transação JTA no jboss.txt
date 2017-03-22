@@ -1,0 +1,3 @@
+ 
+If you by chance are using JBoss there is high probability that datasoruce is incorrectly define not to use JTA transactions. 
+Check if you have <datasource jta="true" .. set in JBoss config. For more details check Transactions don't rollback

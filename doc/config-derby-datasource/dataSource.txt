@@ -1,5 +1,5 @@
             <datasources>   
-                <datasource jndi-name="java:/finanDS" pool-name="finanPool" enabled="true" use-java-context="true">
+                <datasource  jta="true" jndi-name="java:/finanDS" pool-name="finanPool" enabled="true" use-java-context="true">
                     <connection-url>jdbc:derby:/home/solimar/jfinandb;create=true</connection-url>
                     <driver>derby</driver>
                     <security>

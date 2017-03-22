@@ -12,7 +12,7 @@ import br.com.solimar.finan.business.FileImportRN;
 
 @Named
 @ViewScoped
-public class FileUploadMB implements Serializable{
+public class FileUploadMB implements Serializable {
 
 	/**
 	 * 
@@ -22,9 +22,7 @@ public class FileUploadMB implements Serializable{
 	private FileImportRN fileImportRN;
 
 	public void importarExtratoBancario(FileUploadEvent event) {
-		
-		
-		
+
 		try {
 			fileImportRN.importarExtratoBancario(event.getFile().getInputstream());
 		} catch (Exception e) {
@@ -32,5 +30,15 @@ public class FileUploadMB implements Serializable{
 		}
 
 	}
-	
+
+	public void importarCartaoCredito(FileUploadEvent event) {
+
+		try {
+			fileImportRN.importarCartaoCredito(event.getFile().getInputstream());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

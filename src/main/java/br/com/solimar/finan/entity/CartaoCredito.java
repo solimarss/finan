@@ -23,8 +23,8 @@ public class CartaoCredito implements Serializable {
 	@Column(name = "NOME")
 	private String nome;
 
-	@Column(name = "CARTAO_CREDTO_NUM")
-	private String cartaoCreditoNumero;
+	@Column(name = "NUMERO")
+	private String numero;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
@@ -48,12 +48,14 @@ public class CartaoCredito implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCartaoCreditoNumero() {
-		return cartaoCreditoNumero;
+	
+
+	public String getNumero() {
+		return numero;
 	}
 
-	public void setCartaoCreditoNumero(String cartaoCreditoNumero) {
-		this.cartaoCreditoNumero = cartaoCreditoNumero;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public ContaApp getContaApp() {

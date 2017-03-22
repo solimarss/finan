@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.ContaBancaria;
 import br.com.solimar.finan.persistence.ContaBancariaDAO;
 

@@ -19,17 +19,24 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 	public List<Lancamento> findByMemoAndTransactionIdAndContaApp(Lancamento lancamento) {
 
-		/*Query query = em.createQuery(
-				"Select O from Lancamento O Where O.memo =:pMemo AND O.valor =:pValor AND O.data =:pData O.transactionId =:pTranId",
-				ContaBancaria.class);*/
-		
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.memo =:pMemo AND O.transactionId =:pTranId AND O.contaApp =:pContaApp",
+				"Select O from Lancamento O Where "
+				+ "O.memo =:pMemo "
+				+ "AND O.valor =:pValor "
+				+ "AND O.data =:pData "
+				+ "AND O.transactionId =:pTranId "
+				+ "AND O.contaApp =:pContaApp",
 				Lancamento.class);
 
+		/*
+		 * Query query = em.createQuery(
+		 * "Select O from Lancamento O Where O.memo =:pMemo AND O.transactionId =:pTranId AND O.contaApp =:pContaApp"
+		 * , Lancamento.class);
+		 */
+
 		query.setParameter("pMemo", lancamento.getMemo());
-		//query.setParameter("pValor", lancamento.getValor());
-		//query.setParameter("pData", lancamento.getData());
+		query.setParameter("pValor", lancamento.getValor());
+		query.setParameter("pData", lancamento.getData());
 		query.setParameter("pTranId", lancamento.getTransactionId());
 		query.setParameter("pContaApp", lancamento.getContaApp());
 

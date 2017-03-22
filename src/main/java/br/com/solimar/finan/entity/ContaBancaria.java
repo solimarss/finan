@@ -33,6 +33,9 @@ public class ContaBancaria implements Serializable {
 
 	@Column(name = "CONTA_NUMERO", length = 70)
 	private String contaNumero;
+	
+	@Column(name = "BANCO_CODIGO", length = 70)
+	private String bancoCodigo;
 
 	@Column(name = "AGENCIA_NUMERO", length = 70)
 	private String agenciaNumero;
@@ -86,6 +89,14 @@ public class ContaBancaria implements Serializable {
 
 	public void setTipo(ContaTipoEnum tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getBancoCodigo() {
+		return bancoCodigo;
+	}
+
+	public void setBancoCodigo(String bancoCodigo) {
+		this.bancoCodigo = bancoCodigo;
 	}
 
 }

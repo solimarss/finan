@@ -17,13 +17,21 @@ public class ContaBancariaDAO extends AbstractDao<ContaBancaria> {
 
 	public List<ContaBancaria> findByAgenciaAndConta(ContaBancaria contaBancaria) {
 
-		Query query = em.createQuery(
+		/*Query query = em.createQuery(
 				"Select c from ContaBancaria c Where c.contaNumero =:pConta AND c.agenciaNumero =:pAgencia AND c.contaApp =:pContaApp",
+				ContaBancaria.class);*/
+		Query query = em.createQuery(
+				"Select c from ContaBancaria c Where c.contaNumero =:pConta AND c.bancoCodigo =:pBancoCod AND c.contaApp =:pContaApp",
 				ContaBancaria.class);
 
 		query.setParameter("pConta", contaBancaria.getContaNumero());
-		query.setParameter("pAgencia", contaBancaria.getAgenciaNumero());
+		query.setParameter("pBancoCod", contaBancaria.getBancoCodigo());
+		//query.setParameter("pAgencia", contaBancaria.getAgenciaNumero());
 		query.setParameter("pContaApp", contaBancaria.getContaApp());
+		
+		System.out.println("pConta "+contaBancaria.getContaNumero());
+		//System.out.println("pAgencia "+ contaBancaria.getAgenciaNumero());
+		System.out.println("pContaApp "+ contaBancaria.getContaApp());
 
 		return query.getResultList();
 

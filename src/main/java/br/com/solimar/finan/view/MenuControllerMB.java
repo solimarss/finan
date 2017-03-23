@@ -10,7 +10,8 @@ import javax.inject.Named;
 @RequestScoped
 public class MenuControllerMB implements Serializable{
 	
-	
+	private static final long serialVersionUID = 1L;
+
 	public String getItemCssClass(String viewId) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String currentViewId = context.getViewRoot().getViewId();

@@ -17,9 +17,6 @@ import net.sf.ofx4j.io.OFXParseException;
 @ViewScoped
 public class FileUploadMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private FileImportRN fileImportRN;
@@ -28,6 +25,7 @@ public class FileUploadMB implements Serializable {
 
 		try {
 			fileImportRN.importarExtratoBancario(event.getFile().getInputstream());
+			UIService.showSuccess();
 		} catch (IOException e) {
 			UIService.showError("IOException", e);
 		} catch (OFXParseException e) {
@@ -41,12 +39,10 @@ public class FileUploadMB implements Serializable {
 	}
 
 	public void importarCartaoCredito(FileUploadEvent event) {
-
-		
 			
 			try {
 				fileImportRN.importarCartaoCredito(event.getFile().getInputstream());
-				
+				UIService.showSuccess();
 			} catch (IOException e) {
 				UIService.showError("IOException", e);
 			} catch (OFXParseException e) {

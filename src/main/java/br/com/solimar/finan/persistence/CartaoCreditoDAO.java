@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.com.solimar.finan.entity.CartaoCredito;
-import br.com.solimar.finan.entity.ContaBancaria;
 
 public class CartaoCreditoDAO extends AbstractDao<CartaoCredito> {
 
@@ -15,6 +14,7 @@ public class CartaoCreditoDAO extends AbstractDao<CartaoCredito> {
 		super(CartaoCredito.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CartaoCredito> findByNumero(CartaoCredito cartaoCredito) {
 
 		Query query = em.createQuery(

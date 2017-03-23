@@ -9,7 +9,7 @@ body {
 
 .ui-growl {
 	position: absolute !important;
-	top: 50% !important;
-	left: 50% !important;
+	top: 10% !important;
+	right: 5% !important;
 	z-index: 9999 !important;
 }

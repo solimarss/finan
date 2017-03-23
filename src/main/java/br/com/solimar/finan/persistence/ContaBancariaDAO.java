@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.ContaBancaria;
 
 public class ContaBancariaDAO extends AbstractDao<ContaBancaria> {
@@ -15,6 +14,7 @@ public class ContaBancariaDAO extends AbstractDao<ContaBancaria> {
 		super(ContaBancaria.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ContaBancaria> findByAgenciaAndConta(ContaBancaria contaBancaria) {
 
 		/*Query query = em.createQuery(

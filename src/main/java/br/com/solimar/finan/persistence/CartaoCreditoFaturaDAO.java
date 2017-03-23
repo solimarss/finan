@@ -14,6 +14,7 @@ public class CartaoCreditoFaturaDAO extends AbstractDao<CartaoCreditoFatura> {
 		super(CartaoCreditoFatura.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CartaoCreditoFatura> findByVencimentoAndCartao(CartaoCreditoFatura cartaoCreditoFatura) {
 
 		Query query = em.createQuery(

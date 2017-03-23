@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
@@ -58,6 +59,9 @@
 	<section class="aw-content  js-content">
 		<ui:insert name="content" />
 	</section>
+
+	<!-- APPLICATION INFO -->
+	<p:growl id="growl_id" />
 
 	<!-- APPLICATION ERROR -->
 	<ui:include src="/pages/application/error-dialog.xhtml" />

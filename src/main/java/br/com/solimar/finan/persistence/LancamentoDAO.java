@@ -1,12 +1,9 @@
 package br.com.solimar.finan.persistence;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
 
-import br.com.solimar.finan.entity.ContaBancaria;
 import br.com.solimar.finan.entity.Lancamento;
 
 public class LancamentoDAO extends AbstractDao<Lancamento> {
@@ -17,15 +14,12 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		super(Lancamento.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Lancamento> findByMemoAndTransactionIdAndContaApp(Lancamento lancamento) {
 
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where "
-				+ "O.memo =:pMemo "
-				+ "AND O.valor =:pValor "
-				+ "AND O.data =:pData "
-				+ "AND O.transactionId =:pTranId "
-				+ "AND O.contaApp =:pContaApp",
+				"Select O from Lancamento O Where " + "O.memo =:pMemo " + "AND O.valor =:pValor "
+						+ "AND O.data =:pData " + "AND O.transactionId =:pTranId " + "AND O.contaApp =:pContaApp",
 				Lancamento.class);
 
 		/*

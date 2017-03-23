@@ -1,6 +1,7 @@
 package br.com.solimar.finan.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +11,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="LANCAMENTO_PADRAO")
+@Table(name = "LANCAMENTO_PADRAO")
 public class LancamentoPadrao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "CODIGO")
+	private Long codigo;
 
 	@Column(name = "MEMO", length = 300)
 	private String memo;
@@ -28,11 +33,19 @@ public class LancamentoPadrao implements Serializable {
 	@Column(name = "VALOR_CONSIDERADO")
 	private boolean valorConsiderado = true;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private ContaApp contaApp;
-	
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date updatedAt;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Item item;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private ContaApp contaApp;
 
 	public Long getId() {
 		return id;
@@ -73,7 +86,29 @@ public class LancamentoPadrao implements Serializable {
 	public void setItem(Item item) {
 		this.item = item;
 	}
-	
-	
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }

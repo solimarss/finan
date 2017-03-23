@@ -1,6 +1,7 @@
 package br.com.solimar.finan.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="USUARIO")
@@ -21,6 +24,9 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "CODIGO")
+	private Long codigo;
 
 	@Column(name = "NOME", length = 300)
 	private String nome;
@@ -33,6 +39,14 @@ public class Usuario implements Serializable {
 
 	@Column(name = "EMAIL", length = 300)
 	private String email;
+	
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date createdAt;
+	
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date updatedAt;
 	
 
 	@ManyToMany
@@ -85,6 +99,30 @@ public class Usuario implements Serializable {
 
 	public void setContas(List<ContaApp> contas) {
 		this.contas = contas;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	

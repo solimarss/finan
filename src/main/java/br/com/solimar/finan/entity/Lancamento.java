@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 
 @Entity
-@Table(name="LANCAMENTO")
+@Table(name = "LANCAMENTO")
 public class Lancamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,9 +28,12 @@ public class Lancamento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "CODIGO")
+	private Long codigo;
+
 	@Column(name = "DESCRICAO", length = 300)
 	private String descricao;
-	
+
 	@Column(name = "TRANSACTIONID", length = 300)
 	private String transactionId;
 
@@ -62,22 +65,29 @@ public class Lancamento implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TIPO", nullable = false, length = 1)
 	private LancamentoTipoEnum tipo;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private ContaApp contaApp;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaBancaria contaBancaria;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private CartaoCreditoFatura cartaoCreditoFatura;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Item item;
-	
+
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
-	
+
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	@Column(name = "DATA")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date updatedAt;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private ContaApp contaApp;
 
 	public Long getId() {
 		return id;
@@ -191,7 +201,28 @@ public class Lancamento implements Serializable {
 		this.categorizado = categorizado;
 	}
 
-	
-	
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }

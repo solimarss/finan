@@ -13,7 +13,6 @@ import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.solimar.finan.core.exception.BusinessException;
 import br.com.solimar.finan.entity.CartaoCredito;
 import br.com.solimar.finan.entity.CartaoCreditoFatura;
 import br.com.solimar.finan.entity.ContaBancaria;
@@ -54,10 +53,10 @@ public class FileImportRN implements Serializable {
 	@Inject
 	private UserSession userSession;
 
-	public void importarCartaoCredito(InputStream inputStream) throws BusinessException {
+	public void importarCartaoCredito(InputStream inputStream) throws IOException, OFXParseException {
 		System.out.println("importarExtratoBancario");
 
-		try {
+		
 
 			File fileSource = File.createTempFile("fileSourceOFX", ".ofx");
 			File fileTarget = File.createTempFile("fileTargetOFX", ".ofx");
@@ -185,17 +184,12 @@ public class FileImportRN implements Serializable {
 			fileTarget.delete();
 			fileSource.delete();
 
-		} catch (OFXParseException | IOException e) {
-			e.printStackTrace();
-			throw new BusinessException(e);
-		}
+		
 
 	}
 
-	public void importarExtratoBancario(InputStream inputStream) throws BusinessException {
+	public void importarExtratoBancario(InputStream inputStream) throws  IOException, OFXParseException {
 		System.out.println("importarExtratoBancario");
-
-		try {
 
 			File fileSource = File.createTempFile("fileSourceOFX", ".ofx");
 			File fileTarget = File.createTempFile("fileTargetOFX", ".ofx");
@@ -306,10 +300,6 @@ public class FileImportRN implements Serializable {
 			fileTarget.delete();
 			fileSource.delete();
 
-		} catch (OFXParseException | IOException e) {
-			e.printStackTrace();
-			throw new BusinessException(e);
-		}
 
 	}
 

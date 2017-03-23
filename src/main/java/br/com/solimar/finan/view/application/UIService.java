@@ -38,9 +38,19 @@ public class UIService {
 	
 	public static void showError(Exception e) {
 		e.printStackTrace();
+		showError(e.toString());
+	}
+	
+	public static void showError(String msg, Exception e) {
+		e.printStackTrace();
+		showError(msg);
+	}
+	
+	private static void showError(String msg) {
 		FacesMessage message = new FacesMessage();
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		message.setSummary("Erro: " + UtilErros.getMensagemErro(e));
+		//message.setSummary("Erro: " + UtilErros.getMensagemErro(e));
+		message.setSummary("Erro: " + msg);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null,message);
 		UIService.update("error_form_id:error_body_id");

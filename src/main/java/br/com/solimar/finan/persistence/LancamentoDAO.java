@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 
 public class LancamentoDAO extends AbstractDao<Lancamento> {
@@ -33,6 +34,21 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		query.setParameter("pData", lancamento.getData());
 		query.setParameter("pTranId", lancamento.getTransactionId());
 		query.setParameter("pContaApp", lancamento.getContaApp());
+
+		return query.getResultList();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Lancamento> findNaoCategorizados(ContaApp contaApp) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
+				Lancamento.class);
+
+		
+		query.setParameter("pCategorizado", false);
+		query.setParameter("pContaApp", contaApp);
 
 		return query.getResultList();
 

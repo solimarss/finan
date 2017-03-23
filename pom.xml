@@ -21,11 +21,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-
-		<!-- Import the CDI API, we use provided scope as the API is included in 
-			WildFly <dependency> <groupId>javax.enterprise</groupId> <artifactId>cdi-api</artifactId> 
-			<version>1.2</version> <scope>provided</scope> </dependency> -->
-
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>

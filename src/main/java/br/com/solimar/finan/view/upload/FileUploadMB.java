@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.solimar.finan.business.FileImportRN;
+import br.com.solimar.finan.view.application.UIService;
 
 @Named
 @ViewScoped
@@ -27,6 +28,7 @@ public class FileUploadMB implements Serializable {
 			fileImportRN.importarExtratoBancario(event.getFile().getInputstream());
 		} catch (Exception e) {
 			e.printStackTrace();
+			UIService.showError(e);
 		}
 
 	}
@@ -37,6 +39,7 @@ public class FileUploadMB implements Serializable {
 			fileImportRN.importarCartaoCredito(event.getFile().getInputstream());
 		} catch (Exception e) {
 			e.printStackTrace();
+			UIService.showError(e);
 		}
 
 	}

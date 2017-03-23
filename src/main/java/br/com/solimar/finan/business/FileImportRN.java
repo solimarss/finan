@@ -13,6 +13,7 @@ import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.solimar.finan.core.exception.BusinessException;
 import br.com.solimar.finan.entity.CartaoCredito;
 import br.com.solimar.finan.entity.CartaoCreditoFatura;
 import br.com.solimar.finan.entity.ContaBancaria;
@@ -53,7 +54,7 @@ public class FileImportRN implements Serializable {
 	@Inject
 	private UserSession userSession;
 
-	public void importarCartaoCredito(InputStream inputStream) {
+	public void importarCartaoCredito(InputStream inputStream) throws BusinessException {
 		System.out.println("importarExtratoBancario");
 
 		try {
@@ -185,13 +186,13 @@ public class FileImportRN implements Serializable {
 			fileSource.delete();
 
 		} catch (OFXParseException | IOException e) {
-			System.out.println("ERRO");
 			e.printStackTrace();
+			throw new BusinessException(e);
 		}
 
 	}
 
-	public void importarExtratoBancario(InputStream inputStream) {
+	public void importarExtratoBancario(InputStream inputStream) throws BusinessException {
 		System.out.println("importarExtratoBancario");
 
 		try {
@@ -307,6 +308,7 @@ public class FileImportRN implements Serializable {
 
 		} catch (OFXParseException | IOException e) {
 			e.printStackTrace();
+			throw new BusinessException(e);
 		}
 
 	}

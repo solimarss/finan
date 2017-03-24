@@ -46,11 +46,11 @@ public class ContaBancaria implements Serializable {
 	@Column(name = "AGENCIA_NUMERO", length = 70)
 	private String agenciaNumero;
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
-
-	@Column(name = "DATA")
+	
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 

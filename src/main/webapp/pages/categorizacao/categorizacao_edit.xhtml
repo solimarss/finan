@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="categorizacao_edit_form_id">
+
+		<p:dialog id="categorizacao_edit_id" resizable="false"
+			draggable="true" widgetVar="categorizacao_edit_wvar" width="400"
+			closable="false" modal="true" showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="categorizacao_edit_header_id">
+					<h:outputText value="Categoria" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="categorizacao_edit_body_id" columns="2">
+
+
+				<!-- NOME -->
+				<p:outputLabel value="Descrição:" />
+				<h:outputText value="#{categorizacaoEditMB.lancamento.memo}" />
+
+				<p:outputLabel value="Data:" />
+				<h:outputText value="#{categorizacaoEditMB.lancamento.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+				<p:outputLabel value="Valor:" />
+				<h:outputText value="#{categorizacaoEditMB.lancamento.valor}">
+					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+				</h:outputText>
+
+				<p:outputLabel for="cb_categoria" value="Categoria " />
+				<p:selectOneMenu id="cb_categoria"
+					value="#{categorizacaoEditMB.lancamento.item.id}" effect="fold"
+					required="true" editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{categorizacaoEditMB.itens}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}"
+						var="_item" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Desconsiderar Valor:" />
+				<p:selectBooleanCheckbox value="#{categorizacaoEditMB.desconsiderarValor}" />
+
+
+
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="categorizacao_edit_footer_id">
+					<p:commandButton value="Salvar" process="@form"
+					actionListener="#{categorizacaoEditMB.save()}"
+						styleClass="button-save button-blue bold"
+						update="categorizacao_edit_body_id" />
+					<h:outputText value="ou" />
+					<p:commandLink value="Fechar"
+						onclick="PF('categorizacao_edit_wvar').hide()"
+						styleClass="button-cancel" process="@this" update="@form">
+						<p:resetInput target="categorizacao_edit_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

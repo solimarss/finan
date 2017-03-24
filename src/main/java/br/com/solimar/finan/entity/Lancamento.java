@@ -78,11 +78,11 @@ public class Lancamento implements Serializable {
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
-
-	@Column(name = "DATA")
+	
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
@@ -186,6 +186,9 @@ public class Lancamento implements Serializable {
 	}
 
 	public Item getItem() {
+		if(item == null){
+			item = new Item();
+		}
 		return item;
 	}
 

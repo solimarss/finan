@@ -40,11 +40,11 @@ public class Usuario implements Serializable {
 	@Column(name = "EMAIL", length = 300)
 	private String email;
 	
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
-	@Column(name = "DATA")
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 	

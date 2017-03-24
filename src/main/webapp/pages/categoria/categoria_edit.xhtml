@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="categoria_edit_form_id">
+
+		<p:dialog id="categoria_edit_id" resizable="false"
+			draggable="true" widgetVar="categoria_edit_wvar" width="400"
+			closable="false" modal="true" showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="categoria_edit_header_id">
+					<h:outputText value="Categorizar" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="categoria_edit_body_id" columns="2">
+
+
+				<!-- NOME -->
+				<p:outputLabel value="Nome:" for="tx_nome_id" />
+				<h:inputText id="tx_nome_id" value="#{categoriaEditMB.categoria.nome}" />
+		
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="categoria_edit_footer_id">
+					<p:commandButton value="Salvar" process="@form"
+						actionListener="#{categoriaEditMB.save()}"
+						styleClass="button-save button-blue bold"
+						update="categoria_edit_body_id" />
+					<h:outputText value="ou" />
+					<p:commandLink value="Fechar"
+						onclick="PF('categoria_edit_wvar').hide()"
+						styleClass="button-cancel" process="@this" update="@form">
+						<p:resetInput target="categoria_edit_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

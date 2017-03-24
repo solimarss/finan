@@ -31,11 +31,11 @@ public class UIService {
 	public static void showSuccess() {
 		FacesMessage message = new FacesMessage();
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
-		message.setSummary("ConfirmaÃ§Ã£o");
-		message.setDetail("OperaÃ§Ã£o realizada com sucesso!");
+		message.setSummary("Confirmação");
+		message.setDetail("Operação realizada com sucesso!");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
-		// UIService.update("growl_id");
+		UIService.update("growl_id");
 	}
 
 	public static void showError() {

@@ -24,11 +24,11 @@ public class ContaApp implements Serializable {
 	@Column(name = "CODIGO")
 	private Long codigo;
 	
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
-	@Column(name = "DATA")
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 

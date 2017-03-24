@@ -32,11 +32,11 @@ public class Item implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Categoria categoria;
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
 
-	@Column(name = "DATA")
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
@@ -76,6 +76,9 @@ public class Item implements Serializable {
 	}
 
 	public Categoria getCategoria() {
+		if (categoria == null) {
+			categoria = new Categoria();
+		}
 		return categoria;
 	}
 

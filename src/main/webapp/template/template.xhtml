@@ -52,6 +52,14 @@
 							outcome="/pages/categorizacao/categorizacao_list.jsf">
 							<i class="fa  fa-fw  fa-cog"></i>Categorização</h:link></li>
 
+					<li class="#{menuControllerMB.getItemCssClass('categoria')}"><h:link
+							outcome="/pages/categoria/categoria_list.jsf">
+							<i class="fa  fa-fw  fa-cog"></i>Categoria</h:link></li>
+
+					<li class="#{menuControllerMB.getItemCssClass('item')}"><h:link
+							outcome="/pages/item/item_list.jsf">
+							<i class="fa  fa-fw  fa-cog"></i>Item</h:link></li>
+
 					<li class="#{menuControllerMB.getItemCssClass('sair')}"><h:commandLink
 							action="#{authenticatorMB.logout}">
 							<i class="fa  fa-fw  fa-sign-out"></i>Sair</h:commandLink></li>

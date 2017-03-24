@@ -40,11 +40,11 @@ public class CartaoCreditoFatura implements Serializable {
 	
 	
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
-	@Column(name = "DATA")
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 

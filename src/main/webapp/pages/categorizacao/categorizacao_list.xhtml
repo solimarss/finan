@@ -8,36 +8,42 @@
 
 		<h1 class="aw-page-title">Categorização</h1>
 
-		<h:form id="frm">
+		<h:form id="categorizacao_list_form_id"  >
 
 			<p:dataTable var="_lancamento"
 				value="#{categorizacaoListMB.lancamentos}">
-				<p:column headerText="Código">
-					<h:outputText value="#{_lancamento.id}" />
-				</p:column>
 
-				<p:column headerText="ID Transação">
-					<h:outputText value="#{_lancamento.transactionId}" />					
-				</p:column>
-				
-				<p:column headerText="Descrição">
-					<h:outputText value="#{_lancamento.memo}" />
-				</p:column>
-				
-					<p:column headerText="Data">
+				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}" />
 				</p:column>
 
-				<p:column headerText="Valor">
-					<h:outputText value="#{_lancamento.valor}" />
+				<p:column headerText="Descrição">
+					<h:outputText value="#{_lancamento.memo}" />
 				</p:column>
 
-			
 
-				
+
+				<p:column headerText="Valor" style="width:90px;">
+					<h:outputText value="#{_lancamento.valor}">
+						<f:convertNumber type="currency" currencySymbol="R$"
+							locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="" style="width:35px;">
+					<p:commandButton
+						actionListener="#{categorizacaoEditMB.abrirDialog(_lancamento)}"
+						icon="fa fa-fw fa-edit"
+						onclick="PF('categorizacao_edit_wvar').show();" />
+				</p:column>
+
+
+
+
 			</p:dataTable>
 
 		</h:form>
 
+		<ui:include src="/pages/categorizacao/categorizacao_edit.xhtml" />
 	</ui:define>
 </ui:composition>

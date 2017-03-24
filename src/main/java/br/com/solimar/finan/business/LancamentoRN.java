@@ -29,5 +29,13 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp) {
 		return lancamentoDAO.findNaoCategorizados(contaApp);
 	}
+	
+	public void save(Lancamento entity) {
+		if (entity.getId() == null) {
+			lancamentoDAO.insert(entity);
+		}else{
+			lancamentoDAO.update(entity);
+		}
+	}
 
 }

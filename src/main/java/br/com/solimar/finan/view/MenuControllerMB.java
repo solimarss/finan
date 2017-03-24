@@ -20,8 +20,8 @@ public class MenuControllerMB implements Serializable{
 		viewId = "/pages/" + viewId;
 		
 		//log.info("[getItemCssClass] currentViewId: "+currentViewId);
-		System.out.println("viewId "+viewId);
-		System.out.println("currentViewId "+currentViewId);
+		//System.out.println("viewId "+viewId);
+		//System.out.println("currentViewId "+currentViewId);
 		
 		return currentViewId.contains(viewId) ? "is-selected" : null;
 	}

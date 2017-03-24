@@ -29,11 +29,11 @@ public class Categoria implements Serializable {
 	@Column(name = "NOME", length = 300)
 	private String nome;
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
-	@Column(name = "DATA")
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 	

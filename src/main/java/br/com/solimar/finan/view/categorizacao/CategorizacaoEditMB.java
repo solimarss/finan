@@ -1,0 +1,104 @@
+package br.com.solimar.finan.view.categorizacao;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.event.Event;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import br.com.solimar.finan.business.ItemRN;
+import br.com.solimar.finan.business.LancamentoRN;
+import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.view.On;
+import br.com.solimar.finan.view.application.UIService;
+import br.com.solimar.finan.view.application.UserSession;
+
+@Named
+@ViewScoped
+public class CategorizacaoEditMB implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private LancamentoRN lancamentoRN;
+	
+	@Inject
+	private ItemRN itemRN;
+	
+	@Inject
+	private UserSession userSession;
+
+	private Lancamento lancamento;
+	private List<Item> itens;
+	
+	private boolean desconsiderarValor = false;
+
+	@Inject
+	@On("categorizacao.save")
+	Event<Lancamento> eventoCategorizacao;
+
+	@PostConstruct
+	private void init() {
+		lancamento = new Lancamento();
+		itens = itemRN.listAll(userSession.getContaApp());
+
+	}
+
+	public void abrirDialog(Lancamento lancamento) {
+		this.lancamento = lancamento;
+		desconsiderarValor = !lancamento.isValorConsiderado();
+		UIService.update("categorizacao_edit_form_id");
+		UIService.show("categorizacao_edit_wvar");
+	}
+
+	public void save() {
+
+		try {
+
+			lancamento.setContaApp(userSession.getContaApp());
+			lancamento.setUpdatedAt(new Date());
+			lancamento.setCategorizado(true);
+			lancamento.setValorConsiderado(!desconsiderarValor);
+			
+			
+			lancamentoRN.save(lancamento);
+			eventoCategorizacao.fire(lancamento);
+
+			UIService.hide("categorizacao_edit_wvar");
+			UIService.showSuccess();
+
+		} catch (Exception e) {
+			UIService.showError(e);
+		}
+
+	}
+
+	public Lancamento getLancamento() {
+		return lancamento;
+	}
+
+	public void setLancamento(Lancamento lancamento) {
+		this.lancamento = lancamento;
+	}
+
+	public boolean isDesconsiderarValor() {
+		return desconsiderarValor;
+	}
+
+	public void setDesconsiderarValor(boolean desconsiderarValor) {
+		this.desconsiderarValor = desconsiderarValor;
+	}
+
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+
+}

@@ -33,11 +33,11 @@ public class LancamentoPadrao implements Serializable {
 	@Column(name = "VALOR_CONSIDERADO")
 	private boolean valorConsiderado = true;
 
-	@Column(name = "DATA")
+	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
-
-	@Column(name = "DATA")
+	
+	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 

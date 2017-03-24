@@ -2,8 +2,8 @@ package br.com.solimar.finan.enums;
 
 public enum LancamentoTipoEnum {
 	
-	E("Entrada"), 
-	S("Saída");
+	E("Receita"), 
+	S("Despesa");
 
 	private LancamentoTipoEnum(String descricao) {
 		this.descricao = descricao;
@@ -14,4 +14,5 @@ public enum LancamentoTipoEnum {
 	public String getDescricao() {
 		return this.descricao;
 	}
+	
 }

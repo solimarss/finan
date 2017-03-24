@@ -1,6 +1,7 @@
 package br.com.solimar.finan.view.categorizacao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import br.com.solimar.finan.business.ItemRN;
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Item;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
@@ -34,7 +36,8 @@ public class CategorizacaoEditMB implements Serializable {
 
 	private Lancamento lancamento;
 	private List<Item> itens;
-	
+	private List<Item> itensReceita;
+	private List<Item> itensDespesa;
 	private boolean desconsiderarValor = false;
 
 	@Inject
@@ -45,12 +48,27 @@ public class CategorizacaoEditMB implements Serializable {
 	private void init() {
 		lancamento = new Lancamento();
 		itens = itemRN.listAll(userSession.getContaApp());
+		itensReceita = new ArrayList<>();
+		itensDespesa = new ArrayList<>();
+		for(Item item: itens){
+			if(item.getCategoria().getTipo().equals(LancamentoTipoEnum.E)){
+				itensReceita.add(item);
+			}else{
+				itensDespesa.add(item);
+			}
+		}
 
 	}
 
 	public void abrirDialog(Lancamento lancamento) {
 		this.lancamento = lancamento;
 		desconsiderarValor = !lancamento.isValorConsiderado();
+		if(lancamento.getTipo().equals(LancamentoTipoEnum.E)){
+			itens = itensReceita;
+		}
+		else{
+			itens = itensDespesa;
+		}
 		UIService.update("categorizacao_edit_form_id");
 		UIService.show("categorizacao_edit_wvar");
 	}

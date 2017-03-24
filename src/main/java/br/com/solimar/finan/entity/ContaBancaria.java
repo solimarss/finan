@@ -45,6 +45,9 @@ public class ContaBancaria implements Serializable {
 
 	@Column(name = "AGENCIA_NUMERO", length = 70)
 	private String agenciaNumero;
+	
+	@Column(name = "LANCAMENTO_MANUAL")
+	private boolean lancamentoManual = false;
 
 	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -56,6 +59,8 @@ public class ContaBancaria implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -135,6 +140,14 @@ public class ContaBancaria implements Serializable {
 
 	public void setBancoCodigo(String bancoCodigo) {
 		this.bancoCodigo = bancoCodigo;
+	}
+
+	public boolean isLancamentoManual() {
+		return lancamentoManual;
+	}
+
+	public void setLancamentoManual(boolean lancamentoManual) {
+		this.lancamentoManual = lancamentoManual;
 	}
 
 }

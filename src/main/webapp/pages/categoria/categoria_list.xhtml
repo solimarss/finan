@@ -20,6 +20,9 @@
 				<p:column headerText="Data" >
 					<h:outputText value="#{_categoria.nome}" />
 				</p:column>
+				<p:column headerText="Tipo" >
+					<h:outputText value="#{_categoria.tipo.descricao}" />
+				</p:column>
 
 				<p:column headerText="" style="width:35px;" >
 					<p:commandButton

@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.enums.LancamentoTipoEnum;
 
 public class LancamentoDAO extends AbstractDao<Lancamento> {
 
@@ -48,6 +49,36 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		
 		query.setParameter("pCategorizado", false);
+		query.setParameter("pContaApp", contaApp);
+
+		return query.getResultList();
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lancamento> findEntradas(ContaApp contaApp) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.tipo =:pTipo AND O.contaApp =:pContaApp",
+				Lancamento.class);
+
+		
+		query.setParameter("pTipo", LancamentoTipoEnum.E);
+		query.setParameter("pContaApp", contaApp);
+
+		return query.getResultList();
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lancamento> findSaidas(ContaApp contaApp) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.tipo =:pTipo AND O.contaApp =:pContaApp",
+				Lancamento.class);
+
+		
+		query.setParameter("pTipo", LancamentoTipoEnum.S);
 		query.setParameter("pContaApp", contaApp);
 
 		return query.getResultList();

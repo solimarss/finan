@@ -24,6 +24,10 @@
 				<p:column headerText="Categoria" >
 					<h:outputText value="#{_item.categoria.nome}" />
 				</p:column>
+				
+				<p:column headerText="Categoria" >
+					<h:outputText value="#{_item.categoria.tipo.descricao}" />
+				</p:column>
 
 				<p:column headerText="" style="width:35px;" >
 					<p:commandButton

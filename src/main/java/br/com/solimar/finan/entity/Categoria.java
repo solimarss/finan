@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.solimar.finan.enums.LancamentoTipoEnum;
 
 @Entity
 @Table(name="CATEGORIA")
@@ -36,6 +40,10 @@ public class Categoria implements Serializable {
 	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TIPO", nullable = false, length = 1)
+	private LancamentoTipoEnum tipo;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
@@ -82,6 +90,14 @@ public class Categoria implements Serializable {
 
 	public Date getUpdatedAt() {
 		return updatedAt;
+	}
+
+	public LancamentoTipoEnum getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(LancamentoTipoEnum tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setUpdatedAt(Date updatedAt) {

@@ -7,7 +7,7 @@
 	<h:form id="categorizacao_edit_form_id">
 
 		<p:dialog id="categorizacao_edit_id" resizable="false"
-			draggable="true" widgetVar="categorizacao_edit_wvar" width="400"
+			draggable="true" widgetVar="categorizacao_edit_wvar" width="600"
 			closable="false" modal="true" showEffect="fade">
 
 			<f:facet name="header">
@@ -41,6 +41,9 @@
 						itemValue="#{_item.id}" itemLabel="#{_item.nome}"
 						var="_item" />
 				</p:selectOneMenu>
+				
+				<p:outputLabel value="Observação:" for="tx_obs_id" />
+				<h:inputTextarea id="tx_obs_id" value="#{categorizacaoEditMB.lancamento.descricao}" cols="40"  />
 
 				<h:outputText value="Desconsiderar Valor:" />
 				<p:selectBooleanCheckbox value="#{categorizacaoEditMB.desconsiderarValor}" />

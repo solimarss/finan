@@ -6,9 +6,9 @@
 
 	<h:form id="categoria_edit_form_id">
 
-		<p:dialog id="categoria_edit_id" resizable="false"
-			draggable="true" widgetVar="categoria_edit_wvar" width="400"
-			closable="false" modal="true" showEffect="fade">
+		<p:dialog id="categoria_edit_id" resizable="false" draggable="true"
+			widgetVar="categoria_edit_wvar" width="400" closable="false"
+			modal="true" showEffect="fade">
 
 			<f:facet name="header">
 				<h:panelGroup id="categoria_edit_header_id">
@@ -20,8 +20,17 @@
 
 				<!-- NOME -->
 				<p:outputLabel value="Nome:" for="tx_nome_id" />
-				<h:inputText id="tx_nome_id" value="#{categoriaEditMB.categoria.nome}" />
-		
+				<h:inputText id="tx_nome_id"
+					value="#{categoriaEditMB.categoria.nome}" />
+
+				
+					<p:selectOneRadio id="city" value="#{categoriaEditMB.categoria.tipo}" layout="grid"
+						columns="1">
+						  <f:selectItem itemLabel="Receita" itemValue="E" />
+						  <f:selectItem itemLabel="Despesa" itemValue="S" />
+					</p:selectOneRadio>
+			
+
 
 			</h:panelGrid>
 

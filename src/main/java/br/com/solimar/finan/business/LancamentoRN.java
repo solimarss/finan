@@ -29,11 +29,19 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp) {
 		return lancamentoDAO.findNaoCategorizados(contaApp);
 	}
-	
+
+	public List<Lancamento> findEntradas(ContaApp contaApp) {
+		return lancamentoDAO.findEntradas(contaApp);
+	}
+
+	public List<Lancamento> find(ContaApp contaApp) {
+		return lancamentoDAO.findSaidas(contaApp);
+	}
+
 	public void save(Lancamento entity) {
 		if (entity.getId() == null) {
 			lancamentoDAO.insert(entity);
-		}else{
+		} else {
 			lancamentoDAO.update(entity);
 		}
 	}

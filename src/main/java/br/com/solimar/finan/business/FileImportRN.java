@@ -243,6 +243,7 @@ public class FileImportRN implements Serializable {
 				contaBancaria.setCreatedAt(new Date());
 				contaBancaria.setUpdatedAt(new Date());
 				contaBancaria.setCodigo(GeradorCodigo.gerar());
+				contaBancaria.setLancamentoManual(false);
 
 				List<ContaBancaria> listaContas = contaBancariaRN.findByAgenciaAndConta(contaBancaria);
 				if (listaContas.size() == 0) {

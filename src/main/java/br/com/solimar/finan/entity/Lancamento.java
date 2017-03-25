@@ -67,10 +67,10 @@ public class Lancamento implements Serializable {
 	private LancamentoTipoEnum tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private ContaBancaria contaBancaria;
+	private Conta conta;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private CartaoCreditoFatura cartaoCreditoFatura;
+	private Fatura cartaoCreditoFatura;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Item item;
@@ -169,22 +169,15 @@ public class Lancamento implements Serializable {
 		this.contaApp = contaApp;
 	}
 
-	public CartaoCreditoFatura getCartaoCreditoFatura() {
+	public Fatura getCartaoCreditoFatura() {
 		return cartaoCreditoFatura;
 	}
 
-	public void setCartaoCreditoFatura(CartaoCreditoFatura cartaoCreditoFatura) {
+	public void setCartaoCreditoFatura(Fatura cartaoCreditoFatura) {
 		this.cartaoCreditoFatura = cartaoCreditoFatura;
 	}
 
-	public ContaBancaria getContaBancaria() {
-		return contaBancaria;
-	}
-
-	public void setContaBancaria(ContaBancaria contaBancaria) {
-		this.contaBancaria = contaBancaria;
-	}
-
+	
 	public Item getItem() {
 		if(item == null){
 			item = new Item();
@@ -226,6 +219,14 @@ public class Lancamento implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }

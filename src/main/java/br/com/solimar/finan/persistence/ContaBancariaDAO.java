@@ -4,25 +4,25 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import br.com.solimar.finan.entity.ContaBancaria;
+import br.com.solimar.finan.entity.Conta;
 
-public class ContaBancariaDAO extends AbstractDao<ContaBancaria> {
+public class ContaBancariaDAO extends AbstractDao<Conta> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ContaBancariaDAO() {
-		super(ContaBancaria.class);
+		super(Conta.class);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ContaBancaria> findByAgenciaAndConta(ContaBancaria contaBancaria) {
+	public List<Conta> findByContaAndBanco(Conta contaBancaria) {
 
 		/*Query query = em.createQuery(
 				"Select c from ContaBancaria c Where c.contaNumero =:pConta AND c.agenciaNumero =:pAgencia AND c.contaApp =:pContaApp",
 				ContaBancaria.class);*/
 		Query query = em.createQuery(
 				"Select c from ContaBancaria c Where c.contaNumero =:pConta AND c.bancoCodigo =:pBancoCod AND c.contaApp =:pContaApp",
-				ContaBancaria.class);
+				Conta.class);
 
 		query.setParameter("pConta", contaBancaria.getContaNumero());
 		query.setParameter("pBancoCod", contaBancaria.getBancoCodigo());

@@ -16,8 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="CARTAO_CREDITO_FATURA")
-public class CartaoCreditoFatura implements Serializable {
+@Table(name="FATURA")
+public class Fatura implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -36,7 +36,7 @@ public class CartaoCreditoFatura implements Serializable {
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private CartaoCredito cartao;
+	private Conta conta;
 	
 	
 
@@ -111,9 +111,7 @@ public class CartaoCreditoFatura implements Serializable {
 	}
 
 
-	public CartaoCredito getCartao() {
-		return cartao;
-	}
+
 
 
 	public ContaApp getContaApp() {
@@ -126,8 +124,13 @@ public class CartaoCreditoFatura implements Serializable {
 	}
 
 
-	public void setCartao(CartaoCredito cartao) {
-		this.cartao = cartao;
+	public Conta getConta() {
+		return conta;
+	}
+
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 
@@ -148,7 +151,7 @@ public class CartaoCreditoFatura implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CartaoCreditoFatura other = (CartaoCreditoFatura) obj;
+		Fatura other = (Fatura) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -14,9 +14,8 @@ import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.solimar.finan.entity.CartaoCredito;
-import br.com.solimar.finan.entity.CartaoCreditoFatura;
-import br.com.solimar.finan.entity.ContaBancaria;
+import br.com.solimar.finan.entity.Conta;
+import br.com.solimar.finan.entity.Fatura;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.ContaTipoEnum;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
@@ -44,10 +43,7 @@ public class FileImportRN implements Serializable {
 	private LancamentoRN lancamentoRN;
 
 	@Inject
-	private ContaBancariaRN contaBancariaRN;
-
-	@Inject
-	private CartaoCreditoRN cartaoCreditoRN;
+	private ContaRN contaRN;
 
 	@Inject
 	private CartaoCreditoFaturaRN cartaoCreditoFaturaRN;
@@ -87,6 +83,9 @@ public class FileImportRN implements Serializable {
 		System.out
 				.println("INSTITUI√á√ÉO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 		System.out.println("");
+		
+		Conta cartaoCredito = new Conta();
+		cartaoCredito.setBancoCodigo(envelope.getSignonResponse().getFinancialInstitution().getId());
 
 		List<CreditCardStatementResponseTransaction> responses = messageSet.getStatementResponses();
 
@@ -99,17 +98,17 @@ public class FileImportRN implements Serializable {
 			System.out.println("DATA DE VENCIMENTO: " + message.getLedgerBalance().getAsOfDate());
 			System.out.println("");
 
-			CartaoCredito cartaoCredito = new CartaoCredito();
-			cartaoCredito.setNumero(message.getAccount().getAccountNumber());
+			
+			cartaoCredito.setNome("Cart„o de CrÈdito - "+message.getAccount().getAccountNumber());
+			cartaoCredito.setContaNumero(message.getAccount().getAccountNumber());
 			cartaoCredito.setContaApp(userSession.getContaApp());
-			cartaoCredito.setNome("");
 			cartaoCredito.setCreatedAt(new Date());
 			cartaoCredito.setUpdatedAt(new Date());
 			cartaoCredito.setCodigo(GeradorCodigo.gerar());
 
-			List<CartaoCredito> listaCartoes = cartaoCreditoRN.findByNumero(cartaoCredito);
+			List<Conta> listaCartoes = contaRN.findByContaAndBanco(cartaoCredito);
 			if (listaCartoes.size() == 0) {
-				cartaoCreditoRN.insert(cartaoCredito);
+				contaRN.insert(cartaoCredito);
 				System.out.println("==> CART√ÉO INSERIDA");
 
 			} else {
@@ -118,8 +117,8 @@ public class FileImportRN implements Serializable {
 
 			}
 
-			CartaoCreditoFatura fatura = new CartaoCreditoFatura();
-			fatura.setCartao(cartaoCredito);
+			Fatura fatura = new Fatura();
+			fatura.setConta(cartaoCredito);
 			fatura.setContaApp(userSession.getContaApp());
 			fatura.setDataVencimento(message.getLedgerBalance().getAsOfDate());
 			fatura.setValor(BigDecimal.valueOf(message.getLedgerBalance().getAmount()));
@@ -127,7 +126,7 @@ public class FileImportRN implements Serializable {
 			fatura.setUpdatedAt(new Date());
 			fatura.setCodigo(GeradorCodigo.gerar());
 
-			List<CartaoCreditoFatura> listaFaturas = cartaoCreditoFaturaRN.findByVencimentoAndCartao(fatura);
+			List<Fatura> listaFaturas = cartaoCreditoFaturaRN.findByVencimentoAndCartao(fatura);
 
 			if (listaFaturas.size() == 0) {
 				cartaoCreditoFaturaRN.insert(fatura);
@@ -153,6 +152,7 @@ public class FileImportRN implements Serializable {
 				System.out.println("");
 
 				Lancamento lancamento = new Lancamento();
+				lancamento.setConta(cartaoCredito);
 				lancamento.setCategorizado(false);
 				lancamento.setContaApp(userSession.getContaApp());
 				lancamento.setCartaoCreditoFatura(fatura);
@@ -233,7 +233,7 @@ public class FileImportRN implements Serializable {
 
 				List<Transaction> list = b.getMessage().getTransactionList().getTransactions();
 
-				ContaBancaria contaBancaria = new ContaBancaria();
+				Conta contaBancaria = new Conta();
 				contaBancaria.setNome("");
 				contaBancaria.setBancoCodigo(b.getMessage().getAccount().getBankId());
 				contaBancaria.setAgenciaNumero(b.getMessage().getAccount().getBranchId());
@@ -245,9 +245,9 @@ public class FileImportRN implements Serializable {
 				contaBancaria.setCodigo(GeradorCodigo.gerar());
 				contaBancaria.setLancamentoManual(false);
 
-				List<ContaBancaria> listaContas = contaBancariaRN.findByAgenciaAndConta(contaBancaria);
+				List<Conta> listaContas = contaRN.findByContaAndBanco(contaBancaria);
 				if (listaContas.size() == 0) {
-					contaBancariaRN.insert(contaBancaria);
+					contaRN.insert(contaBancaria);
 					System.out.println("==> CONTA INSERIDA");
 
 				} else {
@@ -273,7 +273,7 @@ public class FileImportRN implements Serializable {
 					Lancamento lancamento = new Lancamento();
 					lancamento.setCategorizado(false);
 					lancamento.setContaApp(userSession.getContaApp());
-					lancamento.setContaBancaria(contaBancaria);
+					lancamento.setConta(contaBancaria);
 					lancamento.setData(transaction.getDatePosted());
 					lancamento.setDataPagamento(transaction.getDatePosted());
 					lancamento.setMemo(transaction.getMemo());

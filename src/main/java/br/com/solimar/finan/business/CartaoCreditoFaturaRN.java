@@ -6,7 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.solimar.finan.entity.CartaoCreditoFatura;
+import br.com.solimar.finan.entity.Fatura;
 import br.com.solimar.finan.persistence.CartaoCreditoFaturaDAO;
 
 @Stateless
@@ -17,17 +17,17 @@ public class CartaoCreditoFaturaRN implements Serializable {
 	@Inject
 	private  CartaoCreditoFaturaDAO cartaoCreditoFaturaDAO;
 	
-	public void insert(CartaoCreditoFatura entity) {
+	public void insert(Fatura entity) {
 		cartaoCreditoFaturaDAO.insert(entity);
 	}
 	
 	
 	
-	public CartaoCreditoFatura find(Long id) {
+	public Fatura find(Long id) {
 		return cartaoCreditoFaturaDAO.find(id);
 	}
 	
-	public List<CartaoCreditoFatura> findByVencimentoAndCartao(CartaoCreditoFatura fatura) {
+	public List<Fatura> findByVencimentoAndCartao(Fatura fatura) {
 		return cartaoCreditoFaturaDAO.findByVencimentoAndCartao(fatura);
 	}
 	

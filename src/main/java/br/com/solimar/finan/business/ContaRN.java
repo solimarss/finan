@@ -6,28 +6,28 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.solimar.finan.entity.ContaBancaria;
+import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.persistence.ContaBancariaDAO;
 
 @Stateless
-public class ContaBancariaRN implements Serializable {
+public class ContaRN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private  ContaBancariaDAO contaBancariaDAO;
 	
-	public void insert(ContaBancaria entity) {
+	public void insert(Conta entity) {
 		contaBancariaDAO.insert(entity);
 	}
 	
 	
-	public ContaBancaria find(Long id) {
+	public Conta find(Long id) {
 		return contaBancariaDAO.find(id);
 	}
 	
-	public List<ContaBancaria> findByAgenciaAndConta(ContaBancaria contaBancaria) {
-		return contaBancariaDAO.findByAgenciaAndConta(contaBancaria);
+	public List<Conta> findByContaAndBanco(Conta contaBancaria) {
+		return contaBancariaDAO.findByContaAndBanco(contaBancaria);
 	}
 	
 

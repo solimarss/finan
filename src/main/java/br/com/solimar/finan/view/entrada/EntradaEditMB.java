@@ -22,7 +22,7 @@ import br.com.solimar.finan.view.application.UserSession;
 
 @Named
 @ViewScoped
-public class EntradaditMB implements Serializable {
+public class EntradaEditMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Inject
@@ -39,6 +39,7 @@ public class EntradaditMB implements Serializable {
 	private List<Item> itensReceita;
 	private List<Item> itensDespesa;
 	private boolean desconsiderarValor = false;
+	private boolean edicao = false;
 
 	@Inject
 	@On("entrada.save")
@@ -61,6 +62,7 @@ public class EntradaditMB implements Serializable {
 	}
 
 	public void abrirDialog(Lancamento lancamento) {
+		edicao = true;
 		this.lancamento = lancamento;
 		desconsiderarValor = !lancamento.isValorConsiderado();
 		if(lancamento.getTipo().equals(LancamentoTipoEnum.E)){
@@ -72,11 +74,26 @@ public class EntradaditMB implements Serializable {
 		UIService.update("entrada_edit_form_id");
 		UIService.show("entrada_edit_wvar");
 	}
+	
+	
+	public void abrirDialogNew() {
+		edicao = false;
+		this.lancamento = new Lancamento();
+		desconsiderarValor = false;
+		
+		UIService.update("entrada_edit_form_id");
+		UIService.show("entrada_edit_wvar");
+	}
 
 	public void save() {
 
 		try {
 
+			if(!edicao){
+				lancamento.setTipo(LancamentoTipoEnum.E);
+				lancamento.setCategorizado(true);
+			}
+			
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
@@ -117,6 +134,14 @@ public class EntradaditMB implements Serializable {
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public boolean isEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(boolean edicao) {
+		this.edicao = edicao;
 	}
 
 }

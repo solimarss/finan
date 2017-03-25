@@ -4,49 +4,65 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="categorizacao_edit_form_id">
+	<h:form id="entrada_edit_form_id">
 
-		<p:dialog id="categorizacao_edit_id" resizable="false"
-			draggable="true" widgetVar="categorizacao_edit_wvar" width="600"
-			closable="false" modal="true" showEffect="fade">
+		<p:dialog id="entrada_edit_id" resizable="false" draggable="true"
+			widgetVar="entrada_edit_wvar" width="600" closable="false"
+			modal="true" showEffect="fade">
 
 			<f:facet name="header">
-				<h:panelGroup id="categorizacao_edit_header_id">
+				<h:panelGroup id="entrada_edit_header_id">
 					<h:outputText value="Categoria" />
 				</h:panelGroup>
 			</f:facet>
-			<h:panelGrid id="categorizacao_edit_body_id" columns="2">
+			<h:panelGrid id="entrada_edit_body_id" columns="2">
 
 
 				<!-- NOME -->
-				<p:outputLabel value="Descrição:" />
-				<h:outputText value="#{categorizacaoEditMB.lancamento.memo}" />
+				<p:outputLabel value="Descrição:" rendered="#{entradaEditMB.edicao}" />
+				<h:outputText value="#{entradaEditMB.lancamento.memo}"
+					rendered="#{entradaEditMB.edicao}" />
+
+				<p:outputLabel value="Descrição:"
+					rendered="#{!entradaEditMB.edicao}" />
+				<h:inputText value="#{entradaEditMB.lancamento.memo}"
+					rendered="#{!entradaEditMB.edicao}" />
 
 				<p:outputLabel value="Data:" />
-				<h:outputText value="#{categorizacaoEditMB.lancamento.data}">
+				<h:outputText value="#{entradaEditMB.lancamento.data}"
+					rendered="#{entradaEditMB.edicao}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 
+				<p:calendar value="#{entradaEditMB.lancamento.data}"
+					rendered="#{!entradaEditMB.edicao}" />
+
 				<p:outputLabel value="Valor:" />
-				<h:outputText value="#{categorizacaoEditMB.lancamento.valor}">
+				<h:outputText value="#{entradaEditMB.lancamento.valor}" rendered="#{entradaEditMB.edicao}" >
 					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 				</h:outputText>
 
-				<p:outputLabel for="cb_categoria" value="Categoria " />
+				<p:inputNumber  value="#{entradaEditMB.lancamento.valor}"
+					symbol=" R$" symbolPosition="s" decimalSeparator=","
+					thousandSeparator="." rendered="#{!entradaEditMB.edicao}"> 
+				</p:inputNumber>
+
+				<p:outputLabel for="cb_categoria" value="Item/Categoria " />
 				<p:selectOneMenu id="cb_categoria"
-					value="#{categorizacaoEditMB.lancamento.item.id}" effect="fold"
+					value="#{entradaEditMB.lancamento.item.id}" effect="fold"
 					required="true" editable="false">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{categorizacaoEditMB.itens}"
-						itemValue="#{_item.id}" itemLabel="#{_item.nome}"
-						var="_item" />
+					<f:selectItems value="#{entradaEditMB.itens}"
+						itemValue="#{_item.id}"
+						itemLabel="#{_item.nome} - #{_item.categoria.nome}" var="_item" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel value="Observação:" for="tx_obs_id" />
-				<h:inputTextarea id="tx_obs_id" value="#{categorizacaoEditMB.lancamento.descricao}" cols="40"  />
+				<h:inputTextarea id="tx_obs_id"
+					value="#{entradaEditMB.lancamento.descricao}" cols="40" />
 
 				<h:outputText value="Desconsiderar Valor:" />
-				<p:selectBooleanCheckbox value="#{categorizacaoEditMB.desconsiderarValor}" />
+				<p:selectBooleanCheckbox value="#{entradaEditMB.desconsiderarValor}" />
 
 
 
@@ -54,16 +70,16 @@
 			</h:panelGrid>
 
 			<f:facet name="footer">
-				<h:panelGroup id="categorizacao_edit_footer_id">
+				<h:panelGroup id="entrada_edit_footer_id">
 					<p:commandButton value="Salvar" process="@form"
-					actionListener="#{categorizacaoEditMB.save()}"
+						actionListener="#{entradaEditMB.save()}"
 						styleClass="button-save button-blue bold"
-						update="categorizacao_edit_body_id" />
+						update="entrada_edit_body_id" />
 					<h:outputText value="ou" />
 					<p:commandLink value="Fechar"
-						onclick="PF('categorizacao_edit_wvar').hide()"
+						onclick="PF('entrada_edit_wvar').hide()"
 						styleClass="button-cancel" process="@this" update="@form">
-						<p:resetInput target="categorizacao_edit_body_id" />
+						<p:resetInput target="entrada_edit_body_id" />
 					</p:commandLink>
 				</h:panelGroup>
 			</f:facet>

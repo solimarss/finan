@@ -6,25 +6,42 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Categorização</h1>
+		<h1 class="aw-page-title">Receitas</h1>
 
-		<h:form id="categorizacao_list_form_id"  >
+		<h:form id="entrada_list_form_id">
 
-			<p:dataTable var="_lancamento"
-				value="#{categorizacaoListMB.lancamentos}">
+			<p:commandButton actionListener="#{entradaEditMB.abrirDialogNew()}"
+				icon="fa fa-fw fa-edit" value="Nova" />
+
+			<p:dataTable var="_lancamento" value="#{entradaListMB.lancamentos}">
 
 				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}" />
 				</p:column>
 
-				<p:column headerText="Descrição">
-					<h:outputText value="#{_lancamento.memo}" />
+				<p:column headerText="Receita">
+					<h:outputText
+						value="#{_lancamento.item.nome} - #{_lancamento.item.categoria.nome}" />
+				</p:column>
+
+
+				<p:column headerText="Observação">
+					<h:outputText value="#{_lancamento.descricao}" />
 				</p:column>
 
 
 
 				<p:column headerText="Valor" style="width:90px;">
-					<h:outputText value="#{_lancamento.valor}">
+
+					<h:outputText value="#{_lancamento.valor}"
+						style="text-decoration:line-through"
+						rendered="#{!_lancamento.valorConsiderado}">
+						<f:convertNumber type="currency" currencySymbol="R$"
+							locale="pt_BR" />
+					</h:outputText>
+
+					<h:outputText value="#{_lancamento.valor}"
+						rendered="#{_lancamento.valorConsiderado}">
 						<f:convertNumber type="currency" currencySymbol="R$"
 							locale="pt_BR" />
 					</h:outputText>
@@ -32,9 +49,8 @@
 
 				<p:column headerText="" style="width:35px;">
 					<p:commandButton
-						actionListener="#{categorizacaoEditMB.abrirDialog(_lancamento)}"
-						icon="fa fa-fw fa-edit"
-						onclick="PF('categorizacao_edit_wvar').show();" />
+						actionListener="#{entradaEditMB.abrirDialog(_lancamento)}"
+						icon="fa fa-fw fa-edit" onclick="PF('entrada_edit_wvar').show();" />
 				</p:column>
 
 

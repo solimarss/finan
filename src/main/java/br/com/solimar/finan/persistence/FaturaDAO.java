@@ -6,11 +6,11 @@ import javax.persistence.Query;
 
 import br.com.solimar.finan.entity.Fatura;
 
-public class CartaoCreditoFaturaDAO extends AbstractDao<Fatura> {
+public class FaturaDAO extends AbstractDao<Fatura> {
 
 	private static final long serialVersionUID = 1L;
 
-	public CartaoCreditoFaturaDAO() {
+	public FaturaDAO() {
 		super(Fatura.class);
 	}
 
@@ -18,9 +18,9 @@ public class CartaoCreditoFaturaDAO extends AbstractDao<Fatura> {
 	public List<Fatura> findByVencimentoAndCartao(Fatura cartaoCreditoFatura) {
 
 		Query query = em.createQuery(
-				"Select c from CartaoCreditoFatura c Where "
+				"Select c from Fatura c Where "
 				+ "c.dataVencimento =:pVencimento "
-				+ "AND c.conta =:pCartao "
+				+ "AND c.conta =:pConta "
 				+ "AND c.contaApp =:pContaApp",
 				Fatura.class);
 

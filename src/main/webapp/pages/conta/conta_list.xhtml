@@ -6,32 +6,27 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Categoria</h1>
+		<h1 class="aw-page-title">Conta</h1>
 
-		<h:form id="item_list_form_id">
+		<h:form id="conta_list_form_id">
 
 			<p:commandButton
-				actionListener="#{itemEditMB.abrirDialogNew()}"
+				actionListener="#{contaEditMB.abrirDialogNew()}"
 				icon="fa fa-fw fa-edit" 
 				value="Nova"/>
 
-			<p:dataTable var="_item" value="#{itemListMB.items}">
+			<p:dataTable var="_conta" value="#{contaListMB.contas}">
 
-				<p:column headerText="Nome do Item" >
-					<h:outputText value="#{_item.nome}" />
+				<p:column headerText="Nome" >
+					<h:outputText value="#{_conta.nome}" />
 				</p:column>
-				
-				<p:column headerText="Categoria" >
-					<h:outputText value="#{_item.categoria.nome}" />
-				</p:column>
-				
 				<p:column headerText="Tipo" >
-					<h:outputText value="#{_item.categoria.tipo.descricao}" />
+					<h:outputText value="#{_conta.tipo.descricao}" />
 				</p:column>
 
 				<p:column headerText="" style="width:35px;" >
 					<p:commandButton
-						actionListener="#{itemEditMB.abrirDialogEdit(_item)}"
+						actionListener="#{contaEditMB.abrirDialogEdit(_conta)}"
 						icon="fa fa-fw fa-edit" />
 				</p:column>
 
@@ -42,6 +37,6 @@
 
 		</h:form>
 
-		<ui:include src="/pages/item/item_edit.xhtml" />
+		<ui:include src="/pages/conta/conta_edit.xhtml" />
 	</ui:define>
 </ui:composition>

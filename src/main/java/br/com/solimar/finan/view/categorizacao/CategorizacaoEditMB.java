@@ -11,8 +11,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.solimar.finan.business.CategoriaRN;
 import br.com.solimar.finan.business.ItemRN;
 import br.com.solimar.finan.business.LancamentoRN;
+import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Item;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
@@ -27,18 +29,26 @@ public class CategorizacaoEditMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private LancamentoRN lancamentoRN;
-	
+
 	@Inject
 	private ItemRN itemRN;
-	
+
+	@Inject
+	private CategoriaRN categoriaRN;
+
 	@Inject
 	private UserSession userSession;
 
 	private Lancamento lancamento;
 	private List<Item> itens;
-	private List<Item> itensReceita;
-	private List<Item> itensDespesa;
+	private List<Item> itensAll;
+	private List<Categoria> categorias;
+	private List<Categoria> categoriasReceita;
+	private List<Categoria> categoriasDespesa;
 	private boolean desconsiderarValor = false;
+	private boolean enableDesconsiderarValor = true;
+	private Long categoriaIdSelected;
+	
 
 	@Inject
 	@On("categorizacao.save")
@@ -46,28 +56,61 @@ public class CategorizacaoEditMB implements Serializable {
 
 	@PostConstruct
 	private void init() {
+
 		lancamento = new Lancamento();
-		itens = itemRN.listAll(userSession.getContaApp());
-		itensReceita = new ArrayList<>();
-		itensDespesa = new ArrayList<>();
-		for(Item item: itens){
-			if(item.getCategoria().getTipo().equals(LancamentoTipoEnum.E)){
-				itensReceita.add(item);
-			}else{
-				itensDespesa.add(item);
+		itensAll = itemRN.listAll(userSession.getContaApp());
+
+		categorias = categoriaRN.listAll(userSession.getContaApp());
+		categoriasDespesa = new ArrayList<>();
+		categoriasReceita = new ArrayList<>();
+
+		for (Categoria categoria : categorias) {
+			if (categoria.getTipo().equals(LancamentoTipoEnum.E)) {
+				categoriasReceita.add(categoria);
+			} else {
+				categoriasDespesa.add(categoria);
 			}
 		}
 
 	}
 
+	public void onSelectCategoria() {
+		itens = new ArrayList<>();
+		if (categoriaIdSelected != null) {
+
+			for (Item item : itensAll) {
+				if (item.getCategoria().getId().equals(categoriaIdSelected)) {
+					itens.add(item);
+				}
+			}
+			enableDesconsiderarValor = false;
+			desconsiderarValor = false;
+
+		} else {
+			enableDesconsiderarValor = true;
+		}
+
+	}
+
+	public void onSelectDesconsiderarValor() {
+		categoriaIdSelected = null;
+		lancamento.getItem().setId(null);
+
+	}
+
 	public void abrirDialog(Lancamento lancamento) {
 		this.lancamento = lancamento;
-		desconsiderarValor = !lancamento.isValorConsiderado();
-		if(lancamento.getTipo().equals(LancamentoTipoEnum.E)){
-			itens = itensReceita;
-		}
-		else{
-			itens = itensDespesa;
+		lancamento.setDescricao(lancamento.getMemo());
+		desconsiderarValor = false;
+		enableDesconsiderarValor = true;
+		categoriaIdSelected = null;
+		lancamento.getItem().setId(null);
+		
+
+		if (lancamento.getTipo().equals(LancamentoTipoEnum.E)) {
+			categorias = categoriasReceita;
+		} else {
+			categorias = categoriasDespesa;
 		}
 		UIService.update("categorizacao_edit_form_id");
 		UIService.show("categorizacao_edit_wvar");
@@ -77,12 +120,19 @@ public class CategorizacaoEditMB implements Serializable {
 
 		try {
 
+			if(desconsiderarValor){
+				lancamento.setValorConsiderado(false);
+				lancamento.setItem(null);
+			}else{
+				lancamento.setValorConsiderado(true);
+			}
+			
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
-			lancamento.setValorConsiderado(!desconsiderarValor);
 			
 			
+
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
@@ -117,6 +167,30 @@ public class CategorizacaoEditMB implements Serializable {
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public Long getCategoriaIdSelected() {
+		return categoriaIdSelected;
+	}
+
+	public void setCategoriaIdSelected(Long categoriaIdSelected) {
+		this.categoriaIdSelected = categoriaIdSelected;
+	}
+
+	public boolean isEnableDesconsiderarValor() {
+		return enableDesconsiderarValor;
+	}
+
+	public void setEnableDesconsiderarValor(boolean enableDesconsiderarValor) {
+		this.enableDesconsiderarValor = enableDesconsiderarValor;
 	}
 
 }

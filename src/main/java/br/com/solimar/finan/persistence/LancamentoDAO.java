@@ -59,10 +59,10 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 	public List<Lancamento> findEntradas(ContaApp contaApp) {
 
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.tipo =:pTipo AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
+				"Select O from Lancamento O Where O.tipo =:pTipo AND O.valorConsiderado =:pVConsiderado AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
 				Lancamento.class);
 
-		
+		query.setParameter("pVConsiderado", true);
 		query.setParameter("pTipo", LancamentoTipoEnum.E);
 		query.setParameter("pCategorizado",true);
 		query.setParameter("pContaApp", contaApp);
@@ -75,10 +75,10 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 	public List<Lancamento> findSaidas(ContaApp contaApp) {
 
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.tipo =:pTipo AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
+				"Select O from Lancamento O Where O.tipo =:pTipo AND O.valorConsiderado =:pVConsiderado AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
 				Lancamento.class);
 
-		
+		query.setParameter("pVConsiderado", true);
 		query.setParameter("pTipo", LancamentoTipoEnum.S);
 		query.setParameter("pCategorizado",true);
 		query.setParameter("pContaApp", contaApp);

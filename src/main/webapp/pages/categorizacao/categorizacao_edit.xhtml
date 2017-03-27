@@ -15,38 +15,76 @@
 					<h:outputText value="Categoria" />
 				</h:panelGroup>
 			</f:facet>
+
 			<h:panelGrid id="categorizacao_edit_body_id" columns="2">
 
 
-				<!-- NOME -->
-				<p:outputLabel value="Descrição:" />
+				<p:outputLabel value="Descrição:" for="tx_obs_id" />
+				<h:inputText id="tx_obs_id"
+					value="#{categorizacaoEditMB.lancamento.descricao}" size="50" />
+
+
+
+
+				<p:outputLabel value="Transação:" />
 				<h:outputText value="#{categorizacaoEditMB.lancamento.memo}" />
+
+
 
 				<p:outputLabel value="Data:" />
 				<h:outputText value="#{categorizacaoEditMB.lancamento.data}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 
+
+
 				<p:outputLabel value="Valor:" />
 				<h:outputText value="#{categorizacaoEditMB.lancamento.valor}">
 					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 				</h:outputText>
 
+
+
+
+
 				<p:outputLabel for="cb_categoria" value="Categoria " />
 				<p:selectOneMenu id="cb_categoria"
+					value="#{categorizacaoEditMB.categoriaIdSelected}" effect="fold"
+					editable="false"
+					
+					disabled="#{categorizacaoEditMB.desconsiderarValor}">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{categorizacaoEditMB.categorias}"
+						itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+					<p:ajax event="change" update="categorizacao_edit_body_id"
+						listener="#{categorizacaoEditMB.onSelectCategoria}" />
+				</p:selectOneMenu>
+
+
+
+				<p:outputLabel for="cb_item" value="Tipo" />
+				<p:selectOneMenu id="cb_item"
 					value="#{categorizacaoEditMB.lancamento.item.id}" effect="fold"
-					required="true" editable="false">
+					required="#{!categorizacaoEditMB.desconsiderarValor}"
+					disabled="#{categorizacaoEditMB.desconsiderarValor}"
+					editable="false">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{categorizacaoEditMB.itens}"
-						itemValue="#{_item.id}" itemLabel="#{_item.nome}"
-						var="_item" />
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
 				</p:selectOneMenu>
-				
-				<p:outputLabel value="Observação:" for="tx_obs_id" />
-				<h:inputTextarea id="tx_obs_id" value="#{categorizacaoEditMB.lancamento.descricao}" cols="40"  />
 
-				<h:outputText value="Desconsiderar Valor:" />
-				<p:selectBooleanCheckbox value="#{categorizacaoEditMB.desconsiderarValor}" />
+
+
+
+				<h:outputText value="Não é receita nem despesa:" />
+				<p:selectBooleanCheckbox
+					value="#{categorizacaoEditMB.desconsiderarValor}"
+					disabled="#{!categorizacaoEditMB.enableDesconsiderarValor}">
+
+					<p:ajax event="change" update="categorizacao_edit_body_id"
+						listener="#{categorizacaoEditMB.onSelectDesconsiderarValor}" />
+
+				</p:selectBooleanCheckbox>
 
 
 
@@ -56,7 +94,7 @@
 			<f:facet name="footer">
 				<h:panelGroup id="categorizacao_edit_footer_id">
 					<p:commandButton value="Salvar" process="@form"
-					actionListener="#{categorizacaoEditMB.save()}"
+						actionListener="#{categorizacaoEditMB.save()}"
 						styleClass="button-save button-blue bold"
 						update="categorizacao_edit_body_id" />
 					<h:outputText value="ou" />

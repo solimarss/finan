@@ -18,51 +18,94 @@
 			<h:panelGrid id="entrada_edit_body_id" columns="2">
 
 
-				<!-- NOME -->
-				<p:outputLabel value="Descrição:" rendered="#{entradaEditMB.edicao}" />
+				<p:outputLabel value="Descrição:" for="tx_obs_id" />
+				<h:inputText id="tx_obs_id" required="true"
+					value="#{entradaEditMB.lancamento.descricao}" size="50" />
+
+
+				<p:outputLabel value="Transação:" rendered="#{entradaEditMB.edicao}" />
 				<h:outputText value="#{entradaEditMB.lancamento.memo}"
 					rendered="#{entradaEditMB.edicao}" />
 
-				<p:outputLabel value="Descrição:"
-					rendered="#{!entradaEditMB.edicao}" />
-				<h:inputText value="#{entradaEditMB.lancamento.memo}"
-					rendered="#{!entradaEditMB.edicao}" />
 
-				<p:outputLabel value="Data:" />
+				<p:outputLabel value="Valor:" for="ou_data" rendered="#{entradaEditMB.edicao}"/>
+				<p:outputLabel value="Valor:" for="in_data" rendered="#{!entradaEditMB.edicao}" />
 				<h:outputText value="#{entradaEditMB.lancamento.data}"
-					rendered="#{entradaEditMB.edicao}">
+					rendered="#{entradaEditMB.edicao}" id="ou_data">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 
-				<p:calendar value="#{entradaEditMB.lancamento.data}"
-					rendered="#{!entradaEditMB.edicao}" />
+				<p:calendar value="#{entradaEditMB.lancamento.data}" id="in_data"
+					rendered="#{!entradaEditMB.edicao}" required="true"/>
 
-				<p:outputLabel value="Valor:" />
-				<h:outputText value="#{entradaEditMB.lancamento.valor}" rendered="#{entradaEditMB.edicao}" >
+				<p:outputLabel value="Valor:" for="ou_valor" rendered="#{entradaEditMB.edicao}"/>
+				<p:outputLabel value="Valor:" for="in_valor" rendered="#{!entradaEditMB.edicao}" />
+				<h:outputText id="ou_valor" value="#{entradaEditMB.lancamento.valor}"
+					rendered="#{entradaEditMB.edicao}">
 					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 				</h:outputText>
 
-				<p:inputNumber  value="#{entradaEditMB.lancamento.valor}"
+				<p:inputNumber id="in_valor" value="#{entradaEditMB.lancamento.valor}" required="true"
 					symbol=" R$" symbolPosition="s" decimalSeparator=","
-					thousandSeparator="." rendered="#{!entradaEditMB.edicao}"> 
+					thousandSeparator="." rendered="#{!entradaEditMB.edicao}">
 				</p:inputNumber>
 
-				<p:outputLabel for="cb_categoria" value="Item/Categoria " />
-				<p:selectOneMenu id="cb_categoria"
-					value="#{entradaEditMB.lancamento.item.id}" effect="fold"
-					required="true" editable="false">
+				<p:outputLabel value="Conta:" for="cb_conta"
+					rendered="#{!entradaEditMB.edicao}" />
+					
+				<p:outputLabel value="Conta:" for="txt_conta"
+					rendered="#{entradaEditMB.edicao}" />
+					
+				<h:outputText value="#{entradaEditMB.lancamento.conta.nome}" id="txt_conta"
+					rendered="#{entradaEditMB.edicao}" />
+					
+				<p:selectOneMenu id="cb_conta" rendered="#{!entradaEditMB.edicao}"
+					required="true" value="#{entradaEditMB.contaIdSelected}"
+					effect="fold" editable="false">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{entradaEditMB.itens}"
-						itemValue="#{_item.id}"
-						itemLabel="#{_item.nome} - #{_item.categoria.nome}" var="_item" />
+					<f:selectItems value="#{entradaEditMB.contas}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Observação:" for="tx_obs_id" />
-				<h:inputTextarea id="tx_obs_id"
-					value="#{entradaEditMB.lancamento.descricao}" cols="40" />
 
-				<h:outputText value="Desconsiderar Valor:" />
-				<p:selectBooleanCheckbox value="#{entradaEditMB.desconsiderarValor}" />
+
+				<p:outputLabel for="cb_categoria" value="Categoria " />
+				<p:selectOneMenu id="cb_categoria"
+					value="#{entradaEditMB.categoriaIdSelected}" effect="fold"
+					editable="false" disabled="#{entradaEditMB.desconsiderarValor}">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{entradaEditMB.categorias}"
+						itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+					<p:ajax event="change" update="cb_tipo ck_desc_valor"
+						listener="#{entradaEditMB.onSelectCategoria}" />
+				</p:selectOneMenu>
+
+
+
+				<p:outputLabel for="cb_tipo" value="Tipo" />
+				<p:selectOneMenu id="cb_tipo"
+					value="#{entradaEditMB.lancamento.item.id}" effect="fold"
+					required="#{!entradaEditMB.desconsiderarValor}"
+					disabled="#{entradaEditMB.desconsiderarValor}" editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{entradaEditMB.itens}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
+				</p:selectOneMenu>
+
+
+
+
+				<h:outputText value="Não é receita nem despesa:"
+					rendered="#{entradaEditMB.edicao}" />
+				<p:selectBooleanCheckbox id="ck_desc_valor"
+					rendered="#{entradaEditMB.edicao}"
+					value="#{entradaEditMB.desconsiderarValor}"
+					disabled="#{!entradaEditMB.enableDesconsiderarValor}">
+
+					<p:ajax event="change" update="entrada_edit_body_id"
+						listener="#{entradaEditMB.onSelectDesconsiderarValor}" />
+
+				</p:selectBooleanCheckbox>
 
 
 

@@ -7,15 +7,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.solimar.finan.entity.Fatura;
-import br.com.solimar.finan.persistence.CartaoCreditoFaturaDAO;
+import br.com.solimar.finan.persistence.FaturaDAO;
 
 @Stateless
-public class CartaoCreditoFaturaRN implements Serializable {
+public class FaturaRN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private  CartaoCreditoFaturaDAO cartaoCreditoFaturaDAO;
+	private  FaturaDAO cartaoCreditoFaturaDAO;
 	
 	public void insert(Fatura entity) {
 		cartaoCreditoFaturaDAO.insert(entity);

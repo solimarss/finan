@@ -61,6 +61,13 @@ public class Conta implements Serializable {
 	private ContaApp contaApp;
 	
 	
+	public Conta() {
+		
+	}
+	
+	public Conta(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

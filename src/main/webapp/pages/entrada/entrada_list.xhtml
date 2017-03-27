@@ -16,20 +16,24 @@
 			<p:dataTable var="_lancamento" value="#{entradaListMB.lancamentos}">
 
 				<p:column headerText="Data" style="width:90px;">
-					<h:outputText value="#{_lancamento.data}" />
+					<h:outputText value="#{_lancamento.data}" >
+					 <f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Receita">
+				<p:column headerText="Tipo/Categoria">
 					<h:outputText
-						value="#{_lancamento.item.nome} - #{_lancamento.item.categoria.nome}" />
+						value="#{_lancamento.item.nome} / #{_lancamento.item.categoria.nome}" />
 				</p:column>
 
 
-				<p:column headerText="Observação">
+				<p:column headerText="Descrição">
 					<h:outputText value="#{_lancamento.descricao}" />
 				</p:column>
 
-
+				<p:column headerText="Conta">
+					<h:outputText value="#{_lancamento.conta.nome}" />
+				</p:column>
 
 				<p:column headerText="Valor" style="width:90px;">
 

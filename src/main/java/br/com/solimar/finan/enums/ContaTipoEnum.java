@@ -5,7 +5,7 @@ public enum ContaTipoEnum {
 	CHECKING_ACCOUNT("Conta Corrente"), 
 	SAVINGS_ACCOUNT("Conta poupança"),
 	CREDIT_CARD("Cartão de Credito"),
-	WALLET("carteira");
+	WALLET("Dinheiro");
 
 	private ContaTipoEnum(String descricao) {
 		this.descricao = descricao;

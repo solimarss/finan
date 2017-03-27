@@ -46,7 +46,7 @@ public class FileImportRN implements Serializable {
 	private ContaRN contaRN;
 
 	@Inject
-	private CartaoCreditoFaturaRN cartaoCreditoFaturaRN;
+	private FaturaRN cartaoCreditoFaturaRN;
 
 	@Inject
 	private UserSession userSession;
@@ -105,6 +105,7 @@ public class FileImportRN implements Serializable {
 			cartaoCredito.setCreatedAt(new Date());
 			cartaoCredito.setUpdatedAt(new Date());
 			cartaoCredito.setCodigo(GeradorCodigo.gerar());
+			cartaoCredito.setTipo(ContaTipoEnum.CREDIT_CARD);
 
 			List<Conta> listaCartoes = contaRN.findByContaAndBanco(cartaoCredito);
 			if (listaCartoes.size() == 0) {
@@ -234,7 +235,7 @@ public class FileImportRN implements Serializable {
 				List<Transaction> list = b.getMessage().getTransactionList().getTransactions();
 
 				Conta contaBancaria = new Conta();
-				contaBancaria.setNome("");
+				contaBancaria.setNome("Conta Bancária - "+b.getMessage().getAccount().getAccountNumber());
 				contaBancaria.setBancoCodigo(b.getMessage().getAccount().getBankId());
 				contaBancaria.setAgenciaNumero(b.getMessage().getAccount().getBranchId());
 				contaBancaria.setContaNumero(b.getMessage().getAccount().getAccountNumber());

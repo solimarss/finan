@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="conta_edit_form_id">
+
+		<p:dialog id="conta_edit_id" resizable="false" draggable="true"
+			widgetVar="conta_edit_wvar" width="400" closable="false" modal="true"
+			showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="conta_edit_header_id">
+					<h:outputText value="Conta" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="conta_edit_body_id" columns="2">
+
+
+				<!-- NOME -->
+				<p:outputLabel value="Nome:" for="tx_nome_id" />
+				<h:inputText id="tx_nome_id" value="#{contaEditMB.conta.nome}" />
+
+				<p:outputLabel for="cb_tipo" value="Tipo:" />
+				<p:selectOneMenu id="cb_tipo" value="#{contaEditMB.conta.tipo}"
+					effect="fold" required="true" editable="false">
+					<f:selectItem itemLabel="Conta Corrente"
+						itemValue="CHECKING_ACCOUNT" />
+					<f:selectItem itemLabel="Conta Poupança"
+						itemValue="SAVINGS_ACCOUNT" />
+					<f:selectItem itemLabel="Cartão de Crédito" itemValue="CREDIT_CARD" />
+					<f:selectItem itemLabel="Carteira de Dinheiro" itemValue="WALLET" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Número:"
+					rendered="#{!contaEditMB.conta.lancamentoManual}" />
+
+				<h:outputText id="tx_conta_num_id"
+					rendered="#{!contaEditMB.conta.lancamentoManual}"
+					value="#{contaEditMB.conta.contaNumero}" />
+
+
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="conta_edit_footer_id">
+					<p:commandButton value="Salvar" process="@form"
+						actionListener="#{contaEditMB.save()}"
+						styleClass="button-save button-blue bold"
+						update="conta_edit_body_id" />
+					<h:outputText value="ou" />
+					<p:commandLink value="Fechar"
+						onclick="PF('conta_edit_wvar').hide()" styleClass="button-cancel"
+						process="@this" update="@form">
+						<p:resetInput target="conta_edit_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

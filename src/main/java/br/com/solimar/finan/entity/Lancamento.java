@@ -73,7 +73,7 @@ public class Lancamento implements Serializable {
 	private Fatura cartaoCreditoFatura;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Item item;
+	private Tipo item;
 
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
@@ -178,14 +178,14 @@ public class Lancamento implements Serializable {
 	}
 
 	
-	public Item getItem() {
+	public Tipo getItem() {
 		if(item == null){
-			item = new Item();
+			item = new Tipo();
 		}
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(Tipo item) {
 		this.item = item;
 	}
 

@@ -42,7 +42,7 @@ public class LancamentoPadrao implements Serializable {
 	private Date updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Item item;
+	private Tipo item;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
@@ -79,11 +79,11 @@ public class LancamentoPadrao implements Serializable {
 		this.contaApp = contaApp;
 	}
 
-	public Item getItem() {
+	public Tipo getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(Tipo item) {
 		this.item = item;
 	}
 

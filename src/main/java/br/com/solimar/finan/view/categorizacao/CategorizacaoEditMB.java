@@ -12,10 +12,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.solimar.finan.business.CategoriaRN;
-import br.com.solimar.finan.business.ItemRN;
+import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Categoria;
-import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.view.On;
@@ -31,7 +31,7 @@ public class CategorizacaoEditMB implements Serializable {
 	private LancamentoRN lancamentoRN;
 
 	@Inject
-	private ItemRN itemRN;
+	private TipoRN itemRN;
 
 	@Inject
 	private CategoriaRN categoriaRN;
@@ -40,8 +40,8 @@ public class CategorizacaoEditMB implements Serializable {
 	private UserSession userSession;
 
 	private Lancamento lancamento;
-	private List<Item> itens;
-	private List<Item> itensAll;
+	private List<Tipo> itens;
+	private List<Tipo> itensAll;
 	private List<Categoria> categorias;
 	private List<Categoria> categoriasReceita;
 	private List<Categoria> categoriasDespesa;
@@ -78,7 +78,7 @@ public class CategorizacaoEditMB implements Serializable {
 		itens = new ArrayList<>();
 		if (categoriaIdSelected != null) {
 
-			for (Item item : itensAll) {
+			for (Tipo item : itensAll) {
 				if (item.getCategoria().getId().equals(categoriaIdSelected)) {
 					itens.add(item);
 				}
@@ -161,11 +161,11 @@ public class CategorizacaoEditMB implements Serializable {
 		this.desconsiderarValor = desconsiderarValor;
 	}
 
-	public List<Item> getItens() {
+	public List<Tipo> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<Item> itens) {
+	public void setItens(List<Tipo> itens) {
 		this.itens = itens;
 	}
 

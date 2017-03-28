@@ -19,7 +19,7 @@
 		<class>br.com.solimar.finan.entity.Usuario</class>
 		<class>br.com.solimar.finan.entity.Categoria</class>
 		<class>br.com.solimar.finan.entity.Conta</class>
-		<class>br.com.solimar.finan.entity.Item</class>
+		<class>br.com.solimar.finan.entity.Tipo</class>
 		<class>br.com.solimar.finan.entity.LancamentoPadrao</class>
 
 		<properties>

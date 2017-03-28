@@ -12,14 +12,14 @@
 
 			<f:facet name="header">
 				<h:panelGroup id="entrada_edit_header_id">
-					<h:outputText value="Categoria" />
+					<h:outputText value="Receita" />
 				</h:panelGroup>
 			</f:facet>
 			<h:panelGrid id="entrada_edit_body_id" columns="2">
 
 
 				<p:outputLabel value="Descrição:" for="tx_obs_id" />
-				<h:inputText id="tx_obs_id" required="true"
+				<p:inputText id="tx_obs_id" required="true"
 					value="#{entradaEditMB.lancamento.descricao}" size="50" />
 
 
@@ -28,8 +28,8 @@
 					rendered="#{entradaEditMB.edicao}" />
 
 
-				<p:outputLabel value="Valor:" for="ou_data" rendered="#{entradaEditMB.edicao}"/>
-				<p:outputLabel value="Valor:" for="in_data" rendered="#{!entradaEditMB.edicao}" />
+				<p:outputLabel value="Data:" for="ou_data" rendered="#{entradaEditMB.edicao}"/>
+				<p:outputLabel value="Data:" for="in_data" rendered="#{!entradaEditMB.edicao}" />
 				<h:outputText value="#{entradaEditMB.lancamento.data}"
 					rendered="#{entradaEditMB.edicao}" id="ou_data">
 					<f:convertDateTime pattern="dd/MM/yyyy" />

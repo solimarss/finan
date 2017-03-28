@@ -1,4 +1,4 @@
-package br.com.solimar.finan.view.item;
+package br.com.solimar.finan.view.tipo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,23 +9,23 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.solimar.finan.business.ItemRN;
-import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.business.TipoRN;
+import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
 
 @Named
 @ViewScoped
-public class ItemListMB implements Serializable {
+public class TipoListMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Inject
-	private ItemRN itemRN;
+	private TipoRN itemRN;
 	@Inject
 	private UserSession userSession;
 	
-	private List<Item> items;
+	private List<Tipo> items;
 	
 	
 	@PostConstruct
@@ -38,7 +38,7 @@ public class ItemListMB implements Serializable {
 	}
 	
 	
-	protected void onSave(@Observes @On("item.save") Item evento) {
+	protected void onSave(@Observes @On("item.save") Tipo evento) {
 		search();
 		UIService.update("item_list_form_id");
 		
@@ -47,11 +47,11 @@ public class ItemListMB implements Serializable {
 
 
 
-	public List<Item> getItems() {
+	public List<Tipo> getItems() {
 		return items;
 	}
 
-	public void setItems(List<Item> items) {
+	public void setItems(List<Tipo> items) {
 		this.items = items;
 	}
 

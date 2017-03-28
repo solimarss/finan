@@ -6,16 +6,16 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Categoria</h1>
+		<h1 class="aw-page-title">Tipo</h1>
 
 		<h:form id="item_list_form_id">
 
 			<p:commandButton
-				actionListener="#{itemEditMB.abrirDialogNew()}"
+				actionListener="#{tipoEditMB.abrirDialogNew()}"
 				icon="fa fa-fw fa-edit" 
 				value="Nova"/>
 
-			<p:dataTable var="_item" value="#{itemListMB.items}">
+			<p:dataTable var="_item" value="#{tipoListMB.items}">
 
 				<p:column headerText="Nome do Item" >
 					<h:outputText value="#{_item.nome}" />
@@ -42,6 +42,6 @@
 
 		</h:form>
 
-		<ui:include src="/pages/item/item_edit.xhtml" />
+		<ui:include src="/pages/tipo/tipo_edit.xhtml" />
 	</ui:define>
 </ui:composition>

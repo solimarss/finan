@@ -7,26 +7,26 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.solimar.finan.entity.ContaApp;
-import br.com.solimar.finan.entity.Item;
-import br.com.solimar.finan.persistence.ItemDAO;
+import br.com.solimar.finan.entity.Tipo;
+import br.com.solimar.finan.persistence.TipoDAO;
 
 @Stateless
-public class ItemRN implements Serializable {
+public class TipoRN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private ItemDAO ItemDAO;
+	private TipoDAO ItemDAO;
 
-	public void insert(Item entity) {
+	public void insert(Tipo entity) {
 		ItemDAO.insert(entity);
 	}
 
-	public void update(Item entity) {
+	public void update(Tipo entity) {
 		ItemDAO.update(entity);
 	}
 
-	public void save(Item entity) {
+	public void save(Tipo entity) {
 		if (entity.getId() == null) {
 			System.out.println("INSERT");
 			ItemDAO.insert(entity);
@@ -35,7 +35,7 @@ public class ItemRN implements Serializable {
 		}
 	}
 
-	public List<Item> listAll(ContaApp contaApp) {
+	public List<Tipo> listAll(ContaApp contaApp) {
 		return ItemDAO.listAll(contaApp);
 	}
 

@@ -13,11 +13,11 @@ import javax.inject.Named;
 
 import br.com.solimar.finan.business.CategoriaRN;
 import br.com.solimar.finan.business.ContaRN;
-import br.com.solimar.finan.business.ItemRN;
+import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Conta;
-import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.view.On;
@@ -31,23 +31,23 @@ public class EntradaEditMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private LancamentoRN lancamentoRN;
-	
+
 	@Inject
-	private ItemRN itemRN;
-	
+	private TipoRN itemRN;
+
 	@Inject
 	private UserSession userSession;
 
 	@Inject
 	private CategoriaRN categoriaRN;
-	
+
 	@Inject
 	private ContaRN contaRN;
-	
+
 	private List<Conta> contas;
 	private Lancamento lancamento;
-	private List<Item> itens;
-	private List<Item> itensAll;
+	private List<Tipo> itens;
+	private List<Tipo> itensAll;
 	private List<Categoria> categorias;
 	private List<Categoria> categoriasReceita;
 	private List<Categoria> categoriasDespesa;
@@ -80,12 +80,12 @@ public class EntradaEditMB implements Serializable {
 		}
 
 	}
-	
+
 	public void onSelectCategoria() {
 		itens = new ArrayList<>();
 		if (categoriaIdSelected != null) {
 
-			for (Item item : itensAll) {
+			for (Tipo item : itensAll) {
 				if (item.getCategoria().getId().equals(categoriaIdSelected)) {
 					itens.add(item);
 				}
@@ -108,30 +108,35 @@ public class EntradaEditMB implements Serializable {
 	public void abrirDialog(Lancamento lancamento) {
 		edicao = true;
 		this.lancamento = lancamento;
-		
+
 		categoriaIdSelected = lancamento.getItem().getCategoria().getId();
 		onSelectCategoria();
-		
-		
+
 		desconsiderarValor = !lancamento.isValorConsiderado();
 		if (lancamento.getTipo().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
 			categorias = categoriasDespesa;
 		}
-		
+
 		UIService.update("entrada_edit_form_id");
 		UIService.show("entrada_edit_wvar");
 	}
-	
-	
-	public void abrirDialogNew() {
+
+	public void abrirDialogNew(String lancamentoTipo) {
+
+		if (lancamentoTipo.equals("E")) {
+			categorias = categoriasReceita;
+		} else {
+			categorias = categoriasDespesa;
+		}
+
 		edicao = false;
 		categoriaIdSelected = null;
 		this.lancamento = new Lancamento();
 		desconsiderarValor = false;
 		contaIdSelected = null;
-		
+
 		UIService.update("entrada_edit_form_id");
 		UIService.show("entrada_edit_wvar");
 	}
@@ -140,18 +145,17 @@ public class EntradaEditMB implements Serializable {
 
 		try {
 
-			if(!edicao){
+			if (!edicao) {
 				lancamento.setTipo(LancamentoTipoEnum.E);
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
 			}
-			
+
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
-			
-			
+
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
@@ -180,11 +184,11 @@ public class EntradaEditMB implements Serializable {
 		this.desconsiderarValor = desconsiderarValor;
 	}
 
-	public List<Item> getItens() {
+	public List<Tipo> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<Item> itens) {
+	public void setItens(List<Tipo> itens) {
 		this.itens = itens;
 	}
 

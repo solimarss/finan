@@ -12,7 +12,7 @@
 
 			<f:facet name="header">
 				<h:panelGroup id="item_edit_header_id">
-					<h:outputText value="Item" />
+					<h:outputText value="Tipo" />
 				</h:panelGroup>
 			</f:facet>
 			<h:panelGrid id="item_edit_body_id" columns="2">
@@ -20,14 +20,14 @@
 
 				<!-- NOME -->
 				<p:outputLabel value="Nome:" for="tx_nome_id" />
-				<h:inputText id="tx_nome_id" value="#{itemEditMB.item.nome}" required="true"/>
+				<p:inputText id="tx_nome_id" value="#{tipoEditMB.item.nome}" required="true"/>
 
 				<p:outputLabel for="cb_categoria" value="Categoria " />
 				<p:selectOneMenu id="cb_categoria"
-					value="#{itemEditMB.item.categoria.id}" effect="fold"
+					value="#{tipoEditMB.item.categoria.id}" effect="fold"
 					required="true" editable="false">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{itemEditMB.categorias}"
+					<f:selectItems value="#{tipoEditMB.categorias}"
 						itemValue="#{_categoria.id}" itemLabel="#{_categoria.nome}"
 						var="_categoria" />
 				</p:selectOneMenu>
@@ -39,7 +39,7 @@
 			<f:facet name="footer">
 				<h:panelGroup id="item_edit_footer_id">
 					<p:commandButton value="Salvar" process="@form"
-						actionListener="#{itemEditMB.save()}"
+						actionListener="#{tipoEditMB.save()}"
 						styleClass="button-save button-blue bold"
 						update="item_edit_body_id" />
 					<h:outputText value="ou" />

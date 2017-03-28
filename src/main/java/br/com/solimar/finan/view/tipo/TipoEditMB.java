@@ -1,4 +1,4 @@
-package br.com.solimar.finan.view.item;
+package br.com.solimar.finan.view.tipo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,20 +10,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.solimar.finan.business.CategoriaRN;
-import br.com.solimar.finan.business.ItemRN;
+import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.entity.Categoria;
-import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
 
 @Named
 @ViewScoped
-public class ItemEditMB implements Serializable {
+public class TipoEditMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Inject
-	private ItemRN itemRN;
+	private TipoRN itemRN;
 	
 	@Inject
 	private CategoriaRN categoriaRN;
@@ -33,27 +33,27 @@ public class ItemEditMB implements Serializable {
 
 	@Inject
 	@On("item.save")
-	Event<Item> eventoItem;
+	Event<Tipo> eventoItem;
 	
-	private Item item;
+	private Tipo item;
 	private List<Categoria> categorias;
 	
 	
 
 	@PostConstruct
 	private void init() {
-		item = new Item();
+		item = new Tipo();
 		categorias = categoriaRN.listAll(userSession.getContaApp());
 
 	}
 
 	public void abrirDialogNew() {
-		this.item = new Item();
+		this.item = new Tipo();
 		UIService.update("item_edit_form_id");
 		UIService.show("item_edit_wvar");
 	}
 	
-	public void abrirDialogEdit(Item Item) {
+	public void abrirDialogEdit(Tipo Item) {
 		this.item = Item;
 		UIService.update("item_edit_form_id");
 		UIService.show("item_edit_wvar");
@@ -77,11 +77,11 @@ public class ItemEditMB implements Serializable {
 	}
 
 	
-	public Item getItem() {
+	public Tipo getItem() {
 		return item;
 	}
 
-	public void setItem(Item Item) {
+	public void setItem(Tipo Item) {
 		this.item = Item;
 	}
 

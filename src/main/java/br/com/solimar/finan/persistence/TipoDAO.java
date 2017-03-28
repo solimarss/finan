@@ -5,20 +5,20 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.com.solimar.finan.entity.ContaApp;
-import br.com.solimar.finan.entity.Item;
+import br.com.solimar.finan.entity.Tipo;
 
-public class ItemDAO extends AbstractDao<Item> {
+public class TipoDAO extends AbstractDao<Tipo> {
 
 	private static final long serialVersionUID = 1L;
 
-	public ItemDAO() {
-		super(Item.class);
+	public TipoDAO() {
+		super(Tipo.class);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Item> listAll(ContaApp contaApp) {
+	public List<Tipo> listAll(ContaApp contaApp) {
 
-		Query query = em.createQuery("Select O from Item O Where O.contaApp =:pContaApp", Item.class);
+		Query query = em.createQuery("Select O from Tipo O Where O.contaApp =:pContaApp", Tipo.class);
 
 		query.setParameter("pContaApp", contaApp);
 

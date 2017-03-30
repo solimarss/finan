@@ -8,12 +8,12 @@
 
 		<h1 class="aw-page-title">Receitas</h1>
 
-		<h:form id="entrada_list_form_id">
+		<h:form id="lancamento_list_form_id">
 
-			<p:commandButton actionListener="#{entradaEditMB.abrirDialogNew('E')}"
+			<p:commandButton actionListener="#{lancamentoEditMB.abrirDialogNew()}"
 				icon="fa fa-fw fa-edit" value="Nova" />
 
-			<p:dataTable var="_lancamento" value="#{entradaListMB.lancamentos}">
+			<p:dataTable var="_lancamento" value="#{lancamentoListMB.lancamentos}">
 
 				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}" >
@@ -53,8 +53,8 @@
 
 				<p:column headerText="" style="width:35px;">
 					<p:commandButton
-						actionListener="#{entradaEditMB.abrirDialog(_lancamento)}"
-						icon="fa fa-fw fa-edit" onclick="PF('entrada_edit_wvar').show();" />
+						actionListener="#{lancamentoEditMB.abrirDialog(_lancamento)}"
+						icon="fa fa-fw fa-edit" onclick="PF('lancamento_edit_wvar').show();" />
 				</p:column>
 
 
@@ -64,6 +64,6 @@
 
 		</h:form>
 
-		<ui:include src="/pages/entrada/entrada_edit.xhtml" />
+		<ui:include src="/pages/lancamento/lancamento_edit.xhtml" />
 	</ui:define>
 </ui:composition>

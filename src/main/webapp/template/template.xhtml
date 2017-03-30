@@ -52,9 +52,13 @@
 							outcome="/pages/categorizacao/categorizacao_list.jsf">
 							<i class="fa  fa-fw  fa-cog"></i>Categorização</h:link></li>
 
-					<li class="#{menuControllerMB.getItemCssClass('entrada')}"><h:link
-							outcome="/pages/entrada/entrada_list.jsf">
+					<li class="#{menuControllerMB.getItemCssClass('tipo=receita')}"><h:link
+							outcome="/pages/lancamento/lancamento_list.jsf?tipo=receita">
 							<i class="fa  fa-fw  fa-cog"></i>Receitas</h:link></li>
+
+					<li class="#{menuControllerMB.getItemCssClass('tipo=despesa')}"><h:link
+							outcome="/pages/lancamento/lancamento_list.jsf?tipo=despesa">
+							<i class="fa  fa-fw  fa-cog"></i>Despesas</h:link></li>
 
 					<li class="#{menuControllerMB.getItemCssClass('conta')}"><h:link
 							outcome="/pages/conta/conta_list.jsf">

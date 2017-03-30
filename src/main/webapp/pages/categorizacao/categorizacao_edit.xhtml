@@ -96,6 +96,7 @@
 					<p:commandButton value="Salvar" process="@form"
 						actionListener="#{categorizacaoEditMB.save()}"
 						styleClass="button-save button-blue bold"
+						oncomplete="PF('table_lancamento_wvar').filter()"
 						update="categorizacao_edit_body_id" />
 					<h:outputText value="ou" />
 					<p:commandLink value="Fechar"

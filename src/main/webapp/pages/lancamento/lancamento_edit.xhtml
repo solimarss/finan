@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="lancamento_edit_form_id">
+
+		<p:dialog id="lancamento_edit_id" resizable="false" draggable="true"
+			widgetVar="lancamento_edit_wvar" width="600" closable="false"
+			modal="true" showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="lancamento_edit_header_id">
+					<h:outputText value="Receita" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="lancamento_edit_body_id" columns="2">
+
+
+				<p:outputLabel value="Descrição:" for="tx_obs_id" />
+				<p:inputText id="tx_obs_id" required="true"
+					value="#{lancamentoEditMB.lancamento.descricao}" size="50" />
+
+
+				<p:outputLabel value="Transação:"
+					rendered="#{lancamentoEditMB.edicao}" />
+				<h:outputText value="#{lancamentoEditMB.lancamento.memo}"
+					rendered="#{lancamentoEditMB.edicao}" />
+
+
+				<p:outputLabel value="Data:" for="ou_data"
+					rendered="#{lancamentoEditMB.edicao}" />
+				<p:outputLabel value="Data:" for="in_data"
+					rendered="#{!lancamentoEditMB.edicao}" />
+				<h:outputText value="#{lancamentoEditMB.lancamento.data}"
+					rendered="#{lancamentoEditMB.edicao}" id="ou_data">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+				<p:calendar value="#{lancamentoEditMB.lancamento.data}" id="in_data"
+					rendered="#{!lancamentoEditMB.edicao}" required="true" />
+
+				<p:outputLabel value="Valor:" for="ou_valor"
+					rendered="#{lancamentoEditMB.edicao}" />
+				<p:outputLabel value="Valor:" for="in_valor"
+					rendered="#{!lancamentoEditMB.edicao}" />
+				<h:outputText id="ou_valor"
+					value="#{lancamentoEditMB.lancamento.valor}"
+					rendered="#{lancamentoEditMB.edicao}">
+					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+				</h:outputText>
+
+				<p:inputNumber id="in_valor"
+					value="#{lancamentoEditMB.lancamento.valor}" required="true"
+					symbol=" R$" symbolPosition="s" decimalSeparator=","
+					thousandSeparator="." rendered="#{!lancamentoEditMB.edicao}">
+				</p:inputNumber>
+
+				<p:outputLabel value="Conta:" for="cb_conta"
+					rendered="#{!lancamentoEditMB.edicao}" />
+
+				<p:outputLabel value="Conta:" for="txt_conta"
+					rendered="#{lancamentoEditMB.edicao}" />
+
+				<h:outputText value="#{lancamentoEditMB.lancamento.conta.nome}"
+					id="txt_conta" rendered="#{lancamentoEditMB.edicao}" />
+
+				<p:selectOneMenu id="cb_conta"
+					rendered="#{!lancamentoEditMB.edicao}" required="true"
+					value="#{lancamentoEditMB.contaIdSelected}" effect="fold"
+					editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{lancamentoEditMB.contas}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
+				</p:selectOneMenu>
+
+
+
+				<p:outputLabel for="cb_categoria" value="Categoria " />
+				<p:selectOneMenu id="cb_categoria"
+					value="#{lancamentoEditMB.categoriaIdSelected}" effect="fold"
+					editable="false" disabled="#{lancamentoEditMB.desconsiderarValor}">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{lancamentoEditMB.categorias}"
+						itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+					<p:ajax event="change" update="cb_tipo ck_desc_valor"
+						listener="#{lancamentoEditMB.onSelectCategoria}" />
+				</p:selectOneMenu>
+
+
+
+				<p:outputLabel for="cb_tipo" value="Tipo" />
+				<p:selectOneMenu id="cb_tipo"
+					value="#{lancamentoEditMB.lancamento.item.id}" effect="fold"
+					required="#{!lancamentoEditMB.desconsiderarValor}"
+					disabled="#{lancamentoEditMB.desconsiderarValor}" editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{lancamentoEditMB.itens}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
+				</p:selectOneMenu>
+
+
+
+
+				<h:outputText value="Não é receita nem despesa:"
+					rendered="#{lancamentoEditMB.edicao}" />
+				<p:selectBooleanCheckbox id="ck_desc_valor"
+					rendered="#{lancamentoEditMB.edicao}"
+					value="#{lancamentoEditMB.desconsiderarValor}"
+					disabled="#{!lancamentoEditMB.enableDesconsiderarValor}">
+
+					<p:ajax event="change" update="lancamento_edit_body_id"
+						listener="#{lancamentoEditMB.onSelectDesconsiderarValor}" />
+
+				</p:selectBooleanCheckbox>
+
+
+
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="lancamento_edit_footer_id">
+					<p:commandButton value="Salvar" process="@form"
+						actionListener="#{lancamentoEditMB.save()}"
+						
+						styleClass="button-save button-blue bold"
+						update="lancamento_edit_body_id" />
+					<h:outputText value="ou" />
+					<p:commandLink value="Fechar"
+						onclick="PF('lancamento_edit_wvar').hide()"
+						styleClass="button-cancel" process="@this" update="@form">
+						<p:resetInput target="lancamento_edit_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

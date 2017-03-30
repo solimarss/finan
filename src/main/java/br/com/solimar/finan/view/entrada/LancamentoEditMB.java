@@ -20,13 +20,14 @@ import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.view.JSFUtil;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
 
 @Named
 @ViewScoped
-public class EntradaEditMB implements Serializable {
+public class LancamentoEditMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Inject
@@ -56,6 +57,7 @@ public class EntradaEditMB implements Serializable {
 	private Long categoriaIdSelected;
 	private Long contaIdSelected;
 	private boolean edicao = false;
+	private String tipoLancamentoView;
 
 	@Inject
 	@On("entrada.save")
@@ -63,6 +65,8 @@ public class EntradaEditMB implements Serializable {
 
 	@PostConstruct
 	private void init() {
+		tipoLancamentoView = JSFUtil.getUrlParameter("tipo");
+		
 		lancamento = new Lancamento();
 		itensAll = itemRN.listAll(userSession.getContaApp());
 		contas = contaRN.findLancamentoManual(userSession.getContaApp());
@@ -119,26 +123,30 @@ public class EntradaEditMB implements Serializable {
 			categorias = categoriasDespesa;
 		}
 
-		UIService.update("entrada_edit_form_id");
-		UIService.show("entrada_edit_wvar");
+		UIService.update("lancamento_edit_form_id");
+		UIService.show("lancamento_edit_wvar");
 	}
 
-	public void abrirDialogNew(String lancamentoTipo) {
+	public void abrirDialogNew() {
 
-		if (lancamentoTipo.equals("E")) {
+		lancamento = new Lancamento();
+		
+		if (tipoLancamentoView.equals("receita")) {
 			categorias = categoriasReceita;
+			lancamento.setTipo(LancamentoTipoEnum.E);
+			
 		} else {
 			categorias = categoriasDespesa;
+			lancamento.setTipo(LancamentoTipoEnum.S);
 		}
 
 		edicao = false;
 		categoriaIdSelected = null;
-		this.lancamento = new Lancamento();
 		desconsiderarValor = false;
 		contaIdSelected = null;
 
-		UIService.update("entrada_edit_form_id");
-		UIService.show("entrada_edit_wvar");
+		UIService.update("lancamento_edit_form_id");
+		UIService.show("lancamento_edit_wvar");
 	}
 
 	public void save() {
@@ -146,7 +154,6 @@ public class EntradaEditMB implements Serializable {
 		try {
 
 			if (!edicao) {
-				lancamento.setTipo(LancamentoTipoEnum.E);
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
 			}
@@ -159,7 +166,7 @@ public class EntradaEditMB implements Serializable {
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
-			UIService.hide("entrada_edit_wvar");
+			UIService.hide("lancamento_edit_wvar");
 			UIService.showSuccess();
 
 		} catch (Exception e) {

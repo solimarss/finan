@@ -34,7 +34,7 @@ public class LancamentoRN implements Serializable {
 		return lancamentoDAO.findEntradas(contaApp);
 	}
 
-	public List<Lancamento> find(ContaApp contaApp) {
+	public List<Lancamento> findSaidas(ContaApp contaApp) {
 		return lancamentoDAO.findSaidas(contaApp);
 	}
 

@@ -49,5 +49,7 @@ public class CategorizacaoListMB implements Serializable {
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
 	}
+	
+	
 
 }

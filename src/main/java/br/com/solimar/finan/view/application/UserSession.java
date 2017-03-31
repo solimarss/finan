@@ -8,11 +8,15 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Usuario;
 import br.com.solimar.finan.util.DataUtil;
 
+@Named
 @SessionScoped
 public class UserSession implements Serializable {
 
@@ -63,24 +67,27 @@ public class UserSession implements Serializable {
 		this.ano = ano;
 	}
 
-	public void nextMoth() {
+	public String nextMoth() {
 		mes = getMes() + 1;
 		if (mes > 12) {
 			mes = 1;
 			ano = ano + 1;
 		}
+		return getCurrentViewId();
 	}
 
-	public void previousMoth() {
+	public String previousMoth() {
 		mes = getMes() - 1;
 		if (mes < 1) {
 			mes = 12;
 			ano = ano - 1;
 		}
+		return getCurrentViewId();
 	}
 
 	public String getMesAsString() {
-		String s = "01/" + getMes() + "/2000";
+		System.out.println("getMesAsString");
+		String s = "01/" + getMes() + "/" + getAno();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date dt;
 		try {
@@ -92,7 +99,16 @@ public class UserSession implements Serializable {
 		}
 		DateFormat df2 = new SimpleDateFormat("MMMMM", new Locale("pt", "BR"));
 
-		return df2.format(dt);
+		String mes = df2.format(dt);
+		System.out.println("getMesAsString " + mes);
+		mes = mes + "/" + getAno();
+		return mes;
+	}
+
+	private String getCurrentViewId() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String currentViewId = context.getViewRoot().getViewId();
+		return currentViewId;
 	}
 
 }

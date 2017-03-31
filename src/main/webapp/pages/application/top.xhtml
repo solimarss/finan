@@ -20,7 +20,14 @@
 		</div>
 
 		<div class="app-top-div-right">
-			<p:commandLink value="#" />
+			<h:form>
+				<p:commandLink styleClass="fa fa-caret-left" update="@form panel_content_id"
+					action="#{userSession.previousMoth()}" />
+				<h:outputText styleClass="app-top-month"
+					value="#{userSession.mesAsString}" />
+				<p:commandLink styleClass="fa fa-caret-right" update="@form panel_content_id"
+					action="#{userSession.nextMoth()}" />
+			</h:form>
 		</div>
 
 	</div>

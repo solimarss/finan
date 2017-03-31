@@ -26,7 +26,7 @@
 <h:body>
 
 	<header class="aw-topbar">
-		 <ui:include src="/pages/application/top.xhtml" /> 
+		<ui:include src="/pages/application/top.xhtml" />
 	</header>
 
 	<aside class="aw-sidebar  js-sidebar">
@@ -73,8 +73,10 @@
 		</h:form>
 	</aside>
 
-	<section class="aw-content  js-content">
-		<ui:insert name="content" />
+	<section class="aw-content  js-content" id="section_content_id">
+		<h:panelGroup id="panel_content_id">
+			<ui:insert name="content" />
+		</h:panelGroup>
 	</section>
 
 	<!-- APPLICATION INFO -->

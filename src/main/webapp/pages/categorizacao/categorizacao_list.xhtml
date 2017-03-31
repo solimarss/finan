@@ -6,16 +6,22 @@
 
 	<ui:define name="content">
 
+
 		<h1 class="aw-page-title">Categorização</h1>
 
 		<h:form id="categorizacao_list_form_id">
 
-			<p:dataTable var="_lancamento"
-				widgetVar="table_lancamento_wvar"
+			<p:dataTable var="_lancamento" widgetVar="table_lancamento_wvar"
 				value="#{categorizacaoListMB.lancamentos}">
 
 				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Data Pagamento" style="width:90px;">
+					<h:outputText value="#{_lancamento.dataPagamento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -48,5 +54,6 @@
 		</h:form>
 
 		<ui:include src="/pages/categorizacao/categorizacao_edit.xhtml" />
+
 	</ui:define>
 </ui:composition>

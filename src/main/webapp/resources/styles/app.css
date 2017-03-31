@@ -1,29 +1,36 @@
 @CHARSET "UTF-8";
 
-.app-top-div{
+.app-top-div {
 	height: 50px;
 	font-size: 20px;
 }
 
-.app-top-div-left>a{
+.app-top-div-left>a {
 	text-decoration: none;
 	font-weight: 1000;
 	color: #ffffff;
 	font-size: 25px;
 	line-height: 50px;
 	margin-left: 10px;
-	
 }
 
-.app-top-div-left{
+.app-top-div-left {
 	position: relative;
 	float: left;
 }
 
-
-.app-top-div-right{
+.app-top-div-right {
 	position: relative;
 	float: right;
+}
+
+.app-top-div-right a {
+	text-decoration: none;
+	font-weight: 1000;
+	color: #ffffff;
+	font-size: 25px;
+	line-height: 50px;
+	margin-left: 10px;
 }
 
 .top-app-icon {
@@ -33,6 +40,15 @@
 	text-align: center;
 	padding-left: 5px;
 	margin-right: 10px; */
+}
+
+.app-top-month {
+	text-decoration: none;
+	font-weight: 1000;
+	color: #ffffff;
+	font-size: 25px;
+	line-height: 50px;
+	margin-left: 10px;
 }
 
 .top-app-sigla {

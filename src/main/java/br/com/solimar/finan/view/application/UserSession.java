@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 

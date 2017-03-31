@@ -26,8 +26,8 @@ public class LancamentoRN implements Serializable {
 		return lancamentoDAO.findByMemoAndTransactionIdAndContaApp(lancamento);
 	}
 
-	public List<Lancamento> findNaoCategorizados(ContaApp contaApp) {
-		return lancamentoDAO.findNaoCategorizados(contaApp);
+	public List<Lancamento> findNaoCategorizados(ContaApp contaApp,int mes, int ano) {
+		return lancamentoDAO.findNaoCategorizados(contaApp,mes,ano);
 	}
 
 	public List<Lancamento> findEntradas(ContaApp contaApp) {

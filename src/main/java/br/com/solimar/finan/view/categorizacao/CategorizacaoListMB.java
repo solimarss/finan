@@ -34,7 +34,7 @@ public class CategorizacaoListMB implements Serializable {
 	}
 
 	public void search() {
-		lancamentos = lancamentoRN.findNaoCategorizados(userSession.getContaApp());
+		lancamentos = lancamentoRN.findNaoCategorizados(userSession.getContaApp(), userSession.getMes(), userSession.getAno());
 	}
 
 	protected void onSave(@Observes @On("categorizacao.save") Lancamento evento) {

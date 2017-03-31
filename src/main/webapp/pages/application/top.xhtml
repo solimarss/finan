@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<div class="ss-top-div">
+
+
+		<div class="app-top-div-left">
+
+			<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+
+			<h:link>
+				<span class="top-app-icon"> <i class="fa  fa-fw  fa-medkit"></i>
+				</span>
+				<span class="top-app-sigla">Kairos</span>
+				<span class="top-app-name"> - Gerência</span>
+			</h:link>
+		</div>
+
+		<div class="app-top-div-right">
+			<h:form>
+				<p:commandLink styleClass="fa fa-caret-left" update="@form panel_content_id"
+					action="#{userSession.previousMoth()}" />
+				<h:outputText styleClass="app-top-month"
+					value="#{userSession.mesAsString}" />
+				<p:commandLink styleClass="fa fa-caret-right" update="@form panel_content_id"
+					action="#{userSession.nextMoth()}" />
+			</h:form>
+		</div>
+
+	</div>
+	<!-- <h:graphicImage library="images" name="logo.png" /> -->
+</ui:composition>

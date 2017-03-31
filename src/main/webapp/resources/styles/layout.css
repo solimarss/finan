@@ -19,14 +19,7 @@ body {
 	margin-left: 5px;
 }
 
-.aw-topbar>a {
-	text-decoration: none;
-	font-weight: 1000;
-	color: #ffffff;
-	font-size: 25px;
-	line-height: 50px;
-	margin-left: 10px;
-}
+
 
 /* SIDEBAR */
 .aw-sidebar {
@@ -57,29 +50,7 @@ body {
 	}
 }
 
-.top-app-icon {
-	color: black;
-	/* color: #d14836;
-	background-color: #ffffff;
-	text-align: center;
-	padding-left: 5px;
-	margin-right: 10px; */
-}
 
-.top-app-sigla {
-	color: #ffffff;
-	font-weight: bold;
-}
-
-.top-app-name {
-	display: none;
-}
-
-@media ( min-width : 960px) {
-	.top-app-name {
-		display: inline;
-	}
-}
 
 /* CONTENT */
 .aw-content {

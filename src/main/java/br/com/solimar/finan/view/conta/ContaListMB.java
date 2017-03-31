@@ -24,27 +24,24 @@ public class ContaListMB implements Serializable {
 	private ContaRN contaRN;
 	@Inject
 	private UserSession userSession;
-	
+
 	private List<Conta> contas;
-	
+
 	@PostConstruct
-	private void init(){
+	private void init() {
 		search();
-		
+
 	}
+
 	private void search() {
 		contas = contaRN.listAll(userSession.getContaApp());
 	}
-	
-	
+
 	protected void onSave(@Observes @On("conta.save") Conta evento) {
 		search();
 		UIService.update("conta_list_form_id");
 
 	}
-	
-
-
 
 	public List<Conta> getContas() {
 		return contas;
@@ -55,5 +52,4 @@ public class ContaListMB implements Serializable {
 	}
 
 	
-
 }

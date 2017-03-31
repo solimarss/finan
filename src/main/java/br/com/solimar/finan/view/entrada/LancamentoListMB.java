@@ -5,13 +5,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Lancamento;
@@ -38,18 +34,18 @@ public class LancamentoListMB implements Serializable {
 	private void init() {
 
 		tipoLancamentoView = JSFUtil.getUrlParameter("tipo");
-		System.out.println("tipoLancamentoView: "+tipoLancamentoView);
+		System.out.println("tipoLancamentoView: " + tipoLancamentoView);
 
 		search();
 	}
 
 	public void search() {
-		if(tipoLancamentoView.equals("receita")){
+		if (tipoLancamentoView.equals("receita")) {
 			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp());
-		}else{
+		} else {
 			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp());
 		}
-		
+
 	}
 
 	protected void onSave(@Observes @On("entrada.save") Lancamento evento) {

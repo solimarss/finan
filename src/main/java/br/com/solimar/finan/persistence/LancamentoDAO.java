@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.util.DataUtil;
 
 public class LancamentoDAO extends AbstractDao<Lancamento> {
 
@@ -41,15 +42,17 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Lancamento> findNaoCategorizados(ContaApp contaApp) {
+	public List<Lancamento> findNaoCategorizados(ContaApp contaApp, int mes, int ano) {
 
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.categorizado =:pCategorizado AND O.contaApp =:pContaApp",
+				"Select O from Lancamento O Where O.categorizado =:pCategorizado AND O.contaApp =:pContaApp AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
 				Lancamento.class);
 
 		
 		query.setParameter("pCategorizado", false);
 		query.setParameter("pContaApp", contaApp);
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
 
 		return query.getResultList();
 

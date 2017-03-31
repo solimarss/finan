@@ -16,6 +16,7 @@
 	<h:outputStylesheet library="styles" name="custom.css" />
 	<h:outputStylesheet library="styles" name="layout.css" />
 	<h:outputStylesheet library="styles" name="components.css" />
+	<h:outputStylesheet library="styles" name="app.css" />
 
 	<h:outputScript target="body" library="primefaces"
 		name="jquery/jquery.js" />
@@ -25,15 +26,7 @@
 <h:body>
 
 	<header class="aw-topbar">
-		<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
-
-		<h:link>
-			<span class="top-app-icon"> <i class="fa  fa-fw  fa-medkit"></i>
-			</span>
-			<span class="top-app-sigla">Kairos</span>
-			<span class="top-app-name"> - Gerência</span>
-		</h:link>
-		<!-- <h:graphicImage library="images" name="logo.png" /> -->
+		 <ui:include src="/pages/application/top.xhtml" /> 
 	</header>
 
 	<aside class="aw-sidebar  js-sidebar">

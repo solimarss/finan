@@ -105,7 +105,7 @@ public class LancamentoEditMB implements Serializable {
 
 	public void onSelectDesconsiderarValor() {
 		categoriaIdSelected = null;
-		lancamento.getItem().setId(null);
+		lancamento.getTipo().setId(null);
 
 	}
 
@@ -113,11 +113,11 @@ public class LancamentoEditMB implements Serializable {
 		edicao = true;
 		this.lancamento = lancamento;
 
-		categoriaIdSelected = lancamento.getItem().getCategoria().getId();
+		categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
 		onSelectCategoria();
 
 		desconsiderarValor = !lancamento.isValorConsiderado();
-		if (lancamento.getTipo().equals(LancamentoTipoEnum.E)) {
+		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
 			categorias = categoriasDespesa;
@@ -133,11 +133,11 @@ public class LancamentoEditMB implements Serializable {
 		
 		if (tipoLancamentoView.equals("receita")) {
 			categorias = categoriasReceita;
-			lancamento.setTipo(LancamentoTipoEnum.E);
+			lancamento.setTipoES(LancamentoTipoEnum.E);
 			
 		} else {
 			categorias = categoriasDespesa;
-			lancamento.setTipo(LancamentoTipoEnum.S);
+			lancamento.setTipoES(LancamentoTipoEnum.S);
 		}
 
 		edicao = false;

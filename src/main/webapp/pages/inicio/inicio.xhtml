@@ -10,10 +10,10 @@
 			<h:outputText value="#{msg['page_title_dashboad']}" />
 		</h1>
 
-		<h:form id="frm">
 
-			<div class="ui-fluid"></div>
+		<p:chart type="pie" model="#{dashboardMB.pieMan}"
+			style="width:400px;height:300px" />
 
-		</h:form>
+
 	</ui:define>
 </ui:composition>

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.persistence.LancamentoDAO;
 
 @Stateless
@@ -30,12 +31,12 @@ public class LancamentoRN implements Serializable {
 		return lancamentoDAO.findNaoCategorizados(contaApp,mes,ano);
 	}
 
-	public List<Lancamento> findEntradas(ContaApp contaApp) {
-		return lancamentoDAO.findEntradas(contaApp);
+	public List<Lancamento> findEntradas(ContaApp contaApp,int mes, int ano) {
+		return lancamentoDAO.findEntradas(contaApp, mes, ano);
 	}
 
-	public List<Lancamento> findSaidas(ContaApp contaApp) {
-		return lancamentoDAO.findSaidas(contaApp);
+	public List<Lancamento> findSaidas(ContaApp contaApp,int mes, int ano) {
+		return lancamentoDAO.findSaidas(contaApp, mes, ano);
 	}
 
 	public void save(Lancamento entity) {
@@ -45,5 +46,7 @@ public class LancamentoRN implements Serializable {
 			lancamentoDAO.update(entity);
 		}
 	}
-
+	public List<Lancamento> countGroupByCategoria(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
+		return lancamentoDAO.countGroupByCategoria(tipoEs, contaApp, mes, ano);
+	}
 }

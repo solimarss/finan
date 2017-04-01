@@ -165,9 +165,9 @@ public class FileImportRN implements Serializable {
 				lancamento.setCodigo(GeradorCodigo.gerar());
 
 				if (transaction.getBigDecimalAmount().signum() == -1) {
-					lancamento.setTipo(LancamentoTipoEnum.S);
+					lancamento.setTipoES(LancamentoTipoEnum.S);
 				} else {
-					lancamento.setTipo(LancamentoTipoEnum.E);
+					lancamento.setTipoES(LancamentoTipoEnum.E);
 				}
 				lancamento.setTransactionId(transaction.getId());
 				lancamento.setValor(transaction.getBigDecimalAmount());
@@ -283,9 +283,9 @@ public class FileImportRN implements Serializable {
 					lancamento.setCodigo(GeradorCodigo.gerar());
 
 					if (transaction.getBigDecimalAmount().signum() == -1) {
-						lancamento.setTipo(LancamentoTipoEnum.S);
+						lancamento.setTipoES(LancamentoTipoEnum.S);
 					} else {
-						lancamento.setTipo(LancamentoTipoEnum.E);
+						lancamento.setTipoES(LancamentoTipoEnum.E);
 					}
 					lancamento.setTransactionId(transaction.getId());
 					lancamento.setValor(transaction.getBigDecimalAmount());

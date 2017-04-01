@@ -41,9 +41,9 @@ public class LancamentoListMB implements Serializable {
 
 	public void search() {
 		if (tipoLancamentoView.equals("receita")) {
-			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp());
+			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp(), userSession.getMes(), userSession.getAno());
 		} else {
-			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp());
+			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp(), userSession.getMes(), userSession.getAno());
 		}
 
 	}

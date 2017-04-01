@@ -63,8 +63,8 @@ public class Lancamento implements Serializable {
 	private Date dataPagamento;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "TIPO", nullable = false, length = 1)
-	private LancamentoTipoEnum tipo;
+	@Column(name = "TIPOES", nullable = false, length = 1)
+	private LancamentoTipoEnum tipoES;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Conta conta;
@@ -73,7 +73,7 @@ public class Lancamento implements Serializable {
 	private Fatura cartaoCreditoFatura;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Tipo item;
+	private Tipo tipo;
 
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
@@ -153,12 +153,12 @@ public class Lancamento implements Serializable {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public LancamentoTipoEnum getTipo() {
-		return tipo;
+	public LancamentoTipoEnum getTipoES() {
+		return tipoES;
 	}
 
-	public void setTipo(LancamentoTipoEnum tipo) {
-		this.tipo = tipo;
+	public void setTipoES(LancamentoTipoEnum tipoES) {
+		this.tipoES = tipoES;
 	}
 
 	public ContaApp getContaApp() {
@@ -178,15 +178,15 @@ public class Lancamento implements Serializable {
 	}
 
 	
-	public Tipo getItem() {
-		if(item == null){
-			item = new Tipo();
+	public Tipo getTipo() {
+		if(tipo == null){
+			tipo = new Tipo();
 		}
-		return item;
+		return tipo;
 	}
 
-	public void setItem(Tipo item) {
-		this.item = item;
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
 	public boolean isCategorizado() {

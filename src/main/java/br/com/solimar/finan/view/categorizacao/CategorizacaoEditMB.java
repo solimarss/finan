@@ -94,7 +94,7 @@ public class CategorizacaoEditMB implements Serializable {
 
 	public void onSelectDesconsiderarValor() {
 		categoriaIdSelected = null;
-		lancamento.getItem().setId(null);
+		lancamento.getTipo().setId(null);
 
 	}
 
@@ -104,10 +104,10 @@ public class CategorizacaoEditMB implements Serializable {
 		desconsiderarValor = false;
 		enableDesconsiderarValor = true;
 		categoriaIdSelected = null;
-		lancamento.getItem().setId(null);
+		lancamento.getTipo().setId(null);
 		
 
-		if (lancamento.getTipo().equals(LancamentoTipoEnum.E)) {
+		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
 			categorias = categoriasDespesa;
@@ -122,7 +122,7 @@ public class CategorizacaoEditMB implements Serializable {
 
 			if(desconsiderarValor){
 				lancamento.setValorConsiderado(false);
-				lancamento.setItem(null);
+				lancamento.setTipo(null);
 			}else{
 				lancamento.setValorConsiderado(true);
 			}

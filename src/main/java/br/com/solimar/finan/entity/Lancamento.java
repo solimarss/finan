@@ -75,6 +75,12 @@ public class Lancamento implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Tipo tipo;
 
+	@Column(name = "IS_ABASTECIMENTO")
+	private Boolean isAbastecimento = false;
+	
+	@Column(name = "KILOMETRAGEM", length = 300)
+	private Integer kilometragem;
+	
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
 
@@ -227,6 +233,22 @@ public class Lancamento implements Serializable {
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+	public Boolean getIsAbastecimento() {
+		return isAbastecimento;
+	}
+
+	public void setIsAbastecimento(Boolean isAbastecimento) {
+		this.isAbastecimento = isAbastecimento;
+	}
+
+	public Integer getKilometragem() {
+		return kilometragem;
+	}
+
+	public void setKilometragem(Integer kilometragem) {
+		this.kilometragem = kilometragem;
 	}
 
 }

@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="extrato_upload_form_id">
+
+		<p:dialog id="extrato_upload_id" resizable="false" draggable="true"
+			widgetVar="extrato_upload_wvar" width="480" closable="false" modal="true"
+			showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="extrato_upload_header_id">
+					<h:outputText value="Enviar Extrato Bancário" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="extrato_upload_body_id" columns="2">
+
+
+				<p:fileUpload
+					fileUploadListener="#{fileUploadMB.importarExtratoBancario}"
+					uploadLabel="#{msg['file_upload_upload_label']}"
+					cancelLabel="#{msg['file_upload_cancel_label']}"
+					label="#{msg['file_upload_label']}" mode="advanced"
+					dragDropSupport="true"  sizeLimit="100000"
+					allowTypes="/(\.|\/)(ofx)$/" />
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="extrato_upload_footer_id">
+					<p:commandLink value="Fechar"
+						onclick="PF('extrato_upload_wvar').hide()" styleClass="button-cancel"
+						process="@this" update="@form">
+						<p:resetInput target="extrato_upload_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

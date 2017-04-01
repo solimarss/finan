@@ -10,31 +10,28 @@
 
 		<h:form id="frm">
 
-			<div class="ui-fluid">
-				<h:form>
-					<p:fileUpload
-						fileUploadListener="#{fileUploadMB.importarExtratoBancario}"
-						uploadLabel="#{msg['file_upload_upload_label']}"
-						cancelLabel="#{msg['file_upload_cancel_label']}"
-						label="#{msg['file_upload_label']}"
-						mode="advanced" dragDropSupport="true" update="messages"
-						sizeLimit="100000" allowTypes="/(\.|\/)(ofx)$/"
-						/>
-						
-						<p:fileUpload
-						fileUploadListener="#{fileUploadMB.importarCartaoCredito}"
-						uploadLabel="#{msg['file_upload_upload_label']}"
-						cancelLabel="#{msg['file_upload_cancel_label']}"
-						label="#{msg['file_upload_label']}"
-						mode="advanced" dragDropSupport="true" update="messages"
-						sizeLimit="100000" allowTypes="/(\.|\/)(ofx)$/"
-						/>
-						
 
-					<p:growl id="messages" showDetail="true" />
-				</h:form>
-			</div>
+			<h:form>
+
+				<p:commandButton
+					actionListener="#{fileUploadMB.openDialogExtrato()}"
+					icon="fa fa-fw fa-edit" value="Enviar Extrato Banário" />
+
+				<p:commandButton
+					actionListener="#{fileUploadMB.openDialogFatura()}"
+					icon="fa fa-fw fa-edit" value="Enviar Fatura de Cartão de Crédito" />
+
+			
+
+
+
+
+			</h:form>
+
 
 		</h:form>
+		<ui:include src="/pages/upload/upload_extrato.xhtml" />
+		<ui:include src="/pages/upload/upload_fatura.xhtml" />
+
 	</ui:define>
 </ui:composition>

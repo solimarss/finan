@@ -1,6 +1,7 @@
 package br.com.solimar.finan.persistence;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -9,6 +10,7 @@ import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.util.DataUtil;
+import br.com.solimar.finan.vo.ValueByGroup;
 
 public class LancamentoDAO extends AbstractDao<Lancamento> {
 
@@ -49,7 +51,6 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 				"Select O from Lancamento O Where O.categorizado =:pCategorizado AND O.contaApp =:pContaApp AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
 				Lancamento.class);
 
-		
 		query.setParameter("pCategorizado", false);
 		query.setParameter("pContaApp", contaApp);
 		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
@@ -58,7 +59,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findEntradas(ContaApp contaApp, int mes, int ano) {
 
@@ -68,7 +69,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		query.setParameter("pVConsiderado", true);
 		query.setParameter("pTipoES", LancamentoTipoEnum.E);
-		query.setParameter("pCategorizado",true);
+		query.setParameter("pCategorizado", true);
 		query.setParameter("pContaApp", contaApp);
 		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
 		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
@@ -76,7 +77,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findSaidas(ContaApp contaApp, int mes, int ano) {
 
@@ -86,7 +87,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		query.setParameter("pVConsiderado", true);
 		query.setParameter("pTipoES", LancamentoTipoEnum.S);
-		query.setParameter("pCategorizado",true);
+		query.setParameter("pCategorizado", true);
 		query.setParameter("pContaApp", contaApp);
 		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
 		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
@@ -94,56 +95,63 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Lancamento> countGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes,
+			int ano) {
 
-		Query query = em.createQuery("select sum(O.valor), O.tipo.categoria.nome  from Lancamento O GROUP BY O.tipo.categoria.nome ");
-		
-		//query.setParameter("pTipoES", tipoES);
-		List<Object[]> results  = query.getResultList();
-        
-		 System.out.println("SUM: "+ query.getResultList());
-		
-		for (Object[] result : results) {
-		   // String name = (String) result[0];
-		  //  int count = ((Number) result[1]).intValue();
-			
-			// int count = ((Number) result[0]).intValue();
-			// BigDecimal b = (BigDecimal) result[1];
-		    System.out.println("SUM: "+result[0]);
-		    System.out.println("SUM: "+result[1]);
-		}
-		
-       
-        
-      
-        
-		/*List<Object[]> results = entityManager
-		        .createQuery("SELECT O.valor AS name, COUNT(m) AS total FROM Man AS m GROUP BY m.name ORDER BY m.name ASC");
-		        .getResultList();
-		        
-		for (Object[] result : results) {
-		    String name = (String) result[0];
-		    int count = ((Number) result[1]).intValue();
-		}
-		
-		  
-		
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.tipo =:pTipo AND O.valorConsiderado =:pVConsiderado AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
-				Lancamento.class);
+				"select sum(O.valor), O.tipo.categoria.nome  from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.categoria.nome ");
 
-		query.setParameter("pVConsiderado", true);
-		query.setParameter("pTipo", LancamentoTipoEnum.S);
-		query.setParameter("pCategorizado",true);
+		query.setParameter("pTipoES", tipoES);
+		query.setParameter("pValorConsid", true);
+		query.setParameter("pCategorizado", true);
 		query.setParameter("pContaApp", contaApp);
 		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
 		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
 
-		return query.getResultList();*/
-        return null;
+		List<Object[]> results = query.getResultList();
+
+		List<ValueByGroup> valores = new ArrayList<>();
+
+		for (Object[] result : results) {
+			ValueByGroup v = new ValueByGroup();
+			v.setValor((BigDecimal) result[0]);
+			v.setGroupName(result[1].toString());
+			valores.add(v);
+		}
+
+		return valores;
+
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes,
+			int ano) {
+
+		Query query = em.createQuery(
+				"select sum(O.valor), O.tipo.nome  from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.nome ");
+
+		query.setParameter("pTipoES", tipoES);
+		query.setParameter("pValorConsid", true);
+		query.setParameter("pCategorizado", true);
+		query.setParameter("pContaApp", contaApp);
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		List<Object[]> results = query.getResultList();
+
+		List<ValueByGroup> valores = new ArrayList<>();
+
+		for (Object[] result : results) {
+			ValueByGroup v = new ValueByGroup();
+			v.setValor((BigDecimal) result[0]);
+			v.setGroupName(result[1].toString());
+			valores.add(v);
+		}
+
+		return valores;
+
+	}
+
 }

@@ -37,7 +37,7 @@ public class StartUp {
 			contaApp.setId(1L);
 			contaApp = em.merge(contaApp);
 			
-			
+			/*
 			Categoria c1 = new Categoria();
 			c1.setNome("Alimentação");
 			c1.setCodigo(GeradorCodigo.gerar());
@@ -73,7 +73,7 @@ public class StartUp {
 			em.persist(c1);
 			em.persist(c2);
 			em.persist(c3);
-			em.persist(c4);
+			em.persist(c4);*/
 			
 		}
 		

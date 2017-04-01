@@ -10,6 +10,7 @@ import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.persistence.LancamentoDAO;
+import br.com.solimar.finan.vo.ValueByGroup;
 
 @Stateless
 public class LancamentoRN implements Serializable {
@@ -46,7 +47,10 @@ public class LancamentoRN implements Serializable {
 			lancamentoDAO.update(entity);
 		}
 	}
-	public List<Lancamento> countGroupByCategoria(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.countGroupByCategoria(tipoEs, contaApp, mes, ano);
+	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
+		return lancamentoDAO.sumValorGroupByCategoria(tipoEs, contaApp, mes, ano);
+	}
+	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
+		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp, mes, ano);
 	}
 }

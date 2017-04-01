@@ -48,6 +48,9 @@ public class Conta implements Serializable {
 	
 	@Column(name = "LANCAMENTO_MANUAL")
 	private boolean lancamentoManual = false;
+	
+	@Column(name = "DIA_VENCIMENTO_FATURA")
+	private Integer diaVencimentoFatura;
 
 	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -155,6 +158,14 @@ public class Conta implements Serializable {
 
 	public void setLancamentoManual(boolean lancamentoManual) {
 		this.lancamentoManual = lancamentoManual;
+	}
+
+	public Integer getDiaVencimentoFatura() {
+		return diaVencimentoFatura;
+	}
+
+	public void setDiaVencimentoFatura(Integer diaVencimentoFatura) {
+		this.diaVencimentoFatura = diaVencimentoFatura;
 	}
 
 }

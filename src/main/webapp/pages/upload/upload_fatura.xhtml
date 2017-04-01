@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="fatura_upload_form_id">
+
+		<p:dialog id="fatura_upload_id" resizable="false" draggable="true"
+			widgetVar="fatura_upload_wvar" width="480" closable="false"
+			modal="true" showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="fatura_upload_header_id">
+					<h:outputText value="Enviar Fatura de Cartão de Crédito" />
+				</h:panelGroup>
+			</f:facet>
+			<h:panelGrid id="fatura_upload_body_id" columns="2">
+
+				<p:outputLabel value="Data:" for="in_data" />
+
+				<p:calendar value="#{fileUploadMB.dataPagamentoFatura}" id="in_data"
+					required="true"/>
+
+				<p:outputLabel value="" />
+				<p:fileUpload
+					fileUploadListener="#{fileUploadMB.importarCartaoCredito}"
+					uploadLabel="#{msg['file_upload_upload_label']}"
+					cancelLabel="#{msg['file_upload_cancel_label']}"
+					label="#{msg['file_upload_label']}" mode="advanced"
+					dragDropSupport="true" sizeLimit="100000"
+					allowTypes="/(\.|\/)(ofx)$/" 
+					process="@form"/>
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="fatura_upload_footer_id">
+					<p:commandLink value="Fechar"
+						onclick="PF('fatura_upload_wvar').hide()"
+						styleClass="button-cancel" process="@this" update="@form">
+						<p:resetInput target="fatura_upload_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

@@ -51,7 +51,8 @@ public class FileImportRN implements Serializable {
 	@Inject
 	private UserSession userSession;
 
-	public void importarCartaoCredito(InputStream inputStream) throws IOException, OFXParseException {
+	public void importarCartaoCredito(InputStream inputStream, Date dataVencimentoFatura)
+			throws IOException, OFXParseException {
 		System.out.println("importarExtratoBancario");
 
 		File fileSource = File.createTempFile("fileSourceOFX", ".ofx");
@@ -83,7 +84,7 @@ public class FileImportRN implements Serializable {
 		System.out
 				.println("INSTITUIÃ‡ÃƒO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 		System.out.println("");
-		
+
 		Conta cartaoCredito = new Conta();
 		cartaoCredito.setBancoCodigo(envelope.getSignonResponse().getFinancialInstitution().getId());
 
@@ -98,8 +99,7 @@ public class FileImportRN implements Serializable {
 			System.out.println("DATA DE VENCIMENTO: " + message.getLedgerBalance().getAsOfDate());
 			System.out.println("");
 
-			
-			cartaoCredito.setNome("Cartão de Crédito - "+message.getAccount().getAccountNumber());
+			cartaoCredito.setNome("Cartão de Crédito - " + message.getAccount().getAccountNumber());
 			cartaoCredito.setContaNumero(message.getAccount().getAccountNumber());
 			cartaoCredito.setContaApp(userSession.getContaApp());
 			cartaoCredito.setCreatedAt(new Date());
@@ -121,11 +121,16 @@ public class FileImportRN implements Serializable {
 			Fatura fatura = new Fatura();
 			fatura.setConta(cartaoCredito);
 			fatura.setContaApp(userSession.getContaApp());
-			fatura.setDataVencimento(message.getLedgerBalance().getAsOfDate());
 			fatura.setValor(BigDecimal.valueOf(message.getLedgerBalance().getAmount()));
 			fatura.setCreatedAt(new Date());
 			fatura.setUpdatedAt(new Date());
 			fatura.setCodigo(GeradorCodigo.gerar());
+			if (dataVencimentoFatura == null) {
+				fatura.setDataVencimento(message.getLedgerBalance().getAsOfDate());
+			} else {
+				System.out.println("dataVencimentoFatura else");
+				fatura.setDataVencimento(dataVencimentoFatura);
+			}
 
 			List<Fatura> listaFaturas = cartaoCreditoFaturaRN.findByVencimentoAndCartao(fatura);
 
@@ -235,7 +240,7 @@ public class FileImportRN implements Serializable {
 				List<Transaction> list = b.getMessage().getTransactionList().getTransactions();
 
 				Conta contaBancaria = new Conta();
-				contaBancaria.setNome("Conta Bancária - "+b.getMessage().getAccount().getAccountNumber());
+				contaBancaria.setNome("Conta Bancária - " + b.getMessage().getAccount().getAccountNumber());
 				contaBancaria.setBancoCodigo(b.getMessage().getAccount().getBankId());
 				contaBancaria.setAgenciaNumero(b.getMessage().getAccount().getBranchId());
 				contaBancaria.setContaNumero(b.getMessage().getAccount().getAccountNumber());

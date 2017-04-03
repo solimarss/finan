@@ -20,6 +20,7 @@ import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.util.GeradorCodigo;
 import br.com.solimar.finan.view.JSFUtil;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
@@ -156,8 +157,9 @@ public class LancamentoEditMB implements Serializable {
 			if (!edicao) {
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
+				lancamento.setCodigo(GeradorCodigo.gerar());
 			}
-
+			
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);

@@ -12,12 +12,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.solimar.finan.business.CategoriaRN;
-import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.business.LancamentoRN;
+import br.com.solimar.finan.business.PadraoRN;
+import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.entity.Categoria;
-import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.entity.Padrao;
+import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.util.GeradorCodigo;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
@@ -35,6 +38,9 @@ public class CategorizacaoEditMB implements Serializable {
 
 	@Inject
 	private CategoriaRN categoriaRN;
+	
+	@Inject
+	private PadraoRN padraoRN;
 
 	@Inject
 	private UserSession userSession;
@@ -134,6 +140,16 @@ public class CategorizacaoEditMB implements Serializable {
 			
 
 			lancamentoRN.save(lancamento);
+			
+			List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
+			if(padroes.isEmpty()){
+				Padrao padrao = new Padrao();
+				padrao.setCodigo(GeradorCodigo.gerar());
+				padrao.setContaApp(userSession.getContaApp());
+				padrao.setCreatedAt(new Date());
+				padrao.setItem(lancamento.getTipo());
+			}
+			
 			eventoCategorizacao.fire(lancamento);
 
 			UIService.hide("categorizacao_edit_wvar");

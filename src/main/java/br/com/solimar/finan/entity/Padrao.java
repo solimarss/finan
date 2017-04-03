@@ -15,8 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "LANCAMENTO_PADRAO")
-public class LancamentoPadrao implements Serializable {
+@Table(name = "PADRAO")
+public class Padrao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class LancamentoPadrao implements Serializable {
 	private Date updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Tipo item;
+	private Tipo tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
@@ -79,16 +79,17 @@ public class LancamentoPadrao implements Serializable {
 		this.contaApp = contaApp;
 	}
 
-	public Tipo getItem() {
-		return item;
-	}
-
-	public void setItem(Tipo item) {
-		this.item = item;
-	}
-
+	
 	public Long getCodigo() {
 		return codigo;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setCodigo(Long codigo) {

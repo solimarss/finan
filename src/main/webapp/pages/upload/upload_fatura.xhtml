@@ -20,7 +20,10 @@
 				<p:outputLabel value="Data:" for="in_data" />
 
 				<p:calendar value="#{fileUploadMB.dataPagamentoFatura}" id="in_data"
-					required="true"/>
+					required="true" >
+					<p:ajax event="dateSelect" 
+						listener="#{fileUploadMB.onSelectDate}" />
+					</p:calendar>
 
 				<p:outputLabel value="" />
 				<p:fileUpload

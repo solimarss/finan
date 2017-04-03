@@ -67,7 +67,7 @@ public class LancamentoEditMB implements Serializable {
 	@PostConstruct
 	private void init() {
 		tipoLancamentoView = JSFUtil.getUrlParameter("tipo");
-		
+
 		lancamento = new Lancamento();
 		itensAll = itemRN.listAll(userSession.getContaApp());
 		contas = contaRN.findLancamentoManual(userSession.getContaApp());
@@ -131,11 +131,11 @@ public class LancamentoEditMB implements Serializable {
 	public void abrirDialogNew() {
 
 		lancamento = new Lancamento();
-		
+
 		if (tipoLancamentoView.equals("receita")) {
 			categorias = categoriasReceita;
 			lancamento.setTipoES(LancamentoTipoEnum.E);
-			
+
 		} else {
 			categorias = categoriasDespesa;
 			lancamento.setTipoES(LancamentoTipoEnum.S);
@@ -158,8 +158,10 @@ public class LancamentoEditMB implements Serializable {
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
 				lancamento.setCodigo(GeradorCodigo.gerar());
+				lancamento.setDataPagamento(new Date());
+				lancamento.setCreatedAt(new Date());
 			}
-			
+
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
@@ -175,6 +177,16 @@ public class LancamentoEditMB implements Serializable {
 			UIService.showError(e);
 		}
 
+	}
+
+	public String tipoLancamentoView() {
+		if (tipoLancamentoView.equals("receita")) {
+			return "Receitas";
+		}
+		if (tipoLancamentoView.equals("despesa")) {
+			return "Despesas";
+		}
+		return "";
 	}
 
 	public Lancamento getLancamento() {

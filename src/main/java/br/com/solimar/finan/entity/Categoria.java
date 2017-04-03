@@ -19,14 +19,14 @@ import javax.persistence.TemporalType;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 
 @Entity
-@Table(name="CATEGORIA")
+@Table(name = "CATEGORIA")
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "CODIGO")
 	private Long codigo;
 
@@ -36,17 +36,26 @@ public class Categoria implements Serializable {
 	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
-	
+
 	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TIPO", nullable = false, length = 1)
 	private LancamentoTipoEnum tipo;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+
+	public Categoria() {
+
+	}
+
+	public Categoria(Long id) {
+
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

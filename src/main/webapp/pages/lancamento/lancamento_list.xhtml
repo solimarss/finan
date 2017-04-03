@@ -6,18 +6,32 @@
 
 	<ui:define name="content">
 
-		<h1 class="aw-page-title">Receitas</h1>
+		<h1 class="aw-page-title">#{lancamentoListMB.tipoLancamentoView()}</h1>
 
 		<h:form id="lancamento_list_form_id">
 
-			<p:commandButton actionListener="#{lancamentoEditMB.abrirDialogNew()}"
+
+			<p:outputLabel for="cb_categoria_filtro" value="Categoria " />
+			<p:selectOneMenu id="cb_categoria_filtro"
+				value="#{lancamentoListMB.categoriaIdSelected}" effect="fold"
+				editable="false" >
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{lancamentoListMB.categorias}"
+					itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+				<p:ajax event="change" update="@form"
+					listener="#{lancamentoListMB.onSelectFilterCategoria}" />
+			</p:selectOneMenu>
+
+			<p:commandButton
+				actionListener="#{lancamentoEditMB.abrirDialogNew()}"
 				icon="fa fa-fw fa-edit" value="Nova" />
 
-			<p:dataTable var="_lancamento" value="#{lancamentoListMB.lancamentos}">
+			<p:dataTable var="_lancamento"
+				value="#{lancamentoListMB.lancamentos}">
 
 				<p:column headerText="Data" style="width:90px;">
-					<h:outputText value="#{_lancamento.data}" >
-					 <f:convertDateTime pattern="dd/MM/yyyy" />
+					<h:outputText value="#{_lancamento.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 
@@ -54,7 +68,8 @@
 				<p:column headerText="" style="width:35px;">
 					<p:commandButton
 						actionListener="#{lancamentoEditMB.abrirDialog(_lancamento)}"
-						icon="fa fa-fw fa-edit" onclick="PF('lancamento_edit_wvar').show();" />
+						icon="fa fa-fw fa-edit"
+						onclick="PF('lancamento_edit_wvar').show();" />
 				</p:column>
 
 

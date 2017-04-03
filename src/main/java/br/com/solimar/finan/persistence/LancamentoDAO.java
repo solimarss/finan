@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
@@ -95,10 +96,28 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lancamento> findSaidas(ContaApp contaApp, Categoria categoria, int mes, int ano) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.tipoES =:pTipoES AND O.valorConsiderado =:pVConsiderado AND O.tipo.categoria =:pCategoria AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
+				Lancamento.class);
+
+		query.setParameter("pVConsiderado", true);
+		query.setParameter("pTipoES", LancamentoTipoEnum.S);
+		query.setParameter("pCategorizado", true);
+		query.setParameter("pCategoria", categoria);
+		query.setParameter("pContaApp", contaApp);
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		return query.getResultList();
+
+	}
 
 	@SuppressWarnings("unchecked")
-	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes,
-			int ano) {
+	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
 
 		Query query = em.createQuery(
 				"select sum(O.valor), O.tipo.categoria.nome  from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.categoria.nome ");
@@ -124,10 +143,9 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return valores;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes,
-			int ano) {
+	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
 
 		Query query = em.createQuery(
 				"select sum(O.valor), O.tipo.nome  from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.nome ");

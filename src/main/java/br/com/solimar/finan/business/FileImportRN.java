@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.Fatura;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.entity.Padrao;
 import br.com.solimar.finan.enums.ContaTipoEnum;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.util.GeradorCodigo;
@@ -44,6 +45,9 @@ public class FileImportRN implements Serializable {
 
 	@Inject
 	private ContaRN contaRN;
+
+	@Inject
+	private PadraoRN padraoRN;
 
 	@Inject
 	private FaturaRN cartaoCreditoFaturaRN;
@@ -81,8 +85,7 @@ public class FileImportRN implements Serializable {
 				.getMessageSet(MessageSetType.creditcard);
 
 		System.out.println("TIPO DE CARTÃO: " + messageSet.getType());
-		System.out
-				.println("INSTITUIÇÃO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
+		System.out.println("INSTITUIÇÃO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 		System.out.println("");
 
 		Conta cartaoCredito = new Conta();
@@ -99,7 +102,7 @@ public class FileImportRN implements Serializable {
 			System.out.println("DATA DE VENCIMENTO: " + message.getLedgerBalance().getAsOfDate());
 			System.out.println("");
 
-			cartaoCredito.setNome("Cart�o de Cr�dito - " + message.getAccount().getAccountNumber());
+			cartaoCredito.setNome("Cart�o de Cr�dito - " + message.getAccount().getAccountNumber());
 			cartaoCredito.setContaNumero(message.getAccount().getAccountNumber());
 			cartaoCredito.setContaApp(userSession.getContaApp());
 			cartaoCredito.setCreatedAt(new Date());
@@ -168,24 +171,26 @@ public class FileImportRN implements Serializable {
 				lancamento.setCreatedAt(new Date());
 				lancamento.setUpdatedAt(new Date());
 				lancamento.setCodigo(GeradorCodigo.gerar());
+				lancamento.setTransactionId(transaction.getId());
+				lancamento.setValor(transaction.getBigDecimalAmount());
 
 				if (transaction.getBigDecimalAmount().signum() == -1) {
 					lancamento.setTipoES(LancamentoTipoEnum.S);
 				} else {
 					lancamento.setTipoES(LancamentoTipoEnum.E);
 				}
-				lancamento.setTransactionId(transaction.getId());
-				lancamento.setValor(transaction.getBigDecimalAmount());
+
+				List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
+				for (Padrao padrao : padroes) {
+					lancamento.setTipo(padrao.getTipo());
+					lancamento.setValorConsiderado(padrao.isValorConsiderado());
+				}
 
 				List<Lancamento> listaLancamentos = lancamentoRN.findByMemoAndTransactionIdAndContaApp(lancamento);
 				if (listaLancamentos.size() == 0) {
 					lancamentoRN.insert(lancamento);
 					qtdRegistros++;
-					System.out.println("==> INSERIDO");
-				} else {
-					System.out.println("==> NÃO INSERIDO");
 				}
-
 				System.out.println("-------------------------------------------------------------- ");
 
 			}
@@ -240,7 +245,7 @@ public class FileImportRN implements Serializable {
 				List<Transaction> list = b.getMessage().getTransactionList().getTransactions();
 
 				Conta contaBancaria = new Conta();
-				contaBancaria.setNome("Conta Banc�ria - " + b.getMessage().getAccount().getAccountNumber());
+				contaBancaria.setNome("Conta Banc�ria - " + b.getMessage().getAccount().getAccountNumber());
 				contaBancaria.setBancoCodigo(b.getMessage().getAccount().getBankId());
 				contaBancaria.setAgenciaNumero(b.getMessage().getAccount().getBranchId());
 				contaBancaria.setContaNumero(b.getMessage().getAccount().getAccountNumber());
@@ -286,14 +291,22 @@ public class FileImportRN implements Serializable {
 					lancamento.setCreatedAt(new Date());
 					lancamento.setUpdatedAt(new Date());
 					lancamento.setCodigo(GeradorCodigo.gerar());
+					lancamento.setTransactionId(transaction.getId());
+					lancamento.setValor(transaction.getBigDecimalAmount());
 
 					if (transaction.getBigDecimalAmount().signum() == -1) {
 						lancamento.setTipoES(LancamentoTipoEnum.S);
 					} else {
 						lancamento.setTipoES(LancamentoTipoEnum.E);
 					}
-					lancamento.setTransactionId(transaction.getId());
-					lancamento.setValor(transaction.getBigDecimalAmount());
+					
+					List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
+					for (Padrao padrao : padroes) {
+						lancamento.setTipo(padrao.getTipo());
+						lancamento.setValorConsiderado(padrao.isValorConsiderado());
+					}
+
+					
 
 					List<Lancamento> listaLancamentos = lancamentoRN.findByMemoAndTransactionIdAndContaApp(lancamento);
 					if (listaLancamentos.size() == 0) {

@@ -107,17 +107,29 @@ public class CategorizacaoEditMB implements Serializable {
 	public void abrirDialog(Lancamento lancamento) {
 		this.lancamento = lancamento;
 		lancamento.setDescricao(lancamento.getMemo());
-		desconsiderarValor = false;
-		enableDesconsiderarValor = true;
-		categoriaIdSelected = null;
-		lancamento.getTipo().setId(null);
 		
-
+		
+		if(lancamento.isValorConsiderado()){
+			desconsiderarValor = false;
+			enableDesconsiderarValor = true;
+		}else{
+			desconsiderarValor = true;
+			enableDesconsiderarValor = false;
+		}
+		
+		if(lancamento.getTipo().getId() != null){
+			categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
+		}else{
+			categoriaIdSelected = null;
+		}
+		
 		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
 			categorias = categoriasDespesa;
 		}
+		onSelectCategoria();
+		
 		UIService.update("categorizacao_edit_form_id");
 		UIService.show("categorizacao_edit_wvar");
 	}
@@ -143,11 +155,22 @@ public class CategorizacaoEditMB implements Serializable {
 			
 			List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
 			if(padroes.isEmpty()){
+				
 				Padrao padrao = new Padrao();
+				if(lancamento.isValorConsiderado()){
+					padrao.setTipo(lancamento.getTipo());
+				}else{
+					padrao.setTipo(null);
+				}
+				
+				
 				padrao.setCodigo(GeradorCodigo.gerar());
 				padrao.setContaApp(userSession.getContaApp());
 				padrao.setCreatedAt(new Date());
-				padrao.setItem(lancamento.getTipo());
+				padrao.setMemo(lancamento.getMemo());
+				padrao.setUpdatedAt(new Date());
+				padrao.setValorConsiderado(lancamento.isValorConsiderado());
+				padraoRN.insert(padrao);
 			}
 			
 			eventoCategorizacao.fire(lancamento);

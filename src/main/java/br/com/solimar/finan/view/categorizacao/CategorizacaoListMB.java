@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.solimar.finan.business.LancamentoRN;
-import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;

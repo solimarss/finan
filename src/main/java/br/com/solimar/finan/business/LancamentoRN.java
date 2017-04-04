@@ -53,8 +53,15 @@ public class LancamentoRN implements Serializable {
 			lancamentoDAO.update(entity);
 		}
 	}
-	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.sumValorGroupByCategoria(tipoEs, contaApp, mes, ano);
+	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+		
+		List<ValueByGroup> groupByCategoria =  lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp, mes, ano);
+		for (ValueByGroup groupCat : groupByCategoria) {
+			groupCat.setSubGroup((lancamentoDAO.sumValorGroupByTipoByCategoria(groupCat.getGroupName(), tipoES, contaApp, mes, ano)));
+			
+		}
+		
+		return groupByCategoria;
 	}
 	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
 		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp, mes, ano);

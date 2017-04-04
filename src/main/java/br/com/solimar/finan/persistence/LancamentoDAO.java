@@ -171,5 +171,34 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return valores;
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ValueByGroup> sumValorGroupByTipoByCategoria(String categoriaNome, LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+
+		Query query = em.createQuery(
+				"select sum(O.valor) as total, O.tipo.nome  from Lancamento O WHERE O.tipo.categoria.nome =:pCategoriaNome AND O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.nome ORDER BY total");
+
+		query.setParameter("pCategoriaNome", categoriaNome);
+		query.setParameter("pTipoES", tipoES);
+		query.setParameter("pValorConsid", true);
+		query.setParameter("pCategorizado", true);
+		query.setParameter("pContaApp", contaApp);
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		List<Object[]> results = query.getResultList();
+
+		List<ValueByGroup> valores = new ArrayList<>();
+
+		for (Object[] result : results) {
+			ValueByGroup v = new ValueByGroup();
+			v.setValor((BigDecimal) result[0]);
+			v.setGroupName(result[1].toString());
+			valores.add(v);
+		}
+
+		return valores;
+
+	}
 
 }

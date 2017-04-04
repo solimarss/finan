@@ -1,4 +1,4 @@
-package br.com.solimar.finan.view.entrada;
+package br.com.solimar.finan.view.lancamento;
 
 import java.io.Serializable;
 import java.util.ArrayList;

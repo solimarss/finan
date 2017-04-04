@@ -14,8 +14,13 @@
 			<p:chart type="pie" model="#{dashboardMB.chartPieValorBycategoria}"
 				responsive="true" />
 
-			<p:chart type="pie" model="#{dashboardMB.chartPieValorByTipo}"
-				responsive="true" />
+
+
+			<p:repeat value="#{dashboardMB.valoresByCategoria}" var="cat">
+
+				<p:chart type="pie"
+					model="#{dashboardMB.createChartPieValorByTipo(cat.groupName)}" />
+			</p:repeat>
 
 
 		</center>

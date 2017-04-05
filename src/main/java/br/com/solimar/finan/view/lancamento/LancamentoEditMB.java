@@ -1,6 +1,7 @@
 package br.com.solimar.finan.view.lancamento;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -160,6 +161,11 @@ public class LancamentoEditMB implements Serializable {
 				lancamento.setCodigo(GeradorCodigo.gerar());
 				lancamento.setDataPagamento(new Date());
 				lancamento.setCreatedAt(new Date());
+
+				if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
+					lancamento.setValor(turnToNegative(lancamento.getValor()));
+				} 
+
 			}
 
 			lancamento.setContaApp(userSession.getContaApp());
@@ -167,6 +173,7 @@ public class LancamentoEditMB implements Serializable {
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
 
+			System.out.println("Valor: "+lancamento.getValor());
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
@@ -187,6 +194,13 @@ public class LancamentoEditMB implements Serializable {
 			return "Despesas";
 		}
 		return "";
+	}
+
+	private BigDecimal turnToNegative(BigDecimal valor) {
+		if(valor.signum() == 1){
+			return valor.multiply(new BigDecimal(-1));
+		}
+		return valor;
 	}
 
 	public Lancamento getLancamento() {

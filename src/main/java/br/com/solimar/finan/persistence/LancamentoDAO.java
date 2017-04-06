@@ -61,6 +61,24 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Lancamento> findPossivelDuplicdade(Lancamento lancamento, int mes, int ano) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.contaApp =:pContaApp AND O.data =:pData AND O.valor =:pValor AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
+				Lancamento.class);
+
+		query.setParameter("pData", lancamento.getData());
+		query.setParameter("pValor", lancamento.getValor());
+		query.setParameter("pContaApp", lancamento.getContaApp());
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		return query.getResultList();
+
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findEntradas(ContaApp contaApp, int mes, int ano) {

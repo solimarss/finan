@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 
+import br.com.solimar.finan.entity.Lancamento;
+
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public abstract class AbstractDao<T extends Serializable> implements
 		Serializable {
@@ -41,9 +43,10 @@ public abstract class AbstractDao<T extends Serializable> implements
 		return em.merge(entity);
 	}
 
-	/*public void delete(final T entity) {
+	public void delete(final Object id) {
+		Object entity =  em.find(Lancamento.class, id);
 		em.remove(entity);
-	}*/
+	}
 
 	public List<T> findAll() {
 		final CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder()

@@ -33,13 +33,14 @@
 					rendered="#{lancamentoEditMB.edicao}" />
 				<p:outputLabel value="Data:" for="in_data"
 					rendered="#{!lancamentoEditMB.edicao}" />
+					
 				<h:outputText value="#{lancamentoEditMB.lancamento.data}"
 					rendered="#{lancamentoEditMB.edicao}" id="ou_data">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 
 				<p:calendar value="#{lancamentoEditMB.lancamento.data}" id="in_data"
-					rendered="#{!lancamentoEditMB.edicao}" required="true" />
+					rendered="#{!lancamentoEditMB.edicao}" required="true" locale="pt_BR" />
 
 				<p:outputLabel value="Valor:" for="ou_valor"
 					rendered="#{lancamentoEditMB.edicao}" />

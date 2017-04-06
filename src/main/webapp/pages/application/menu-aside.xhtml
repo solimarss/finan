@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<nav class="aw-menu">
+			<ul>
+				<li class="#{menuControllerMB.getItemCssClass('dashboard')}"><h:link
+						outcome="/pages/dashboard/dashboard.jsf">
+						<i class="fa  fa-fw  fa-home"></i>Dashboard</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('upload')}"><h:link
+						outcome="/pages/upload/file_upload.jsf">
+						<i class="fa  fa-fw  fa-cog"></i>Importação</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('categorizacao')}"><h:link
+						outcome="/pages/categorizacao/categorizacao_list.jsf">
+						<i class="fa  fa-fw  fa-cog"></i>Categorização</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('tipo=receita')}"><h:link
+						outcome="/pages/lancamento/lancamento_list.jsf?tipo=receita">
+						<i class="fa  fa-fw  fa-cog"></i>Receitas</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('tipo=despesa')}"><h:link
+						outcome="/pages/lancamento/lancamento_list.jsf?tipo=despesa">
+						<i class="fa  fa-fw  fa-cog"></i>Despesas</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('conta')}"><h:link
+						outcome="/pages/conta/conta_list.jsf">
+						<i class="fa  fa-fw  fa-cog"></i>Contas</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('categoria')}"><h:link
+						outcome="/pages/categoria/categoria_list.jsf">
+						<i class="fa  fa-fw  fa-cog"></i>Categoria</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('item')}"><h:link
+						outcome="/pages/tipo/tipo_list.jsf">
+						<i class="fa  fa-fw  fa-cog"></i>Tipo</h:link></li>
+
+				<li class="#{menuControllerMB.getItemCssClass('sair')}"><h:commandLink
+						action="#{authenticatorMB.logout}">
+						<i class="fa  fa-fw  fa-sign-out"></i>Sair</h:commandLink></li>
+			</ul>
+		</nav>
+	</h:form>
+</ui:composition>

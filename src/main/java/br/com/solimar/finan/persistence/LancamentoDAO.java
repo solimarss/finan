@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.ContaApp;
@@ -97,12 +98,18 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	public List<Lancamento> findSaidas(ContaApp contaApp, Categoria categoria, int mes, int ano) {
 
-		Query query = em.createQuery(
+		
+		
+		
+		TypedQuery<Lancamento> query = em.createQuery(
 				"Select O from Lancamento O Where O.tipoES =:pTipoES AND O.valorConsiderado =:pVConsiderado AND O.tipo.categoria =:pCategoria AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
 				Lancamento.class);
+		
+		
+		
 
 		query.setParameter("pVConsiderado", true);
 		query.setParameter("pTipoES", LancamentoTipoEnum.S);

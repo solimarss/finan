@@ -59,7 +59,6 @@ public class LancamentoEditMB implements Serializable {
 	private Long categoriaIdSelected;
 	private Long contaIdSelected;
 	private boolean edicao = false;
-	private String tipoLancamentoView;
 
 	@Inject
 	@On("entrada.save")
@@ -67,7 +66,6 @@ public class LancamentoEditMB implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		tipoLancamentoView = JSFUtil.getUrlParameter("tipo");
 
 		lancamento = new Lancamento();
 		itensAll = itemRN.listAll(userSession.getContaApp());
@@ -133,7 +131,7 @@ public class LancamentoEditMB implements Serializable {
 
 		lancamento = new Lancamento();
 
-		if (tipoLancamentoView.equals("receita")) {
+		if (userSession.isTipoESReceita()) {
 			categorias = categoriasReceita;
 			lancamento.setTipoES(LancamentoTipoEnum.E);
 
@@ -164,7 +162,7 @@ public class LancamentoEditMB implements Serializable {
 
 				if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
 					lancamento.setValor(turnToNegative(lancamento.getValor()));
-				} 
+				}
 
 			}
 
@@ -173,7 +171,7 @@ public class LancamentoEditMB implements Serializable {
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
 
-			System.out.println("Valor: "+lancamento.getValor());
+			System.out.println("Valor: " + lancamento.getValor());
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
@@ -187,17 +185,16 @@ public class LancamentoEditMB implements Serializable {
 	}
 
 	public String tipoLancamentoView() {
-		if (tipoLancamentoView.equals("receita")) {
+		if (userSession.isTipoESReceita()) {
 			return "Receitas";
 		}
-		if (tipoLancamentoView.equals("despesa")) {
-			return "Despesas";
-		}
-		return "";
+
+		return "Despesas";
+
 	}
 
 	private BigDecimal turnToNegative(BigDecimal valor) {
-		if(valor.signum() == 1){
+		if (valor.signum() == 1) {
 			return valor.multiply(new BigDecimal(-1));
 		}
 		return valor;

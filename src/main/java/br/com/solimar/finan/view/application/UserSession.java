@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Usuario;
+import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.util.DataUtil;
 
 @Named
@@ -24,6 +25,7 @@ public class UserSession implements Serializable {
 	private ContaApp contaApp;
 	private Integer mes;
 	private Integer ano;
+	private LancamentoTipoEnum tipoES;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -108,6 +110,21 @@ public class UserSession implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String currentViewId = context.getViewRoot().getViewId();
 		return currentViewId;
+	}
+
+	public LancamentoTipoEnum getTipoES() {
+		return tipoES;
+	}
+
+	public void setTipoES(LancamentoTipoEnum tipoES) {
+		this.tipoES = tipoES;
+	}
+
+	public boolean isTipoESReceita() {
+		if (tipoES.equals(LancamentoTipoEnum.E)) {
+			return true;
+		}
+		return false;
 	}
 
 }

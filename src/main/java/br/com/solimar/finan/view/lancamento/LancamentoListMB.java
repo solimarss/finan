@@ -15,7 +15,6 @@ import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
-import br.com.solimar.finan.view.JSFUtil;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
@@ -32,8 +31,6 @@ public class LancamentoListMB implements Serializable {
 
 	private List<Lancamento> lancamentos;
 
-	private String tipoLancamentoView;
-
 	private Long categoriaIdSelected;
 
 	@Inject
@@ -45,8 +42,6 @@ public class LancamentoListMB implements Serializable {
 
 	@PostConstruct
 	private void init() {
-
-		tipoLancamentoView = JSFUtil.getUrlParameter("tipo");
 
 		categorias = categoriaRN.listAll(userSession.getContaApp());
 		categoriasDespesa = new ArrayList<>();
@@ -60,7 +55,7 @@ public class LancamentoListMB implements Serializable {
 			}
 		}
 
-		if (tipoLancamentoView.equals("receita")) {
+		if (userSession.isTipoESReceita()) {
 			categorias = categoriasReceita;
 
 		} else {
@@ -72,7 +67,7 @@ public class LancamentoListMB implements Serializable {
 	}
 
 	public void search() {
-		if (tipoLancamentoView.equals("receita")) {
+		if (userSession.isTipoESReceita()) {
 			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp(), userSession.getMes(),
 					userSession.getAno());
 		} else {
@@ -101,13 +96,11 @@ public class LancamentoListMB implements Serializable {
 	}
 
 	public String tipoLancamentoView() {
-		if (tipoLancamentoView.equals("receita")) {
+		if (userSession.isTipoESReceita()) {
 			return "Receitas";
 		}
-		if (tipoLancamentoView.equals("despesa")) {
-			return "Despesas";
-		}
-		return "";
+		return "Despesas";
+
 	}
 
 	public Long getCategoriaIdSelected() {

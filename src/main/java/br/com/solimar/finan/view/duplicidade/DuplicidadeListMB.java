@@ -38,9 +38,10 @@ public class DuplicidadeListMB implements Serializable {
 	}
 
 	public void excluir(Lancamento lancamento) {
+		lancamentoRN.delete(lancamento);
 		search();
 		UIService.update("duplicidade_list_form_id");
-		lancamentoRN.delete(lancamento);
+		
 	}
 
 	public List<Lancamento> getLancamentos() {

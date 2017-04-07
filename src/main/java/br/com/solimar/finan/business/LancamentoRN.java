@@ -40,7 +40,7 @@ public class LancamentoRN implements Serializable {
 
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
 
-		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findSaidas(contaApp, mes, ano);
+		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp, mes, ano);
 
 		List<Lancamento> lacamentosDuplicados = new ArrayList<>();
 
@@ -48,13 +48,25 @@ public class LancamentoRN implements Serializable {
 			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicdade(lancamento, mes, ano);
 			if (lancamentos.size() > 1) {
 				for (Lancamento lanc : lancamentos) {
-					lacamentosDuplicados.add(lanc);
+
+					// verificar se já está na lista
+					boolean exite = false;
+					for (Lancamento lanc2 : lacamentosDuplicados) {
+						if (lanc2.getId().equals(lanc.getId())) {
+							exite = true;
+						}
+					}
+					// Se não existir adiciona
+					if (!exite) {
+						lacamentosDuplicados.add(lanc);
+					}
 
 				}
 			}
 
 		}
 
+		System.out.println("lacamentosDuplicados.size(): " + lacamentosDuplicados.size());
 		return lacamentosDuplicados;
 
 	}
@@ -92,8 +104,6 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public void delete(Lancamento lancamento) {
-		System.out.println("");
-		
 		lancamentoDAO.delete(lancamento.getId());
 	}
 }

@@ -10,6 +10,16 @@
 			<h:outputText value="#{msg['page_title_dashboad']}" />
 		</h1>
 
+		<h:outputText value="#{dashboardMB.totalDespesa}">
+			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+		</h:outputText>
+
+
+
+		<h:outputText value="#{dashboardMB.totalReceita}">
+			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+		</h:outputText>
+
 		<center>
 			<p:chart type="pie" model="#{dashboardMB.chartPieValorBycategoria}"
 				responsive="true" />

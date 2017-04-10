@@ -1,6 +1,7 @@
 package br.com.solimar.finan.view.tipo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -24,28 +25,48 @@ public class TipoListMB implements Serializable {
 	private TipoRN itemRN;
 	@Inject
 	private UserSession userSession;
-	
+
 	private List<Tipo> items;
 	
-	
+	private List<Tipo> itemsAll;
+
+	private Long categoriaIdSelected;
+
 	@PostConstruct
-	private void init(){
+	private void init() {
+		
 		search();
+
+	}
+
+	private void search() {
+		itemsAll = itemRN.listAll(userSession.getContaApp());
+		if(categoriaIdSelected == null){
+			items = itemsAll;
+		}else{
+			items =  new ArrayList<>();
+			for (Tipo tipo : itemsAll) {
+				if(tipo.getCategoria().getId().equals(categoriaIdSelected)){
+					items.add(tipo);
+				}
+			}
+			
+			
+		}
+		
 		
 	}
-	private void search() {
-		items = itemRN.listAll(userSession.getContaApp());
-	}
-	
-	
+
 	protected void onSave(@Observes @On("item.save") Tipo evento) {
 		search();
 		UIService.update("item_list_form_id");
-		
+
 	}
-	
 
-
+	public void onSelectFilterCategoria() {
+		search();
+		UIService.update("item_list_form_id");
+	}
 
 	public List<Tipo> getItems() {
 		return items;
@@ -55,6 +76,11 @@ public class TipoListMB implements Serializable {
 		this.items = items;
 	}
 
-	
+	public Long getCategoriaIdSelected() {
+		return categoriaIdSelected;
+	}
 
+	public void setCategoriaIdSelected(Long categoriaIdSelected) {
+		this.categoriaIdSelected = categoriaIdSelected;
+	}
 }

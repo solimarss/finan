@@ -1,6 +1,7 @@
 package br.com.solimar.finan.view.dashboard;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,23 +26,29 @@ public class DashboardMB implements Serializable {
 
 	private PieChartModel chartPieValorBycategoria;
 
-	
+	private BigDecimal totalDespesa = BigDecimal.ZERO;
+	private BigDecimal totalReceita = BigDecimal.ZERO;
 
-    private List<ValueByGroup> valoresByCategoria;
+	private List<ValueByGroup> valoresByCategoria;
 
 	@Inject
 	private LancamentoRN lancamentoRN;
 
 	@PostConstruct
 	private void init() {
-		valoresByCategoria = lancamentoRN.sumValorGroupByCategoria(LancamentoTipoEnum.S,
-				userSession.getContaApp(), userSession.getMes(), userSession.getAno());
+
+		valoresByCategoria = lancamentoRN.sumValorGroupByCategoria(LancamentoTipoEnum.S, userSession.getContaApp(),
+				userSession.getMes(), userSession.getAno());
 		createChartPieValorByCategoria(valoresByCategoria);
 
-			
+		for (ValueByGroup valueByGroup : valoresByCategoria) {
+			totalDespesa = totalDespesa.add(valueByGroup.getValor());
+		}
+
+		totalReceita = lancamentoRN.sumValorEntrada(userSession.getContaApp(), userSession.getMes(),
+				userSession.getAno());
 
 	}
-
 
 	public void createChartPieValorByCategoria(List<ValueByGroup> valores) {
 		chartPieValorBycategoria = new PieChartModel();
@@ -58,27 +65,25 @@ public class DashboardMB implements Serializable {
 	}
 
 	public PieChartModel createChartPieValorByTipo(String categoriaNome) {
-		
+
 		PieChartModel chartPieValorByTipo = new PieChartModel();
 
 		for (ValueByGroup valueCat : valoresByCategoria) {
-			if(categoriaNome.equals(valueCat.getGroupName())){
+			if (categoriaNome.equals(valueCat.getGroupName())) {
 				for (ValueByGroup valueTipo : valueCat.getSubGroup()) {
 					chartPieValorByTipo.set(valueTipo.getGroupName(), valueTipo.getValor());
 				}
 			}
-			
+
 		}
-		chartPieValorByTipo.setTitle("Categoria: "+categoriaNome);
+		chartPieValorByTipo.setTitle("Categoria: " + categoriaNome);
 		chartPieValorByTipo.setLegendPosition("e");
 		chartPieValorByTipo.setFill(false);
 		chartPieValorByTipo.setShowDataLabels(true);
 		chartPieValorByTipo.setDiameter(150);
-		
+
 		return chartPieValorByTipo;
 	}
-	
-	
 
 	public PieChartModel getChartPieValorBycategoria() {
 		return chartPieValorBycategoria;
@@ -88,17 +93,28 @@ public class DashboardMB implements Serializable {
 		this.chartPieValorBycategoria = chartPieValorBycategoria;
 	}
 
-
 	public List<ValueByGroup> getValoresByCategoria() {
 		return valoresByCategoria;
 	}
-
 
 	public void setValoresByCategoria(List<ValueByGroup> valoresByCategoria) {
 		this.valoresByCategoria = valoresByCategoria;
 	}
 
-	
+	public BigDecimal getTotalDespesa() {
+		return totalDespesa;
+	}
 
-	
+	public void setTotalDespesa(BigDecimal totalDespesa) {
+		this.totalDespesa = totalDespesa;
+	}
+
+	public BigDecimal getTotalReceita() {
+		return totalReceita;
+	}
+
+	public void setTotalReceita(BigDecimal totalReceita) {
+		this.totalReceita = totalReceita;
+	}
+
 }

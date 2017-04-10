@@ -10,26 +10,35 @@
 
 		<h:form id="item_list_form_id">
 
-			<p:commandButton
-				actionListener="#{tipoEditMB.abrirDialogNew()}"
-				icon="fa fa-fw fa-edit" 
-				value="Nova"/>
+			<p:outputLabel for="cb_categoria_filtro" value="Categoria " />
+			<p:selectOneMenu id="cb_categoria_filtro"
+				value="#{tipoListMB.categoriaIdSelected}" effect="fold"
+				editable="false">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{lancamentoListMB.categorias}"
+					itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+				<p:ajax event="change" update="@form"
+					listener="#{tipoListMB.onSelectFilterCategoria}" />
+			</p:selectOneMenu>
+
+			<p:commandButton actionListener="#{tipoEditMB.abrirDialogNew()}"
+				icon="fa fa-fw fa-edit" value="Nova" />
 
 			<p:dataTable var="_item" value="#{tipoListMB.items}">
 
-				<p:column headerText="Nome do Item" >
+				<p:column headerText="Nome do Item">
 					<h:outputText value="#{_item.nome}" />
 				</p:column>
-				
-				<p:column headerText="Categoria" >
+
+				<p:column headerText="Categoria">
 					<h:outputText value="#{_item.categoria.nome}" />
 				</p:column>
-				
-				<p:column headerText="Tipo" >
+
+				<p:column headerText="Tipo">
 					<h:outputText value="#{_item.categoria.tipo.descricao}" />
 				</p:column>
 
-				<p:column headerText="" style="width:35px;" >
+				<p:column headerText="" style="width:35px;">
 					<p:commandButton
 						actionListener="#{tipoEditMB.abrirDialogEdit(_item)}"
 						icon="fa fa-fw fa-edit" />

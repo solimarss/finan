@@ -25,6 +25,8 @@ public class TipoDAO extends AbstractDao<Tipo> {
 		return query.getResultList();
 
 	}
+	
+	
 
 	
 

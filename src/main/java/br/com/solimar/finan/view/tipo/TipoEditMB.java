@@ -30,6 +30,8 @@ public class TipoEditMB implements Serializable {
 	
 	@Inject
 	private UserSession userSession;
+	
+
 
 	@Inject
 	@On("item.save")
@@ -43,8 +45,12 @@ public class TipoEditMB implements Serializable {
 	@PostConstruct
 	private void init() {
 		item = new Tipo();
-		categorias = categoriaRN.listAll(userSession.getContaApp());
+		
 
+	}
+	
+	public void search() {
+		categorias = categoriaRN.listAll(userSession.getContaApp());
 	}
 
 	public void abrirDialogNew() {
@@ -77,6 +83,8 @@ public class TipoEditMB implements Serializable {
 	}
 
 	
+	
+	
 	public Tipo getItem() {
 		return item;
 	}
@@ -92,5 +100,7 @@ public class TipoEditMB implements Serializable {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
+
+	
 
 }

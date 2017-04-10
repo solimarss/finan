@@ -168,6 +168,25 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return valores;
 
 	}
+	
+	
+	
+	public BigDecimal sumValorLancamentos(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+
+		Query query = em.createQuery(
+				"select sum(O.valor) from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) ");
+
+		query.setParameter("pTipoES", tipoES);
+		query.setParameter("pValorConsid", true);
+		query.setParameter("pCategorizado", true);
+		query.setParameter("pContaApp", contaApp);
+		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
+		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		return (BigDecimal) query.getSingleResult();
+
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {

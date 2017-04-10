@@ -1,6 +1,7 @@
 package br.com.solimar.finan.business;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class LancamentoRN implements Serializable {
 		return lancamentoDAO.findEntradas(contaApp, mes, ano);
 	}
 
+	public BigDecimal sumValorEntrada(ContaApp contaApp, int mes, int ano) {
+		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, mes, ano);
+	}
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
 
 		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp, mes, ano);

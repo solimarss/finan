@@ -15,7 +15,7 @@
 				value="#{tipoListMB.categoriaIdSelected}" effect="fold"
 				editable="false">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{lancamentoListMB.categorias}"
+				<f:selectItems value="#{tipoListMB.categorias}"
 					itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
 				<p:ajax event="change" update="@form"
 					listener="#{tipoListMB.onSelectFilterCategoria}" />

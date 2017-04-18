@@ -37,6 +37,18 @@ public class MenuControllerMB implements Serializable {
 		userSession.setTipoES(LancamentoTipoEnum.S);
 		return "/pages/lancamento/lancamento_list.jsf?faces-redirect=true";
 	}
+	
+	public String goToTiposDespesas() {
+		System.out.println("goToDespesas");
+		userSession.setTipoES(LancamentoTipoEnum.S);
+		return "/pages/tipo/tipo_list.jsf?faces-redirect=true";
+	}
+	
+	public String goToCategoriasDespesas() {
+		System.out.println("goToDespesas");
+		userSession.setTipoES(LancamentoTipoEnum.S);
+		return "/pages/categoria/categoria_list.jsf?faces-redirect=true";
+	}
 	public String goToReceitas() {
 		System.out.println("goToReceitas");
 		userSession.setTipoES(LancamentoTipoEnum.E);

@@ -45,7 +45,7 @@ public class TipoEditMB implements Serializable {
 	@PostConstruct
 	private void init() {
 		item = new Tipo();
-		
+		search();
 
 	}
 	

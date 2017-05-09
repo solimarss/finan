@@ -20,7 +20,8 @@
 
 				<!-- NOME -->
 				<p:outputLabel value="Nome:" for="tx_nome_id" />
-				<p:inputText id="tx_nome_id" value="#{tipoEditMB.item.nome}" required="true"/>
+				<p:inputText id="tx_nome_id" value="#{tipoEditMB.item.nome}"
+					required="true" />
 
 				<p:outputLabel for="cb_categoria" value="Categoria " />
 				<p:selectOneMenu id="cb_categoria"
@@ -32,6 +33,14 @@
 						var="_categoria" />
 				</p:selectOneMenu>
 
+				<p:outputLabel for="classificacao_id" value="Classificação:"  rendered="#{tipoEditMB.renderClassificacao()}"/>
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" rendered="#{tipoEditMB.renderClassificacao()}">
+
+					<p:selectOneRadio id="classificacao_id"
+						value="#{tipoEditMB.item.classificacao}" layout="grid" columns="2">
+						<f:selectItems value="#{tipoEditMB.classificacoes}" />
+					</p:selectOneRadio>
+				</h:panelGrid>
 
 
 			</h:panelGrid>

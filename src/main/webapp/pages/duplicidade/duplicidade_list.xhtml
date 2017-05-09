@@ -17,6 +17,10 @@
 				<p:column headerText="ID" style="width:20px;">
 					<h:outputText value="#{_lancamento.id}" />
 				</p:column>
+				
+				<p:column headerText="Transação" >
+					<h:outputText value="#{_lancamento.transactionId}" />
+				</p:column>
 
 				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}">

@@ -64,7 +64,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<Lancamento> findPossivelDuplicdade(Lancamento lancamento, int mes, int ano) {
+	public List<Lancamento> findPossivelDuplicidade(Lancamento lancamento, int mes, int ano) {
 
 		Query query = em.createQuery(
 				"Select O from Lancamento O Where O.contaApp =:pContaApp AND O.data =:pData AND O.valor =:pValor AND (O.dataPagamento BETWEEN :startDate AND :endDate)",

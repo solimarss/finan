@@ -26,6 +26,10 @@ public class LancamentoRN implements Serializable {
 	public void insert(Lancamento entity) {
 		lancamentoDAO.insert(entity);
 	}
+	
+	public void update(Lancamento entity) {
+		lancamentoDAO.update(entity);
+	}
 
 	public List<Lancamento> findByMemoAndTransactionIdAndContaApp(Lancamento lancamento) {
 		return lancamentoDAO.findByMemoAndTransactionIdAndContaApp(lancamento);
@@ -42,6 +46,12 @@ public class LancamentoRN implements Serializable {
 	public BigDecimal sumValorEntrada(ContaApp contaApp, int mes, int ano) {
 		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, mes, ano);
 	}
+	
+	public List<Lancamento> findDuplicados(Lancamento lancamento, int mes, int ano) {
+		return lancamentoDAO.findPossivelDuplicidade(lancamento, mes, ano);
+	}
+	
+	
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
 
 		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp, mes, ano);
@@ -49,7 +59,7 @@ public class LancamentoRN implements Serializable {
 		List<Lancamento> lacamentosDuplicados = new ArrayList<>();
 
 		for (Lancamento lancamento : lacamentosNaoCategorizados) {
-			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicdade(lancamento, mes, ano);
+			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicidade(lancamento, mes, ano);
 			if (lancamentos.size() > 1) {
 				for (Lancamento lanc : lancamentos) {
 

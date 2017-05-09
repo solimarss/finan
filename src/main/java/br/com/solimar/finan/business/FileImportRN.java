@@ -84,7 +84,7 @@ public class FileImportRN implements Serializable {
 		CreditCardResponseMessageSet messageSet = (CreditCardResponseMessageSet) envelope
 				.getMessageSet(MessageSetType.creditcard);
 
-		System.out.println("TIPO DE CARTÃO: " + messageSet.getType());
+		//System.out.println("TIPO DE CARTÃO: " + messageSet.getType());
 		System.out.println("INSTITUIÇÃO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 		System.out.println("");
 

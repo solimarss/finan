@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 
 @Entity
 @Table(name = "TIPO")
@@ -42,6 +46,11 @@ public class Tipo implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+	
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CLASSIFICACAO", nullable = true, length = 30)
+	private TipoClassificacaoEnum classificacao;
 
 	public Long getId() {
 		return id;
@@ -101,5 +110,16 @@ public class Tipo implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public TipoClassificacaoEnum getClassificacao() {
+		return classificacao;
+	}
+
+	public void setClassificacao(TipoClassificacaoEnum classificacao) {
+		this.classificacao = classificacao;
+	}
+
+	
+
 
 }

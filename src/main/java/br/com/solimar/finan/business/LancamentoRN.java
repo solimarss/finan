@@ -12,6 +12,7 @@ import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 import br.com.solimar.finan.persistence.LancamentoDAO;
 import br.com.solimar.finan.vo.ValueByGroup;
 
@@ -26,7 +27,7 @@ public class LancamentoRN implements Serializable {
 	public void insert(Lancamento entity) {
 		lancamentoDAO.insert(entity);
 	}
-	
+
 	public void update(Lancamento entity) {
 		lancamentoDAO.update(entity);
 	}
@@ -46,12 +47,11 @@ public class LancamentoRN implements Serializable {
 	public BigDecimal sumValorEntrada(ContaApp contaApp, int mes, int ano) {
 		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, mes, ano);
 	}
-	
+
 	public List<Lancamento> findDuplicados(Lancamento lancamento, int mes, int ano) {
 		return lancamentoDAO.findPossivelDuplicidade(lancamento, mes, ano);
 	}
-	
-	
+
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
 
 		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp, mes, ano);
@@ -85,12 +85,15 @@ public class LancamentoRN implements Serializable {
 
 	}
 
-	public List<Lancamento> findSaidas(ContaApp contaApp, Long categoriaId, int mes, int ano) {
-		if (categoriaId == null) {
-			return lancamentoDAO.findSaidas(contaApp, mes, ano);
-		} else {
-			return lancamentoDAO.findSaidas(contaApp, new Categoria(categoriaId), mes, ano);
-		}
+	public List<Lancamento> findSaidas(ContaApp contaApp, int mes, int ano) {
+		return lancamentoDAO.findSaidas(contaApp, mes, ano);
+	}
+
+	public List<Lancamento> findSaidas(ContaApp contaApp, Long categoriaId, TipoClassificacaoEnum classificacaoSelected,
+			int mes, int ano) {
+
+		return lancamentoDAO.findSaidas(contaApp, categoriaId, classificacaoSelected, mes, ano);
+
 	}
 
 	public void save(Lancamento entity) {
@@ -104,6 +107,7 @@ public class LancamentoRN implements Serializable {
 	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
 
 		List<ValueByGroup> groupByCategoria = lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp, mes, ano);
+		
 		for (ValueByGroup groupCat : groupByCategoria) {
 			groupCat.setSubGroup((lancamentoDAO.sumValorGroupByTipoByCategoria(groupCat.getGroupName(), tipoES,
 					contaApp, mes, ano)));

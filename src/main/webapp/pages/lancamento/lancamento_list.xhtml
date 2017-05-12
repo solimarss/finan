@@ -10,17 +10,34 @@
 
 		<h:form id="lancamento_list_form_id">
 
+			<h:panelGrid columns="2">
+				<p:outputLabel for="cb_categoria_filtro" value="Categoria:" />
+				<p:selectOneMenu id="cb_categoria_filtro"
+					value="#{lancamentoListMB.categoriaIdSelected}" effect="fold"
+					editable="false">
+					<f:selectItem itemLabel="Todas" itemValue="" />
+					<f:selectItems value="#{lancamentoListMB.categorias}"
+						itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
+					<p:ajax event="change" update="@form"
+						listener="#{lancamentoListMB.onSelectFilterCategoria}" />
+				</p:selectOneMenu>
 
-			<p:outputLabel for="cb_categoria_filtro" value="Categoria " />
-			<p:selectOneMenu id="cb_categoria_filtro"
-				value="#{lancamentoListMB.categoriaIdSelected}" effect="fold"
-				editable="false" >
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{lancamentoListMB.categorias}"
-					itemValue="#{_cat.id}" itemLabel="#{_cat.nome}" var="_cat" />
-				<p:ajax event="change" update="@form"
-					listener="#{lancamentoListMB.onSelectFilterCategoria}" />
-			</p:selectOneMenu>
+				<p:outputLabel for="cb_classific_filtro_id" value="Classificação:" />
+				<p:selectOneMenu id="cb_classific_filtro_id"
+					value="#{lancamentoListMB.classificacaoSelected}" layout="grid"
+					columns="2">
+					<f:selectItem itemLabel="Todas" itemValue="" />
+					<f:selectItems value="#{lancamentoListMB.classificacoes}" var="_cla" itemValue="#{_cla}" itemLabel="#{_cla.descricao} - #{_cla}" />
+					<p:ajax event="change" update="@form"
+						listener="#{lancamentoListMB.onSelectFilterCategoria}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<p:outputLabel value="Total: " />
+			<h:outputText value="#{lancamentoListMB.total}">
+				<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+			</h:outputText>
 
 			<p:commandButton
 				actionListener="#{lancamentoEditMB.abrirDialogNew()}"
@@ -35,9 +52,20 @@
 					</h:outputText>
 				</p:column>
 
+				<p:column headerText="Data Pgto" style="width:90px;">
+					<h:outputText value="#{_lancamento.dataPagamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="Tipo/Categoria">
 					<h:outputText
 						value="#{_lancamento.tipo.nome} / #{_lancamento.tipo.categoria.nome}" />
+				</p:column>
+				
+				<p:column headerText="Classif." style="width:40px;" >
+					<h:outputText
+						value="#{_lancamento.tipo.classificacao}" />
 				</p:column>
 
 

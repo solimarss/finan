@@ -7,10 +7,15 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 import br.com.solimar.finan.util.DataUtil;
 import br.com.solimar.finan.vo.ValueByGroup;
 
@@ -61,8 +66,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findPossivelDuplicidade(Lancamento lancamento, int mes, int ano) {
 
@@ -115,29 +119,30 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return query.getResultList();
 
 	}
-	
-	
-	public List<Lancamento> findSaidas(ContaApp contaApp, Categoria categoria, int mes, int ano) {
 
-		
-		
-		
-		TypedQuery<Lancamento> query = em.createQuery(
-				"Select O from Lancamento O Where O.tipoES =:pTipoES AND O.valorConsiderado =:pVConsiderado AND O.tipo.categoria =:pCategoria AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
-				Lancamento.class);
-		
-		
-		
+	// TODO transformar em um consulta com criteria
+	public List<Lancamento> findSaidas(ContaApp contaApp, Long categoriaId, TipoClassificacaoEnum classificacaoSelected,
+			int mes, int ano) {
 
-		query.setParameter("pVConsiderado", true);
-		query.setParameter("pTipoES", LancamentoTipoEnum.S);
-		query.setParameter("pCategorizado", true);
-		query.setParameter("pCategoria", categoria);
-		query.setParameter("pContaApp", contaApp);
-		query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
-		query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+		Session session = em.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Lancamento.class);
+		Criteria tipo = criteria.createCriteria("tipo", "tipo");
 
-		return query.getResultList();
+		if (categoriaId != null) {
+			tipo.add(Restrictions.eq("categoria.id", categoriaId));
+		}
+		if (classificacaoSelected != null) {
+			tipo.add(Restrictions.eq("classificacao", classificacaoSelected));
+		}
+
+		criteria.add(Restrictions.eq("tipoES", LancamentoTipoEnum.S));
+		criteria.add(Restrictions.eq("valorConsiderado", true));
+		criteria.add(Restrictions.eq("categorizado", true));
+		criteria.add(Restrictions.eq("contaApp", contaApp));
+		criteria.add(Restrictions.between("dataPagamento", DataUtil.getFirstDayOfTheMonth(mes, ano),
+				DataUtil.getLastDayOfTheMonth(mes, ano)));
+
+		return criteria.list();
 
 	}
 
@@ -168,9 +173,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return valores;
 
 	}
-	
-	
-	
+
 	public BigDecimal sumValorLancamentos(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
 
 		Query query = em.createQuery(
@@ -186,7 +189,6 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return (BigDecimal) query.getSingleResult();
 
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
@@ -215,9 +217,10 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		return valores;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<ValueByGroup> sumValorGroupByTipoByCategoria(String categoriaNome, LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+	public List<ValueByGroup> sumValorGroupByTipoByCategoria(String categoriaNome, LancamentoTipoEnum tipoES,
+			ContaApp contaApp, int mes, int ano) {
 
 		Query query = em.createQuery(
 				"select sum(O.valor) as total, O.tipo.nome  from Lancamento O WHERE O.tipo.categoria.nome =:pCategoriaNome AND O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.nome ORDER BY total");

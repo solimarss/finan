@@ -1,6 +1,7 @@
 package br.com.solimar.finan.view.lancamento;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
@@ -32,6 +34,8 @@ public class LancamentoListMB implements Serializable {
 	private List<Lancamento> lancamentos;
 
 	private Long categoriaIdSelected;
+	private TipoClassificacaoEnum classificacaoSelected;
+	private BigDecimal total = BigDecimal.ZERO;
 
 	@Inject
 	private CategoriaRN categoriaRN;
@@ -71,8 +75,12 @@ public class LancamentoListMB implements Serializable {
 			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp(), userSession.getMes(),
 					userSession.getAno());
 		} else {
-			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp(), categoriaIdSelected, userSession.getMes(),
-					userSession.getAno());
+			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp(), categoriaIdSelected, classificacaoSelected,
+					userSession.getMes(), userSession.getAno());
+		}
+		total = BigDecimal.ZERO;
+		for (Lancamento lancamento : lancamentos) {
+			total = total.add(lancamento.getValor());
 		}
 
 	}
@@ -117,6 +125,22 @@ public class LancamentoListMB implements Serializable {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public TipoClassificacaoEnum[] getClassificacoes() {
+		return TipoClassificacaoEnum.values();
+	}
+
+	public TipoClassificacaoEnum getClassificacaoSelected() {
+		return classificacaoSelected;
+	}
+
+	public void setClassificacaoSelected(TipoClassificacaoEnum classificacaoSelected) {
+		this.classificacaoSelected = classificacaoSelected;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
 	}
 
 }

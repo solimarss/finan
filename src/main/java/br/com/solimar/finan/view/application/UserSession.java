@@ -121,7 +121,23 @@ public class UserSession implements Serializable {
 	}
 
 	public boolean isTipoESReceita() {
+		if (tipoES == null) {
+			return false;
+		}
+
 		if (tipoES.equals(LancamentoTipoEnum.E)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isTipoESDespesa() {
+
+		if (tipoES == null) {
+			return false;
+		}
+
+		if (tipoES.equals(LancamentoTipoEnum.S)) {
 			return true;
 		}
 		return false;

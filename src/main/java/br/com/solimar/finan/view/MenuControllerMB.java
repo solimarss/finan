@@ -31,6 +31,12 @@ public class MenuControllerMB implements Serializable {
 
 		return currentViewId.contains(viewId) ? "is-selected" : null;
 	}
+	
+	public String goToLancamentos() {
+		System.out.println("goToLancamentos()");
+		userSession.setTipoES(null);
+		return "/pages/lancamento/lancamento_list.jsf?faces-redirect=true";
+	}
 
 	public String goToDespesas() {
 		System.out.println("goToDespesas");

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.solimar.finan.business.CategoriaRN;
+import br.com.solimar.finan.business.LancamentoFilters;
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Lancamento;
@@ -59,25 +60,34 @@ public class LancamentoListMB implements Serializable {
 			}
 		}
 
-		if (userSession.isTipoESReceita()) {
-			categorias = categoriasReceita;
-
-		} else {
+		if (userSession.isTipoESDespesa()) {
 			categorias = categoriasDespesa;
-
+		} else if (userSession.isTipoESReceita()) {
+			categorias = categoriasReceita;
 		}
 
 		search();
 	}
 
 	public void search() {
+		LancamentoFilters filters = new LancamentoFilters();
+		filters.setContaApp(userSession.getContaApp());
+		filters.setMes(userSession.getMes());
+		filters.setAno(userSession.getAno());
+		filters.setCategoriaId(categoriaIdSelected);
+		filters.setClassificacao(classificacaoSelected);
+		filters.setTipoES(userSession.getTipoES());
+
 		if (userSession.isTipoESReceita()) {
-			lancamentos = lancamentoRN.findEntradas(userSession.getContaApp(), userSession.getMes(),
-					userSession.getAno());
+			filters.setVlrConsiderado(true);
+		} else if (userSession.isTipoESDespesa()) {
+			filters.setVlrConsiderado(true);
 		} else {
-			lancamentos = lancamentoRN.findSaidas(userSession.getContaApp(), categoriaIdSelected, classificacaoSelected,
-					userSession.getMes(), userSession.getAno());
+			filters.setVlrConsiderado(null);
 		}
+		
+		lancamentos = lancamentoRN.search(filters);
+
 		total = BigDecimal.ZERO;
 		for (Lancamento lancamento : lancamentos) {
 			total = total.add(lancamento.getValor());
@@ -107,7 +117,10 @@ public class LancamentoListMB implements Serializable {
 		if (userSession.isTipoESReceita()) {
 			return "Receitas";
 		}
-		return "Despesas";
+		if (userSession.isTipoESDespesa()) {
+			return "Despesas";
+		}
+		return "Todas";
 
 	}
 

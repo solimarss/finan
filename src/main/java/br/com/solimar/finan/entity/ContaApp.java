@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="CONTA_APP")
@@ -31,6 +32,12 @@ public class ContaApp implements Serializable {
 	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
+	
+	@Column(name = "START_DAY")
+	private Integer startDay;
+	
+	@Column(name = "USE_START_DAY")
+	private Boolean useStartDay;
 
 	
 	
@@ -70,4 +77,33 @@ public class ContaApp implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public Integer getStartDay() {
+		return startDay;
+	}
+
+	@Transient
+	public Integer getStartDayAsString() {
+		String dia = startDay.toString();
+		if(dia.length() == 1){
+			dia = "0"+dia;
+		}
+		return startDay;
+	}
+	
+	public void setStartDay(Integer startDay) {
+		this.startDay = startDay;
+	}
+
+	public Boolean getUseStartDay() {
+		if(useStartDay == null){
+			useStartDay = false;
+		}
+		return useStartDay;
+	}
+
+	public void setUseStartDay(Boolean useStartDay) {
+		this.useStartDay = useStartDay;
+	}
+
+	
 }

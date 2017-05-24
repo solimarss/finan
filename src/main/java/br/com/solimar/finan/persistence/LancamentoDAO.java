@@ -59,27 +59,30 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		query.setParameter("pCategorizado", false);
 		query.setParameter("pContaApp", contaApp);
-		
+
 		query.setParameter("startDate", inicio);
 		query.setParameter("endDate", fim);
-		
-		//query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes, ano));
-		//query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes, ano));
+
+		// query.setParameter("startDate", DataUtil.getFirstDayOfTheMonth(mes,
+		// ano));
+		// query.setParameter("endDate", DataUtil.getLastDayOfTheMonth(mes,
+		// ano));
 
 		return query.getResultList();
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Lancamento> findPossivelDuplicidade(Lancamento lancamento, Date inicio, Date fim) {
+	public List<Lancamento> findPossivelDuplicidade(ContaApp contaApp, Lancamento lancamento, Date inicio, Date fim) {
 
 		Query query = em.createQuery(
-				"Select O from Lancamento O Where O.contaApp =:pContaApp AND O.data =:pData AND O.valor =:pValor AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
+				"Select O from Lancamento O Where O.contaApp =:pContaApp AND O.data =:pData AND O.valor =:pValor  AND O.contaApp =:pContaApp AND (O.dataPagamento BETWEEN :startDate AND :endDate)",
 				Lancamento.class);
 
 		query.setParameter("pData", lancamento.getData());
 		query.setParameter("pValor", lancamento.getValor());
 		query.setParameter("pContaApp", lancamento.getContaApp());
+		query.setParameter("pContaApp", contaApp);
 		query.setParameter("startDate", inicio);
 		query.setParameter("endDate", fim);
 
@@ -87,7 +90,6 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findSaidas(ContaApp contaApp, Date inicio, Date fim) {
 
@@ -105,8 +107,7 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 	}
 
-	
-	public List<Lancamento> search(LancamentoFilters filters) {
+	public List<Lancamento> search(LancamentoFilters filters, Date inicio, Date fim) {
 
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Lancamento.class);
@@ -134,15 +135,15 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		criteria.add(Restrictions.eq("contaApp", filters.getContaApp()));
 		
 		
-		criteria.add(Restrictions.between("dataPagamento", DataUtil.getFirstDayOfTheMonth(filters.getMes(), filters.getAno()),
-				DataUtil.getLastDayOfTheMonth(filters.getMes(), filters.getAno())));
+		criteria.add(Restrictions.between("dataPagamento", inicio,fim));
 
 		return criteria.list();
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, Date inicio, Date fim) {
+	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, Date inicio,
+			Date fim) {
 
 		Query query = em.createQuery(
 				"select sum(O.valor), O.tipo.categoria.nome  from Lancamento O WHERE O.tipoES =:pTipoES AND O.valorConsiderado =:pValorConsid AND O.categorizado =:pCategorizado AND O.contaApp =:pContaApp  AND (O.dataPagamento BETWEEN :startDate AND :endDate) GROUP BY O.tipo.categoria.nome ");

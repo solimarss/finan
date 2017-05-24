@@ -38,6 +38,8 @@ public class UserSession implements Serializable {
 	public ContaApp getContaApp() {
 		contaApp = new ContaApp();
 		contaApp.setId(1L);
+		contaApp.setStartDay(20);
+		contaApp.setUseStartDay(true);
 		return contaApp;
 	}
 
@@ -87,23 +89,44 @@ public class UserSession implements Serializable {
 	}
 
 	public String getMesAsString() {
-		System.out.println("getMesAsString");
-		String s = "01/" + getMes() + "/" + getAno();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		Date dt;
-		try {
-			dt = df.parse(s);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return "";
 
+		if (contaApp.getUseStartDay()) {
+			String s = contaApp.getStartDay() + "/" + getMes() + "/" + getAno();
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			Date dt;
+			try {
+				dt = df.parse(s);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return "";
+
+			}
+
+			DateFormat df2 = new SimpleDateFormat("dd/MMMMM", new Locale("pt", "BR"));
+
+			String mes = df2.format(dt);
+			mes = mes + "/" + getAno();
+			return mes;
+
+		} else {
+
+			String s = "01/" + getMes() + "/" + getAno();
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			Date dt;
+			try {
+				dt = df.parse(s);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return "";
+
+			}
+			DateFormat df2 = new SimpleDateFormat("MMMMM", new Locale("pt", "BR"));
+
+			String mes = df2.format(dt);
+			System.out.println("getMesAsString " + mes);
+			mes = mes + "/" + getAno();
+			return mes;
 		}
-		DateFormat df2 = new SimpleDateFormat("MMMMM", new Locale("pt", "BR"));
-
-		String mes = df2.format(dt);
-		System.out.println("getMesAsString " + mes);
-		mes = mes + "/" + getAno();
-		return mes;
 	}
 
 	private String getCurrentViewId() {

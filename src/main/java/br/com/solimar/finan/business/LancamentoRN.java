@@ -3,6 +3,7 @@ package br.com.solimar.finan.business;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -36,25 +37,40 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.findNaoCategorizados(contaApp, DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
+		
+		return lancamentoDAO.findNaoCategorizados(contaApp, startDay, endDay);
 	}
 
 	public BigDecimal sumValorEntrada(ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
+		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, startDay, endDay);
 	}
 
-	public List<Lancamento> findDuplicados(Lancamento lancamento, int mes, int ano) {
-		return lancamentoDAO.findPossivelDuplicidade(lancamento,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+	public List<Lancamento> findDuplicados(ContaApp contaApp, Lancamento lancamento, int mes, int ano) {
+		
+		
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
+		return lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento,  startDay, endDay);
 	}
 
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
+		
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
 
-		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp,  startDay, endDay);
 
 		List<Lancamento> lacamentosDuplicados = new ArrayList<>();
 
 		for (Lancamento lancamento : lacamentosNaoCategorizados) {
-			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicidade(lancamento,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento,  startDay, endDay);
 			if (lancamentos.size() > 1) {
 				for (Lancamento lanc : lancamentos) {
 
@@ -81,11 +97,17 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<Lancamento> findSaidas(ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.findSaidas(contaApp,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
+		return lancamentoDAO.findSaidas(contaApp,  startDay, endDay);
 	}
 
 	public List<Lancamento> search(LancamentoFilters filters) {
-		return lancamentoDAO.search(filters);
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(filters.getContaApp(), filters.getMes(), filters.getAno());
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(filters.getContaApp(), filters.getMes(), filters.getAno());
+		
+		return lancamentoDAO.search(filters, startDay, endDay);
 
 	}
 
@@ -98,12 +120,16 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
+		
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
 
-		List<ValueByGroup> groupByCategoria = lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		List<ValueByGroup> groupByCategoria = lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp,  startDay, endDay);
 
 		for (ValueByGroup groupCat : groupByCategoria) {
 			groupCat.setSubGroup((lancamentoDAO.sumValorGroupByTipoByCategoria(groupCat.getGroupName(), tipoES,
-					contaApp,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano))));
+					contaApp,  startDay, endDay)));
 
 		}
 
@@ -111,7 +137,11 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
-		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp,  DataUtil.getFirstDayOfTheMonth(mes, ano), DataUtil.getLastDayOfTheMonth(mes, ano));
+		
+		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
+		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
+		
+		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp,  startDay, endDay);
 	}
 
 	public void delete(Lancamento lancamento) {

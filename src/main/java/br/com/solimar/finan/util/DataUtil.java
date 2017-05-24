@@ -32,6 +32,15 @@ public class DataUtil {
 		return data;
 	}
 
+	public static Date getDate(int dia, int mes, int ano) {
+		System.out.println("getDate");
+		Calendar cal = GregorianCalendar.getInstance();
+		cal.set(ano, (mes - 1), dia);
+		Date data = cal.getTime();
+		System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(data));
+		return data;
+	}
+	
 	public static Date getFirstDayOfTheMonth(int mes, int ano) {
 
 		Calendar cal = GregorianCalendar.getInstance();

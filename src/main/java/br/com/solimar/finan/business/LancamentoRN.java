@@ -35,6 +35,10 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findByMemoAndTransactionIdAndContaApp(Lancamento lancamento) {
 		return lancamentoDAO.findByMemoAndTransactionIdAndContaApp(lancamento);
 	}
+	
+	public List<Lancamento> searchForDuplicityCreditCard(Lancamento lancamento) {
+		return lancamentoDAO.searchForDuplicityCreditCard(lancamento);
+	}
 
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp, int mes, int ano) {
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);

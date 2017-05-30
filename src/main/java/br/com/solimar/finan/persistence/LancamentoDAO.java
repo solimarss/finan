@@ -50,6 +50,32 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 	}
 
+	public List<Lancamento> searchForDuplicityCreditCard(Lancamento lancamento) {
+
+		Query query = em.createQuery(
+				"Select O from Lancamento O Where O.memo =:pMemo " + "AND O.valor =:pValor "
+						+ "AND O.data =:pData AND O.cartaoCreditoFatura =:pFatura AND O.createdAt !=:pCreatedAt AND O.contaApp =:pContaApp",
+				Lancamento.class);
+
+		/*
+		 * Query query = em.createQuery(
+		 * "Select O from Lancamento O Where O.memo =:pMemo AND O.transactionId =:pTranId AND O.contaApp =:pContaApp"
+		 * , Lancamento.class);
+		 */
+
+		query.setParameter("pMemo", lancamento.getMemo());
+		query.setParameter("pValor", lancamento.getValor());
+		query.setParameter("pData", lancamento.getData());
+		query.setParameter("pContaApp", lancamento.getContaApp());
+		query.setParameter("pFatura", lancamento.getCartaoCreditoFatura());
+
+		// Para ser duplicado tem que ser numa data de criação diferente
+		query.setParameter("pCreatedAt", lancamento.getCreatedAt());
+
+		return query.getResultList();
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp, Date inicio, Date fim) {
 
@@ -111,9 +137,9 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Lancamento.class);
-		
+
 		Criteria tipo = null;
-		if(filters.getCategoriaId() != null || filters.getClassificacao() != null){
+		if (filters.getCategoriaId() != null || filters.getClassificacao() != null) {
 			tipo = criteria.createCriteria("tipo", "tipo");
 		}
 
@@ -133,9 +159,8 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 
 		criteria.add(Restrictions.eq("categorizado", true));
 		criteria.add(Restrictions.eq("contaApp", filters.getContaApp()));
-		
-		
-		criteria.add(Restrictions.between("dataPagamento", inicio,fim));
+
+		criteria.add(Restrictions.between("dataPagamento", inicio, fim));
 
 		return criteria.list();
 

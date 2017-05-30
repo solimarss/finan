@@ -14,7 +14,6 @@ import org.primefaces.model.chart.PieChartModel;
 
 import br.com.solimar.finan.business.LancamentoRN;
 import br.com.solimar.finan.entity.Lancamento;
-import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 import br.com.solimar.finan.view.application.UserSession;
 import br.com.solimar.finan.vo.ValueByGroup;

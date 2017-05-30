@@ -84,7 +84,7 @@ public class FileImportRN implements Serializable {
 		CreditCardResponseMessageSet messageSet = (CreditCardResponseMessageSet) envelope
 				.getMessageSet(MessageSetType.creditcard);
 
-		//System.out.println("TIPO DE CARTÃO: " + messageSet.getType());
+		// System.out.println("TIPO DE CARTÃO: " + messageSet.getType());
 		System.out.println("INSTITUIÇÃO: " + envelope.getSignonResponse().getFinancialInstitution().getOrganization());
 		System.out.println("");
 
@@ -128,6 +128,7 @@ public class FileImportRN implements Serializable {
 			fatura.setCreatedAt(new Date());
 			fatura.setUpdatedAt(new Date());
 			fatura.setCodigo(GeradorCodigo.gerar());
+
 			if (dataVencimentoFatura == null) {
 				fatura.setDataVencimento(message.getLedgerBalance().getAsOfDate());
 			} else {
@@ -186,10 +187,24 @@ public class FileImportRN implements Serializable {
 					lancamento.setValorConsiderado(padrao.isValorConsiderado());
 				}
 
-				List<Lancamento> listaLancamentos = lancamentoRN.findByMemoAndTransactionIdAndContaApp(lancamento);
+				List<Lancamento> listaLancamentos = lancamentoRN.searchForDuplicityCreditCard(lancamento);
+
 				if (listaLancamentos.size() == 0) {
+
 					lancamentoRN.insert(lancamento);
 					qtdRegistros++;
+					System.out.println("==> LANÇAMENTO INSERIDO");
+				} else {
+					
+					if (possueValoresIguais(transactions, lancamento)) {
+						lancamentoRN.insert(lancamento);
+						qtdRegistros++;
+						System.out.println("==> LANÇAMENTO INSERIDO");
+					}else{
+						System.out.println("==> LANÇAMENTO NÃO INSERIDO");
+					}
+
+					
 				}
 				System.out.println("-------------------------------------------------------------- ");
 
@@ -200,6 +215,19 @@ public class FileImportRN implements Serializable {
 
 		fileTarget.delete();
 		fileSource.delete();
+
+	}
+
+	private boolean possueValoresIguais(List<Transaction> transactions, Lancamento lancamento) {
+		int qtd = 0;
+		for (Transaction transaction : transactions) {
+			if (transaction.getBigDecimalAmount().compareTo(lancamento.getValor()) == 0
+					&& transaction.getDatePosted().equals(lancamento.getData())) {
+				qtd++;
+			}
+		}
+
+		return qtd > 1;
 
 	}
 
@@ -299,14 +327,12 @@ public class FileImportRN implements Serializable {
 					} else {
 						lancamento.setTipoES(LancamentoTipoEnum.E);
 					}
-					
+
 					List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
 					for (Padrao padrao : padroes) {
 						lancamento.setTipo(padrao.getTipo());
 						lancamento.setValorConsiderado(padrao.isValorConsiderado());
 					}
-
-					
 
 					List<Lancamento> listaLancamentos = lancamentoRN.findByMemoAndTransactionIdAndContaApp(lancamento);
 					if (listaLancamentos.size() == 0) {

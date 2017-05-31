@@ -113,7 +113,12 @@ public class LancamentoEditMB implements Serializable {
 		edicao = true;
 		this.lancamento = lancamento;
 
-		categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
+		
+		if(lancamento.getTipo() != null){
+			categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
+		
+		}
+		
 		onSelectCategoria();
 
 		desconsiderarValor = !lancamento.isValorConsiderado();
@@ -152,13 +157,18 @@ public class LancamentoEditMB implements Serializable {
 	public void save() {
 
 		try {
+			
+			
 
 			if (!edicao) {
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
 				lancamento.setCodigo(GeradorCodigo.gerar());
-				lancamento.setDataPagamento(new Date());
+				lancamento.setDataPagamento(lancamento.getData());
+				lancamento.setUpdatedAt(new Date());			
 				lancamento.setCreatedAt(new Date());
+				
+				System.out.println("data pagto; "+lancamento.getDataPagamento());
 
 				if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
 					lancamento.setValor(turnToNegative(lancamento.getValor()));
@@ -170,6 +180,11 @@ public class LancamentoEditMB implements Serializable {
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
+			
+			if(desconsiderarValor){
+				lancamento.setTipo(null);
+			}
+			
 
 			System.out.println("Valor: " + lancamento.getValor());
 			lancamentoRN.save(lancamento);

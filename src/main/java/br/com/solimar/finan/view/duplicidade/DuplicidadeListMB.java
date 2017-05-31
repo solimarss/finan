@@ -41,6 +41,7 @@ public class DuplicidadeListMB implements Serializable {
 				userSession.getAno()).get(0);
 
 		lancamentoDuplicado.setTransactionId(lancamento.getTransactionId());
+		lancamentoDuplicado.setMemo(lancamento.getMemo());
 
 		lancamentoRN.delete(lancamento);
 		lancamentoRN.update(lancamentoDuplicado);

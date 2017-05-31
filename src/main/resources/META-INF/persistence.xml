@@ -5,14 +5,13 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
 
-	<persistence-unit name="finan-unit"
-		transaction-type="JTA">
-		
+	<persistence-unit name="finan-unit" transaction-type="JTA">
+
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 
 		<jta-data-source>java:/finanDS</jta-data-source>
-		
+
 		<class>br.com.solimar.finan.entity.Lancamento</class>
 		<class>br.com.solimar.finan.entity.Fatura</class>
 		<class>br.com.solimar.finan.entity.ContaApp</class>
@@ -23,6 +22,7 @@
 		<class>br.com.solimar.finan.entity.Padrao</class>
 
 		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />

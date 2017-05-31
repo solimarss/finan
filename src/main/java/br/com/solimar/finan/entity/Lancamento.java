@@ -185,9 +185,6 @@ public class Lancamento implements Serializable {
 
 	
 	public Tipo getTipo() {
-		if(tipo == null){
-			tipo = new Tipo();
-		}
 		return tipo;
 	}
 

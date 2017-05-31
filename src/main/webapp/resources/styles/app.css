@@ -40,6 +40,7 @@
 	text-align: center;
 	padding-left: 5px;
 	margin-right: 10px; */
+	
 }
 
 .app-top-month {
@@ -64,4 +65,36 @@
 	.top-app-name {
 		display: inline;
 	}
+}
+
+#container {
+	width: 100%;
+	border-color: blue;
+	text-align: center;
+	border: 2px;
+}
+
+.box {
+	display: inline-block;
+	width: 29%;
+	height: 50px;
+	margin: 10px 20px;
+	border-radius: 3px;
+	box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
+	color: white;
+	font-size: 14px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+#box-1 {
+	background-color: #e34d4e;
+}
+
+#box-2 {
+	background-color: #4e9a06;
+}
+
+#box-3 {
+	background-color: #24a2d5;
 }

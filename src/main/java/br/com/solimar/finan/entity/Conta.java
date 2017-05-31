@@ -64,6 +64,7 @@ public class Conta implements Serializable {
 	private ContaApp contaApp;
 	
 	
+	
 	public Conta() {
 		
 	}

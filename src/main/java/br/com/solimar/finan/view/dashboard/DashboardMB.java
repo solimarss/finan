@@ -28,6 +28,7 @@ public class DashboardMB implements Serializable {
 
 	private BigDecimal totalDespesa = BigDecimal.ZERO;
 	private BigDecimal totalReceita = BigDecimal.ZERO;
+	private BigDecimal saldo = BigDecimal.ZERO;
 
 	private List<ValueByGroup> valoresByCategoria;
 
@@ -47,6 +48,12 @@ public class DashboardMB implements Serializable {
 
 		totalReceita = lancamentoRN.sumValorEntrada(userSession.getContaApp(), userSession.getMes(),
 				userSession.getAno());
+		
+		if (totalReceita == null) {
+			totalReceita = BigDecimal.ZERO;
+		}
+
+		saldo = totalReceita.add(totalDespesa);
 
 	}
 
@@ -115,6 +122,14 @@ public class DashboardMB implements Serializable {
 
 	public void setTotalReceita(BigDecimal totalReceita) {
 		this.totalReceita = totalReceita;
+	}
+
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(BigDecimal saldo) {
+		this.saldo = saldo;
 	}
 
 }

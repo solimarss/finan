@@ -10,15 +10,41 @@
 			<h:outputText value="#{msg['page_title_dashboad']}" />
 		</h1>
 
-		<h:outputText value="#{dashboardMB.totalDespesa}">
-			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
-		</h:outputText>
+
+		<div id="container">
+			<div id="box-1" class="box">
+				<h:panelGrid columns="1">
+					<h:outputText value="Despesas" />
+					<h:outputText value="#{dashboardMB.totalDespesa}">
+						<f:convertNumber type="currency" currencySymbol="R$"
+							locale="pt_BR" />
+					</h:outputText>
+				</h:panelGrid>
+			</div>
+			<div id="box-2" class="box">
+				<h:panelGrid columns="1">
+					<h:outputText value="Receitas" />
+					
+					<h:outputText value="#{dashboardMB.totalReceita}">
+						<f:convertNumber type="currency" currencySymbol="R$"
+							locale="pt_BR" />
+					</h:outputText>
+				</h:panelGrid>
+			</div>
+			<div id="box-3" class="box">
+				<h:panelGrid columns="1">
+					<h:outputText value="Saldo" />
+					<h:outputText value="#{dashboardMB.saldo}">
+						<f:convertNumber type="currency" currencySymbol="R$"
+							locale="pt_BR" />
+					</h:outputText>
+				</h:panelGrid>
+			</div>
+		</div>
 
 
 
-		<h:outputText value="#{dashboardMB.totalReceita}">
-			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
-		</h:outputText>
+
 
 		<center>
 			<p:chart type="pie" model="#{dashboardMB.chartPieValorBycategoria}"

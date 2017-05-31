@@ -35,6 +35,7 @@ public class ContaListMB implements Serializable {
 
 	private void search() {
 		contas = contaRN.listAll(userSession.getContaApp());
+		
 	}
 
 	protected void onSave(@Observes @On("conta.save") Conta evento) {

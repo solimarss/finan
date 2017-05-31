@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -27,6 +28,14 @@ public class UserSession implements Serializable {
 	private Integer ano;
 	private LancamentoTipoEnum tipoES;
 
+	@PostConstruct
+	public void init() {
+		contaApp = new ContaApp();
+		contaApp.setId(1L);
+		contaApp.setStartDay(20);
+		contaApp.setUseStartDay(true);
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -36,10 +45,6 @@ public class UserSession implements Serializable {
 	}
 
 	public ContaApp getContaApp() {
-		contaApp = new ContaApp();
-		contaApp.setId(1L);
-		contaApp.setStartDay(20);
-		contaApp.setUseStartDay(true);
 		return contaApp;
 	}
 
@@ -89,6 +94,8 @@ public class UserSession implements Serializable {
 	}
 
 	public String getMesAsString() {
+
+		System.out.println("contaApp.getUseStartDay(): " + contaApp.getUseStartDay());
 
 		if (contaApp.getUseStartDay()) {
 			String s = contaApp.getStartDay() + "/" + getMes() + "/" + getAno();

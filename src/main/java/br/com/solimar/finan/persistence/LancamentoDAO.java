@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.solimar.finan.business.LancamentoFilters;
@@ -161,6 +162,8 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		criteria.add(Restrictions.eq("contaApp", filters.getContaApp()));
 
 		criteria.add(Restrictions.between("dataPagamento", inicio, fim));
+		
+		criteria.addOrder(Order.desc("data")).addOrder(Order.desc("dataPagamento")).addOrder(Order.desc("valor"));
 
 		return criteria.list();
 

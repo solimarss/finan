@@ -54,6 +54,7 @@ public class CategorizacaoEditMB implements Serializable {
 	private boolean desconsiderarValor = false;
 	private boolean enableDesconsiderarValor = true;
 	private Long categoriaIdSelected;
+	private Long tipoIdSelected;
 	
 
 	@Inject
@@ -117,10 +118,12 @@ public class CategorizacaoEditMB implements Serializable {
 			enableDesconsiderarValor = false;
 		}
 		
-		if(lancamento.getTipo().getId() != null){
+		if(lancamento.getTipo() != null){
 			categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
+			tipoIdSelected = lancamento.getTipo().getId();
 		}else{
 			categoriaIdSelected = null;
+			tipoIdSelected = null;
 		}
 		
 		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
@@ -143,6 +146,7 @@ public class CategorizacaoEditMB implements Serializable {
 				lancamento.setTipo(null);
 			}else{
 				lancamento.setValorConsiderado(true);
+				lancamento.setTipo(findTipo(tipoIdSelected));
 			}
 			
 			lancamento.setContaApp(userSession.getContaApp());
@@ -184,6 +188,14 @@ public class CategorizacaoEditMB implements Serializable {
 
 	}
 
+	private Tipo findTipo(Long id){
+		for (Tipo tipo : itensAll) {
+			if(tipo.getId().equals(id)){
+				return tipo;
+			}
+		}
+		return null;
+	}
 	public Lancamento getLancamento() {
 		return lancamento;
 	}
@@ -230,6 +242,14 @@ public class CategorizacaoEditMB implements Serializable {
 
 	public void setEnableDesconsiderarValor(boolean enableDesconsiderarValor) {
 		this.enableDesconsiderarValor = enableDesconsiderarValor;
+	}
+
+	public Long getTipoIdSelected() {
+		return tipoIdSelected;
+	}
+
+	public void setTipoIdSelected(Long tipoIdSelected) {
+		this.tipoIdSelected = tipoIdSelected;
 	}
 
 }

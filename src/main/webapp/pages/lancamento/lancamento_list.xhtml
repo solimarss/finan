@@ -27,7 +27,9 @@
 					value="#{lancamentoListMB.classificacaoSelected}" layout="grid"
 					columns="2">
 					<f:selectItem itemLabel="Todas" itemValue="" />
-					<f:selectItems value="#{lancamentoListMB.classificacoes}" var="_cla" itemValue="#{_cla}" itemLabel="#{_cla.descricao} - #{_cla}" />
+					<f:selectItems value="#{lancamentoListMB.classificacoes}"
+						var="_cla" itemValue="#{_cla}"
+						itemLabel="#{_cla.descricao} - #{_cla}" />
 					<p:ajax event="change" update="@form"
 						listener="#{lancamentoListMB.onSelectFilterCategoria}" />
 				</p:selectOneMenu>
@@ -46,6 +48,10 @@
 			<p:dataTable var="_lancamento"
 				value="#{lancamentoListMB.lancamentos}">
 
+				<p:column headerText="ID" style="width:20px;">
+					<h:outputText value="#{_lancamento.id}" />
+				</p:column>
+
 				<p:column headerText="Data" style="width:90px;">
 					<h:outputText value="#{_lancamento.data}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -62,10 +68,9 @@
 					<h:outputText
 						value="#{_lancamento.tipo.nome} / #{_lancamento.tipo.categoria.nome}" />
 				</p:column>
-				
-				<p:column headerText="Classif." style="width:40px;" >
-					<h:outputText
-						value="#{_lancamento.tipo.classificacao}" />
+
+				<p:column headerText="Classif." style="width:40px;">
+					<h:outputText value="#{_lancamento.tipo.classificacao}" />
 				</p:column>
 
 
@@ -93,17 +98,35 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="" style="width:35px;">
+				<p:column headerText="" style="width:70px;">
 					<p:commandButton
 						actionListener="#{lancamentoEditMB.abrirDialog(_lancamento)}"
 						icon="fa fa-fw fa-edit"
 						onclick="PF('lancamento_edit_wvar').show();" />
+
+					<p:column headerText="" style="width:35px;">
+						<p:commandButton
+							actionListener="#{lancamentoListMB.excluir(_lancamento)}"
+							icon="fa fa-fw fa-trash-o">
+
+							<p:confirm header="Confirmation" message="Are you sure?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+					</p:column>
 				</p:column>
 
 
 
 
 			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 		</h:form>
 

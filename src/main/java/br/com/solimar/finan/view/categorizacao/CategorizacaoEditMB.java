@@ -101,7 +101,8 @@ public class CategorizacaoEditMB implements Serializable {
 
 	public void onSelectDesconsiderarValor() {
 		categoriaIdSelected = null;
-		lancamento.getTipo().setId(null);
+		
+		lancamento.setTipo(null);
 
 	}
 

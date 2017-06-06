@@ -94,6 +94,14 @@ public class LancamentoListMB implements Serializable {
 		}
 
 	}
+	
+	public void excluir(Lancamento lancamento) {
+		lancamentoRN.delete(lancamento);
+		search();
+		UIService.update("lancamento_list_form_id");
+
+	}
+
 
 	public void onSelectFilterCategoria() {
 		search();

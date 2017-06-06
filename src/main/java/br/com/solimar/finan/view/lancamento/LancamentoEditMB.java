@@ -135,6 +135,8 @@ public class LancamentoEditMB implements Serializable {
 	public void abrirDialogNew() {
 
 		lancamento = new Lancamento();
+		lancamento.setTipo(new Tipo());
+		lancamento.getTipo().setId(0l);
 
 		if (userSession.isTipoESReceita()) {
 			categorias = categoriasReceita;

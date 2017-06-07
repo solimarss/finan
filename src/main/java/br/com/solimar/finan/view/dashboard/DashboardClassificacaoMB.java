@@ -40,7 +40,7 @@ public class DashboardClassificacaoMB implements Serializable {
 	private void init() {
 
 		
-		//TODO terminar a implemtação do dashboard classificação cria o xml
+		
 		List<Lancamento> lancamentos = lancamentoRN.findSaidas(userSession.getContaApp(), userSession.getMes(), userSession.getAno());
 		
 		valoresByCategoria = new ArrayList<>();

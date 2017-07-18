@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -98,22 +99,19 @@ public class UserSession implements Serializable {
 		System.out.println("contaApp.getUseStartDay(): " + contaApp.getUseStartDay());
 
 		if (contaApp.getUseStartDay()) {
-			String s = contaApp.getStartDay() + "/" + getMes() + "/" + getAno();
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			Date dt;
-			try {
-				dt = df.parse(s);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return "";
 
-			}
+			Calendar calendarInicio = Calendar.getInstance();
+			calendarInicio.set(getAno(), getMes()-1, contaApp.getStartDay());
 
-			DateFormat df2 = new SimpleDateFormat("dd/MMMMM", new Locale("pt", "BR"));
+			Calendar calendarFim = Calendar.getInstance();
+			calendarFim.set(getAno(), getMes()-1, contaApp.getStartDay());
+			calendarFim.add(Calendar.MONTH, 1);
 
-			String mes = df2.format(dt);
-			mes = mes + "/" + getAno();
-			return mes;
+			DateFormat df = new SimpleDateFormat("dd/MMM/yy", new Locale("pt", "BR"));
+			String inicio = df.format(calendarInicio.getTime());
+			String fim = df.format(calendarFim.getTime());
+
+			return inicio + " - " + fim;
 
 		} else {
 

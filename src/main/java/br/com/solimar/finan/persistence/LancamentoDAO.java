@@ -153,6 +153,9 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 		if (filters.getTipoES() != null) {
 			criteria.add(Restrictions.eq("tipoES", filters.getTipoES()));
 		}
+		if (filters.getTipoId() != null) {
+			criteria.add(Restrictions.eq("tipo.id", filters.getTipoId()));
+		}
 		if (filters.getVlrConsiderado() != null) {
 			criteria.add(Restrictions.eq("valorConsiderado", filters.getVlrConsiderado()));
 

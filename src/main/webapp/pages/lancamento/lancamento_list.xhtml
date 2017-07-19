@@ -22,6 +22,17 @@
 						listener="#{lancamentoListMB.onSelectFilterCategoria}" />
 				</p:selectOneMenu>
 
+				<p:outputLabel for="cb_tipo" value="Tipo" />
+				<p:selectOneMenu id="cb_tipo"
+					value="#{lancamentoListMB.tipoIdSelected}" effect="fold"
+					editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{lancamentoListMB.tipos}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
+					<p:ajax event="change" update="@form"
+						listener="#{lancamentoListMB.onSelectFilterTipo}" />
+				</p:selectOneMenu>
+
 				<p:outputLabel for="cb_classific_filtro_id" value="Classificação:" />
 				<p:selectOneMenu id="cb_classific_filtro_id"
 					value="#{lancamentoListMB.classificacaoSelected}" layout="grid"

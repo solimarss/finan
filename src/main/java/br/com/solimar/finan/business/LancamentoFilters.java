@@ -8,6 +8,7 @@ public class LancamentoFilters {
 
 	private ContaApp contaApp;
 	private Long categoriaId;
+	private Long tipoId;
 	private TipoClassificacaoEnum classificacao;
 	private LancamentoTipoEnum tipoES;
 	private Boolean vlrConsiderado;
@@ -70,6 +71,14 @@ public class LancamentoFilters {
 
 	public void setAno(int ano) {
 		this.ano = ano;
+	}
+
+	public Long getTipoId() {
+		return tipoId;
+	}
+
+	public void setTipoId(Long tipoId) {
+		this.tipoId = tipoId;
 	}
 
 }

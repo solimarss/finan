@@ -62,13 +62,21 @@ public class DashboardMB implements Serializable {
 
 		for (ValueByGroup valorCat : valores) {
 			chartPieValorBycategoria.set(valorCat.getGroupName(), valorCat.getValor());
+			
+			
 		}
 
 		chartPieValorBycategoria.setTitle("Despesa por Categoria");
 		chartPieValorBycategoria.setLegendPosition("e");
-		chartPieValorBycategoria.setFill(false);
+		chartPieValorBycategoria.setFill(true);
 		chartPieValorBycategoria.setShowDataLabels(true);
 		chartPieValorBycategoria.setDiameter(150);
+		chartPieValorBycategoria.setLegendRows(5);
+		chartPieValorBycategoria.setShowDatatip(true);
+		//chartPieValorBycategoria.setDatatipFormat("%s - R$ %.2f");
+		chartPieValorBycategoria.setDatatipFormat("<span>R$ %s %.2f</span>");
+	
+	
 	}
 
 	public PieChartModel createChartPieValorByTipo(String categoriaNome) {

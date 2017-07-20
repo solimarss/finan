@@ -73,8 +73,8 @@ public class DashboardMB implements Serializable {
 		chartPieValorBycategoria.setDiameter(150);
 		chartPieValorBycategoria.setLegendRows(5);
 		chartPieValorBycategoria.setShowDatatip(true);
-		//chartPieValorBycategoria.setDatatipFormat("%s - R$ %.2f");
-		chartPieValorBycategoria.setDatatipFormat("<span>R$ %s %.2f</span>");
+		chartPieValorBycategoria.setDatatipFormat("%s - R$ %.2f");
+		//chartPieValorBycategoria.setDatatipFormat("<span>R$ %s %.2f</span>");
 	
 	
 	}

@@ -13,9 +13,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Usuario;
-import br.com.solimar.finan.enums.LancamentoTipoEnum;
+import br.com.solimar.finan.enums.LancTipoListagemEnum;
 import br.com.solimar.finan.util.DataUtil;
 
 @Named
@@ -25,9 +26,11 @@ public class UserSession implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario;
 	private ContaApp contaApp;
+	private Conta conta;
 	private Integer mes;
 	private Integer ano;
-	private LancamentoTipoEnum tipoES;
+	/*private LancamentoTipoEnum tipoES;*/
+	private LancTipoListagemEnum listagem;
 
 	@PostConstruct
 	public void init() {
@@ -140,7 +143,7 @@ public class UserSession implements Serializable {
 		return currentViewId;
 	}
 
-	public LancamentoTipoEnum getTipoES() {
+	/*public LancamentoTipoEnum getTipoES() {
 		return tipoES;
 	}
 
@@ -169,6 +172,27 @@ public class UserSession implements Serializable {
 			return true;
 		}
 		return false;
+	}*/
+
+	
+	
+	public LancTipoListagemEnum getListagem() {
+		return listagem;
+	}
+
+	public void setListagem(LancTipoListagemEnum listagem) {
+		if(listagem != null && !listagem.equals(LancTipoListagemEnum.X)){
+			conta = null;
+		}
+		this.listagem = listagem;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }

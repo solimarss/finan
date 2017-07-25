@@ -18,6 +18,7 @@ import br.com.solimar.finan.business.TipoRN;
 import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.entity.Tipo;
+import br.com.solimar.finan.enums.LancTipoListagemEnum;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 import br.com.solimar.finan.view.On;
@@ -31,10 +32,10 @@ public class LancamentoListMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private LancamentoRN lancamentoRN;
-	
+
 	@Inject
 	private TipoRN tipoRN;
-	
+
 	@Inject
 	private UserSession userSession;
 
@@ -53,17 +54,23 @@ public class LancamentoListMB implements Serializable {
 	private List<Categoria> categoriasDespesa;
 	private List<Tipo> tipos;
 	private List<Tipo> tiposAll;
+	private LancTipoListagemEnum listagem;
 
 	@PostConstruct
 	private void init() {
+		listagem = userSession.getListagem();
+
 		categoriasDespesa = new ArrayList<>();
 		categoriasReceita = new ArrayList<>();
-		tipos = new ArrayList<>();;
-		tiposAll = new ArrayList<>();;
+		tipos = new ArrayList<>();
+		;
+		tiposAll = new ArrayList<>();
+		;
 
 		tiposAll = tipoRN.listAll(userSession.getContaApp());
 		categorias = categoriaRN.listAll(userSession.getContaApp());
 
+		// TODO refatora, buscar listagem do banco, não filtrar aqui no código
 		for (Categoria categoria : categorias) {
 			if (categoria.getTipo().equals(LancamentoTipoEnum.E)) {
 				categoriasReceita.add(categoria);
@@ -72,9 +79,9 @@ public class LancamentoListMB implements Serializable {
 			}
 		}
 
-		if (userSession.isTipoESDespesa()) {
+		if (listagem.equals(LancTipoListagemEnum.S)) {
 			categorias = categoriasDespesa;
-		} else if (userSession.isTipoESReceita()) {
+		} else if (listagem.equals(LancTipoListagemEnum.E)) {
 			categorias = categoriasReceita;
 		}
 
@@ -88,18 +95,22 @@ public class LancamentoListMB implements Serializable {
 		filters.setAno(userSession.getAno());
 		filters.setCategoriaId(categoriaIdSelected);
 		filters.setClassificacao(classificacaoSelected);
-		filters.setTipoES(userSession.getTipoES());
 		filters.setTipoId(tipoIdSelected);
-		
 
-		if (userSession.isTipoESReceita()) {
+		if (listagem.equals(LancTipoListagemEnum.E)) {
 			filters.setVlrConsiderado(true);
-		} else if (userSession.isTipoESDespesa()) {
+			filters.setTipoES(LancamentoTipoEnum.E);
+		} else if (listagem.equals(LancTipoListagemEnum.S)) {
 			filters.setVlrConsiderado(true);
+			filters.setTipoES(LancamentoTipoEnum.S);
+		} else if (listagem.equals(LancTipoListagemEnum.X)) {
+			filters.setVlrConsiderado(null);
+			filters.setTipoES(null);
+			filters.setConta(userSession.getConta());
 		} else {
 			filters.setVlrConsiderado(null);
 		}
-		
+
 		lancamentos = lancamentoRN.search(filters);
 
 		total = BigDecimal.ZERO;
@@ -108,7 +119,7 @@ public class LancamentoListMB implements Serializable {
 		}
 
 	}
-	
+
 	public void excluir(Lancamento lancamento) {
 		lancamentoRN.delete(lancamento);
 		search();
@@ -116,12 +127,10 @@ public class LancamentoListMB implements Serializable {
 
 	}
 
-
-	
 	public void onSelectFilterCategoria() {
-		
-		//TODO implementar pesquisa por tipo
-				
+
+		// TODO implementar pesquisa por tipo
+
 		if (categoriaIdSelected != null) {
 
 			for (Tipo tipo : tiposAll) {
@@ -129,10 +138,9 @@ public class LancamentoListMB implements Serializable {
 					tipos.add(tipo);
 				}
 			}
-			
 
-		} 
-		
+		}
+
 		search();
 		UIService.update("lancamento_list_form_id");
 	}
@@ -141,6 +149,7 @@ public class LancamentoListMB implements Serializable {
 		search();
 		UIService.update("lancamento_list_form_id");
 	}
+
 	protected void onSave(@Observes @On("entrada.save") Lancamento evento) {
 		search();
 		UIService.update("lancamento_list_form_id");
@@ -155,13 +164,7 @@ public class LancamentoListMB implements Serializable {
 	}
 
 	public String tipoLancamentoView() {
-		if (userSession.isTipoESReceita()) {
-			return "Receitas";
-		}
-		if (userSession.isTipoESDespesa()) {
-			return "Despesas";
-		}
-		return "Todas";
+		return listagem.getDescricao();
 
 	}
 
@@ -212,7 +215,13 @@ public class LancamentoListMB implements Serializable {
 	public void setTipoIdSelected(Long tipoIdSelected) {
 		this.tipoIdSelected = tipoIdSelected;
 	}
-	
-	
+
+	public LancTipoListagemEnum getListagem() {
+		return listagem;
+	}
+
+	public void setListagem(LancTipoListagemEnum listagem) {
+		this.listagem = listagem;
+	}
 
 }

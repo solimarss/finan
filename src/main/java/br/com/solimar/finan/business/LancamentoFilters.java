@@ -1,5 +1,6 @@
 package br.com.solimar.finan.business;
 
+import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.enums.TipoClassificacaoEnum;
@@ -7,6 +8,7 @@ import br.com.solimar.finan.enums.TipoClassificacaoEnum;
 public class LancamentoFilters {
 
 	private ContaApp contaApp;
+	private Conta conta;
 	private Long categoriaId;
 	private Long tipoId;
 	private TipoClassificacaoEnum classificacao;
@@ -79,6 +81,14 @@ public class LancamentoFilters {
 
 	public void setTipoId(Long tipoId) {
 		this.tipoId = tipoId;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }

@@ -67,6 +67,7 @@ public class ContaEditMB implements Serializable {
 	}
 
 	
+	
 	public Conta getConta() {
 		return conta;
 	}

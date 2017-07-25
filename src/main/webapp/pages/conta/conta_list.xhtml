@@ -10,24 +10,27 @@
 
 		<h:form id="conta_list_form_id">
 
-			<p:commandButton
-				actionListener="#{contaEditMB.abrirDialogNew()}"
-				icon="fa fa-fw fa-edit" 
-				value="Nova"/>
+			<p:commandButton actionListener="#{contaEditMB.abrirDialogNew()}"
+				icon="fa fa-fw fa-edit" value="Nova" />
 
 			<p:dataTable var="_conta" value="#{contaListMB.contas}">
 
-				<p:column headerText="Nome" >
+				<p:column headerText="Nome">
 					<h:outputText value="#{_conta.nome}" />
 				</p:column>
-				<p:column headerText="Tipo" >
+				<p:column headerText="Tipo">
 					<h:outputText value="#{_conta.tipo.descricao}" />
 				</p:column>
 
-				<p:column headerText="" style="width:35px;" >
+				<p:column headerText="" style="width:35px;">
 					<p:commandButton
 						actionListener="#{contaEditMB.abrirDialogEdit(_conta)}"
 						icon="fa fa-fw fa-edit" />
+				</p:column>
+
+				<p:column headerText="" style="width:35px;">
+					<p:commandButton action="#{contaListMB.goToExtrato(_conta)}"
+						icon="fa fa-fw fa-file-text-o" />
 				</p:column>
 
 

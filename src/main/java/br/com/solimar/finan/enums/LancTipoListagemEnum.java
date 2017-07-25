@@ -1,12 +1,13 @@
 package br.com.solimar.finan.enums;
 
-public enum FilterLancTipoEnum {
+public enum LancTipoListagemEnum {
 	
 	E("Receita"), 
 	S("Despesa"),
-	T("Todos");
+	X("Extrato de Conta"),
+	T("Todos os Lançamentos");
 
-	private FilterLancTipoEnum(String descricao) {
+	private LancTipoListagemEnum(String descricao) {
 		this.descricao = descricao;
 	}
 

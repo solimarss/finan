@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import br.com.solimar.finan.business.ContaRN;
 import br.com.solimar.finan.entity.Conta;
+import br.com.solimar.finan.enums.LancTipoListagemEnum;
 import br.com.solimar.finan.view.On;
 import br.com.solimar.finan.view.application.UIService;
 import br.com.solimar.finan.view.application.UserSession;
@@ -42,6 +43,12 @@ public class ContaListMB implements Serializable {
 		search();
 		UIService.update("conta_list_form_id");
 
+	}
+	
+	public String goToExtrato(Conta conta) {
+		userSession.setConta(conta);
+		userSession.setListagem(LancTipoListagemEnum.X);
+		return "/pages/lancamento/lancamento_list.jsf";
 	}
 
 	public List<Conta> getContas() {

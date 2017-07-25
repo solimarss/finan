@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.solimar.finan.enums.LancTipoListagemEnum;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.view.application.UserSession;
 
@@ -34,30 +35,31 @@ public class MenuControllerMB implements Serializable {
 	
 	public String goToLancamentos() {
 		System.out.println("goToLancamentos()");
-		userSession.setTipoES(null);
+		userSession.setListagem(LancTipoListagemEnum.T);
 		return "/pages/lancamento/lancamento_list.jsf?faces-redirect=true";
 	}
 
 	public String goToDespesas() {
 		System.out.println("goToDespesas");
-		userSession.setTipoES(LancamentoTipoEnum.S);
+		userSession.setListagem(LancTipoListagemEnum.S);
+		
 		return "/pages/lancamento/lancamento_list.jsf?faces-redirect=true";
 	}
 	
 	public String goToTiposDespesas() {
 		System.out.println("goToDespesas");
-		userSession.setTipoES(LancamentoTipoEnum.S);
+		userSession.setListagem(LancTipoListagemEnum.S);
 		return "/pages/tipo/tipo_list.jsf?faces-redirect=true";
 	}
 	
 	public String goToCategoriasDespesas() {
 		System.out.println("goToDespesas");
-		userSession.setTipoES(LancamentoTipoEnum.S);
+		userSession.setListagem(LancTipoListagemEnum.S);
 		return "/pages/categoria/categoria_list.jsf?faces-redirect=true";
 	}
 	public String goToReceitas() {
 		System.out.println("goToReceitas");
-		userSession.setTipoES(LancamentoTipoEnum.E);
+		userSession.setListagem(LancTipoListagemEnum.E);
 		return "/pages/lancamento/lancamento_list.jsf?faces-redirect=true";
 	}
 

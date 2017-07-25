@@ -57,7 +57,7 @@ public class TipoListMB implements Serializable {
 			}
 		}
 
-		if (userSession.isTipoESReceita()) {
+		if (userSession.getListagem().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 
 		} else {

@@ -138,7 +138,7 @@ public class LancamentoEditMB implements Serializable {
 		lancamento.setTipo(new Tipo());
 		lancamento.getTipo().setId(0l);
 
-		if (userSession.isTipoESReceita()) {
+		if (userSession.getListagem().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 			lancamento.setTipoES(LancamentoTipoEnum.E);
 
@@ -202,11 +202,7 @@ public class LancamentoEditMB implements Serializable {
 	}
 
 	public String tipoLancamentoView() {
-		if (userSession.isTipoESReceita()) {
-			return "Receitas";
-		}
-
-		return "Despesas";
+		return userSession.getListagem().getDescricao();
 
 	}
 

@@ -160,6 +160,10 @@ public class LancamentoDAO extends AbstractDao<Lancamento> {
 			criteria.add(Restrictions.eq("valorConsiderado", filters.getVlrConsiderado()));
 
 		}
+		if (filters.getConta() != null) {
+			criteria.add(Restrictions.eq("conta", filters.getConta()));
+
+		}
 
 		criteria.add(Restrictions.eq("categorizado", true));
 		criteria.add(Restrictions.eq("contaApp", filters.getContaApp()));

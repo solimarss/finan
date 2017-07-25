@@ -4,7 +4,15 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/template/template.xhtml" xmlns:p="http://primefaces.org/ui">
 
+
 	<ui:define name="content">
+
+		<h:outputScript target="body">
+			function ajustarGrafico() {
+				$.jqplot.sprintf.thousandsSeparator = '.';
+				$.jqplot.sprintf.decimalMark = ',';	
+			}
+		</h:outputScript>
 
 		<h1 class="aw-page-title">
 			<h:outputText value="#{msg['page_title_dashboad']}" />
@@ -24,7 +32,7 @@
 			<div id="box-2" class="box">
 				<h:panelGrid columns="1">
 					<h:outputText value="Receitas" />
-					
+
 					<h:outputText value="#{dashboardMB.totalReceita}">
 						<f:convertNumber type="currency" currencySymbol="R$"
 							locale="pt_BR" />
@@ -53,13 +61,12 @@
 
 
 			<p:repeat value="#{dashboardMB.valoresByCategoria}" var="cat">
-
 				<p:chart type="pie"
-					model="#{dashboardMB.createChartPieValorByTipo(cat.groupName)}" />
+					model="#{dashboardMB.createChartPieValorByTipo(cat.groupName)}"
+					responsive="true" />
 			</p:repeat>
 
 
 		</center>
-
 	</ui:define>
 </ui:composition>

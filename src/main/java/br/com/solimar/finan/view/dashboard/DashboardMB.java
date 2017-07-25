@@ -3,8 +3,11 @@ package br.com.solimar.finan.view.dashboard;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +41,11 @@ public class DashboardMB implements Serializable {
 	@PostConstruct
 	private void init() {
 
+		UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		viewRoot.setLocale(new Locale("pt", "BR"));
+		System.out.println("Locale: " + viewRoot.getLocale());
+		System.out.println("Locale: " + Locale.getDefault());
+
 		valoresByCategoria = lancamentoRN.sumValorGroupByCategoria(LancamentoTipoEnum.S, userSession.getContaApp(),
 				userSession.getMes(), userSession.getAno());
 		createChartPieValorByCategoria(valoresByCategoria);
@@ -48,7 +56,7 @@ public class DashboardMB implements Serializable {
 
 		totalReceita = lancamentoRN.sumValorEntrada(userSession.getContaApp(), userSession.getMes(),
 				userSession.getAno());
-		
+
 		if (totalReceita == null) {
 			totalReceita = BigDecimal.ZERO;
 		}
@@ -58,12 +66,12 @@ public class DashboardMB implements Serializable {
 	}
 
 	public void createChartPieValorByCategoria(List<ValueByGroup> valores) {
+
 		chartPieValorBycategoria = new PieChartModel();
 
 		for (ValueByGroup valorCat : valores) {
 			chartPieValorBycategoria.set(valorCat.getGroupName(), valorCat.getValor());
-			
-			
+
 		}
 
 		chartPieValorBycategoria.setTitle("Despesa por Categoria");
@@ -73,10 +81,12 @@ public class DashboardMB implements Serializable {
 		chartPieValorBycategoria.setDiameter(150);
 		chartPieValorBycategoria.setLegendRows(5);
 		chartPieValorBycategoria.setShowDatatip(true);
-		chartPieValorBycategoria.setDatatipFormat("%s - R$ %'.2f");
-		//chartPieValorBycategoria.setDatatipFormat("<span>R$ %s %.2f</span>");
-	
-	
+		chartPieValorBycategoria.setDatatipFormat("%s:  R$ %'.2f");
+		// chartPieValorBycategoria.setDatatipFormat("<span>R$ %s %.2f</span>");
+
+		// 'ajustarGrafico' é o nome de uma função javascript na página
+		chartPieValorBycategoria.setExtender("ajustarGrafico");
+
 	}
 
 	public PieChartModel createChartPieValorByTipo(String categoriaNome) {
@@ -96,6 +106,10 @@ public class DashboardMB implements Serializable {
 		chartPieValorByTipo.setFill(false);
 		chartPieValorByTipo.setShowDataLabels(true);
 		chartPieValorByTipo.setDiameter(150);
+		chartPieValorByTipo.setDatatipFormat("%s:  R$ %'.2f");
+
+		// 'ajustarGrafico' é o nome de uma função javascript na página
+		chartPieValorByTipo.setExtender("ajustarGrafico");
 
 		return chartPieValorByTipo;
 	}

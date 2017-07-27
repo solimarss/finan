@@ -89,6 +89,9 @@ public class LancamentoListMB implements Serializable {
 	}
 
 	public void search() {
+		
+		
+		
 		LancamentoFilters filters = new LancamentoFilters();
 		filters.setContaApp(userSession.getContaApp());
 		filters.setMes(userSession.getMes());

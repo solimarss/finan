@@ -20,6 +20,7 @@ import br.com.solimar.finan.entity.Categoria;
 import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.Tipo;
 import br.com.solimar.finan.entity.Lancamento;
+import br.com.solimar.finan.enums.LancTipoListagemEnum;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.util.GeradorCodigo;
 import br.com.solimar.finan.view.JSFUtil;
@@ -104,8 +105,17 @@ public class LancamentoEditMB implements Serializable {
 	}
 
 	public void onSelectDesconsiderarValor() {
-		categoriaIdSelected = null;
-		lancamento.getTipo().setId(null);
+
+		if (desconsiderarValor) {
+			categoriaIdSelected = null;
+			if (lancamento.getTipo() != null) {
+				lancamento.getTipo().setId(null);
+
+			}
+
+		} else {
+
+		}
 
 	}
 
@@ -113,15 +123,15 @@ public class LancamentoEditMB implements Serializable {
 		edicao = true;
 		this.lancamento = lancamento;
 
-		
-		if(lancamento.getTipo() != null){
+		if (lancamento.getTipo() != null) {
 			categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
-		
+
 		}
-		
+
 		onSelectCategoria();
 
 		desconsiderarValor = !lancamento.isValorConsiderado();
+
 		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
@@ -138,13 +148,14 @@ public class LancamentoEditMB implements Serializable {
 		lancamento.setTipo(new Tipo());
 		lancamento.getTipo().setId(0l);
 
-		if (userSession.getListagem().equals(LancamentoTipoEnum.E)) {
+		if (userSession.getListagem().equals(LancTipoListagemEnum.E)) {
 			categorias = categoriasReceita;
 			lancamento.setTipoES(LancamentoTipoEnum.E);
 
 		} else {
 			categorias = categoriasDespesa;
 			lancamento.setTipoES(LancamentoTipoEnum.S);
+
 		}
 
 		edicao = false;
@@ -159,18 +170,16 @@ public class LancamentoEditMB implements Serializable {
 	public void save() {
 
 		try {
-			
-			
 
 			if (!edicao) {
 				lancamento.setCategorizado(true);
 				lancamento.setConta(new Conta(contaIdSelected));
 				lancamento.setCodigo(GeradorCodigo.gerar());
 				lancamento.setDataPagamento(lancamento.getData());
-				lancamento.setUpdatedAt(new Date());			
+				lancamento.setUpdatedAt(new Date());
 				lancamento.setCreatedAt(new Date());
-				
-				System.out.println("data pagto; "+lancamento.getDataPagamento());
+
+				System.out.println("data pagto; " + lancamento.getDataPagamento());
 
 				if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
 					lancamento.setValor(turnToNegative(lancamento.getValor()));
@@ -182,11 +191,10 @@ public class LancamentoEditMB implements Serializable {
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
-			
-			if(desconsiderarValor){
+
+			if (desconsiderarValor) {
 				lancamento.setTipo(null);
 			}
-			
 
 			System.out.println("Valor: " + lancamento.getValor());
 			lancamentoRN.save(lancamento);

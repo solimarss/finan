@@ -87,6 +87,7 @@ public class LancamentoEditMB implements Serializable {
 	}
 
 	public void onSelectCategoria() {
+		
 		itens = new ArrayList<>();
 		if (categoriaIdSelected != null) {
 
@@ -97,6 +98,10 @@ public class LancamentoEditMB implements Serializable {
 			}
 			enableDesconsiderarValor = false;
 			desconsiderarValor = false;
+			
+			if(lancamento.getTipo() == null){
+				lancamento.setTipo(new Tipo());
+			}
 
 		} else {
 			enableDesconsiderarValor = true;

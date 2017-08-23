@@ -1,7 +1,6 @@
 package br.com.solimar.finan.core.interceptor;
 
 import javax.interceptor.AroundInvoke;
-import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
 

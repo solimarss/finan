@@ -13,7 +13,6 @@ import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
 import br.com.solimar.finan.persistence.LancamentoDAO;
-import br.com.solimar.finan.util.DataUtil;
 import br.com.solimar.finan.vo.ValueByGroup;
 
 @Stateless

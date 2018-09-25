@@ -22,7 +22,7 @@
 		<class>br.com.solimar.finan.entity.Padrao</class>
 
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />

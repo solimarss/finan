@@ -65,6 +65,9 @@ public class Lancamento implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TIPOES", nullable = false, length = 1)
 	private LancamentoTipoEnum tipoES;
+	
+	@Column(name = "IS_TRANSFERENCIA")
+	private Boolean isTransferencia;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Conta conta;
@@ -246,6 +249,14 @@ public class Lancamento implements Serializable {
 
 	public void setKilometragem(Integer kilometragem) {
 		this.kilometragem = kilometragem;
+	}
+
+	public Boolean getIsTransferencia() {
+		return isTransferencia;
+	}
+
+	public void setIsTransferencia(Boolean isTransferencia) {
+		this.isTransferencia = isTransferencia;
 	}
 
 }

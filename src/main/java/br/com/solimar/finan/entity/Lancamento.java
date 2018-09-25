@@ -97,6 +97,34 @@ public class Lancamento implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ContaApp contaApp;
+	
+	
+	
+	public Lancamento() {
+		
+	}
+	
+	public Lancamento(Lancamento lancamento) {
+		this.codigo = lancamento.getCodigo();
+		this.descricao = lancamento.getDescricao();
+		this.transactionId = lancamento.getTransactionId();
+		this.memo = lancamento.getMemo();
+		this.valor = lancamento.getValor();
+		this.valorConsiderado = lancamento.isValorConsiderado();
+		this.data = lancamento.getData();
+		this.dataPagamento = lancamento.getDataPagamento();
+		this.tipoES = lancamento.getTipoES();
+		this.isTransferencia = lancamento.getIsTransferencia();
+		this.conta = lancamento.getConta();
+		this.cartaoCreditoFatura = lancamento.getCartaoCreditoFatura();
+		this.tipo = lancamento.getTipo();
+		this.isAbastecimento = lancamento.getIsAbastecimento();
+		this.kilometragem = lancamento.getKilometragem();
+		this.categorizado = lancamento.isCategorizado();
+		this.createdAt = lancamento.getCreatedAt();
+		this.updatedAt = lancamento.getUpdatedAt();
+		this.contaApp = lancamento.getContaApp();
+	}
 
 	public Long getId() {
 		return id;

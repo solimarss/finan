@@ -39,11 +39,16 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="" style="width:35px;">
+				<p:column headerText="" style="width:70px;">
 					<p:commandButton
 						actionListener="#{categorizacaoEditMB.abrirDialog(_lancamento)}"
 						icon="fa fa-fw fa-edit"
 						onclick="PF('categorizacao_edit_wvar').show();" />
+
+					<p:commandButton
+						actionListener="#{categorizacaoTransferMB.abrirDialog(_lancamento)}"
+						icon="fa fa-fw fa-edit"
+						onclick="PF('categorizacao_transfer_wvar').show();" />
 				</p:column>
 
 
@@ -54,7 +59,8 @@
 		</h:form>
 
 		<ui:include src="/pages/categorizacao/categorizacao_edit.xhtml" />
+		<ui:include src="/pages/categorizacao/categorizacao_transfer.xhtml" />
 
-	
+
 	</ui:define>
 </ui:composition>

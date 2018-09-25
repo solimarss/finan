@@ -196,6 +196,7 @@ public class LancamentoEditMB implements Serializable {
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
 			lancamento.setValorConsiderado(!desconsiderarValor);
+			lancamento.setIsTransferencia(false);
 
 			if (desconsiderarValor) {
 				lancamento.setTipo(null);

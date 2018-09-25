@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="categorizacao_transfer_form_id">
+
+		<p:dialog id="categorizacao_transfer_id" resizable="false"
+			draggable="true" widgetVar="categorizacao_transfer_wvar" width="600"
+			closable="false" modal="true" showEffect="fade">
+
+			<f:facet name="header">
+				<h:panelGroup id="categorizacao_transfer_header_id">
+					<h:outputText value="Transferência" />
+				</h:panelGroup>
+			</f:facet>
+
+			<h:panelGrid id="categorizacao_transfer_body_id" columns="2">
+
+
+				<p:outputLabel value="Descrição:" for="tx_obs_id" />
+				<p:inputText id="tx_obs_id"
+					value="#{categorizacaoTransferMB.lancamento.descricao}" size="50" />
+
+				<p:outputLabel value="Transação:" />
+				<h:outputText value="#{categorizacaoTransferMB.lancamento.memo}" />
+
+				<p:outputLabel value="Data:" />
+				<h:outputText value="#{categorizacaoTransferMB.lancamento.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+				<p:outputLabel value="Valor:" />
+				<h:outputText value="#{categorizacaoTransferMB.lancamento.valor}">
+					<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+				</h:outputText>
+				
+				<p:outputLabel value="De:" />
+				<h:outputText value="#{categorizacaoTransferMB.lancamento.conta.nome}" />
+				
+				
+				<p:outputLabel value="Para:" />
+				<p:selectOneMenu id="cb_conta"
+					required="true"
+					value="#{categorizacaoTransferMB.contaIdSelected}" effect="fold"
+					editable="false">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{categorizacaoTransferMB.contas}"
+						itemValue="#{_item.id}" itemLabel="#{_item.nome}" var="_item" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<h:panelGroup id="categorizacao_transfer_footer_id">
+					<p:commandButton value="Salvar" process="@form"
+						actionListener="#{categorizacaoTransferMB.save()}"
+						styleClass="button-save button-blue bold"
+						oncomplete="PF('table_lancamento_wvar').filter()"
+						update="categorizacao_transfer_body_id" />
+					<h:outputText value="ou" />
+					<p:commandLink value="Fechar"
+						onclick="PF('categorizacao_transfer_wvar').hide()"
+						styleClass="button-cancel" process="@this" update="@form">
+						<p:resetInput target="categorizacao_transfer_body_id" />
+					</p:commandLink>
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

@@ -76,8 +76,7 @@
 				</p:column>
 
 				<p:column headerText="Tipo/Categoria">
-					<h:outputText
-						value="#{_lancamento.tipo.nome} / #{_lancamento.tipo.categoria.nome}" />
+					<h:outputText value="#{_lancamento.tipoCategoriaAsString}" />
 				</p:column>
 
 				<p:column headerText="Classif." style="width:40px;">
@@ -96,11 +95,12 @@
 				<p:column headerText="Valor" style="width:90px;">
 
 					<h:outputText value="#{_lancamento.valor}"
-						style="text-decoration:line-through"
 						rendered="#{!_lancamento.valorConsiderado}">
 						<f:convertNumber type="currency" currencySymbol="R$"
 							locale="pt_BR" />
 					</h:outputText>
+					<h:outputText value=" *"
+						rendered="#{!_lancamento.valorConsiderado}" />
 
 					<h:outputText value="#{_lancamento.valor}"
 						rendered="#{_lancamento.valorConsiderado}">

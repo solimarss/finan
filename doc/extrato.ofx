@@ -1,0 +1,411 @@
+OFXHEADER:100DATA:OFXSGMLVERSION:102SECURITY:NONEENCODING:USASCIICHARSET:1252COMPRESSION:NONEOLDFILEUID:NONENEWFILEUID:NONE<OFX>
+   <SIGNONMSGSRSV1>
+      <SONRS>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <DTSERVER>20180925120000[-3:BRT]</DTSERVER>
+         <LANGUAGE>POR</LANGUAGE>
+         <FI>
+            <ORG>Banco do Brasil</ORG>
+            <FID>1</FID>
+         </FI>
+      </SONRS>
+   </SIGNONMSGSRSV1>
+   <BANKMSGSRSV1>
+      <STMTTRNRS>
+         <TRNUID>1</TRNUID>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <STMTRS>
+            <CURDEF>BRL</CURDEF>
+            <BANKACCTFROM>
+               <BANKID>1</BANKID>
+               <BRANCHID>3074-0</BRANCHID>
+               <ACCTID>55033-7</ACCTID>
+               <ACCTTYPE>CHECKING</ACCTTYPE>
+            </BANKACCTFROM>
+            <BANKTRANLIST>
+               <DTSTART>20180831120000[-3:BRT]</DTSTART>
+               <DTEND>20180925120000[-3:BRT]</DTEND>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-12.44</TRNAMT>
+                  <FITID>20180903112440</FITID>
+                  <CHECKNUM>000000391217</CHECKNUM>
+                  <REFNUM>391.217</REFNUM>
+                  <MEMO>Compra com Cartão - 03/09 13:18 LIDER SUPERMERC E MA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-52.04</TRNAMT>
+                  <FITID>20180903152040</FITID>
+                  <CHECKNUM>000000427735</CHECKNUM>
+                  <REFNUM>427.735</REFNUM>
+                  <MEMO>Compra com Cartão - 03/09 14:02 PORTUGAL P DESCARTAV</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-12.00</TRNAMT>
+                  <FITID>20180903112000</FITID>
+                  <CHECKNUM>000000667465</CHECKNUM>
+                  <REFNUM>667.465</REFNUM>
+                  <MEMO>Compra com Cartão - 01/09 02:58 MASTER</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-15.29</TRNAMT>
+                  <FITID>20180903115290</FITID>
+                  <CHECKNUM>000000680616</CHECKNUM>
+                  <REFNUM>680.616</REFNUM>
+                  <MEMO>Compra com Cartão - 03/09 19:20 SABOR DO PICUI</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-9.00</TRNAMT>
+                  <FITID>2018090319000</FITID>
+                  <CHECKNUM>000000871328</CHECKNUM>
+                  <REFNUM>871.328</REFNUM>
+                  <MEMO>Compra com Cartão - 02/09 15:23 LIDER SUPERMERCADO E</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-23.53</TRNAMT>
+                  <FITID>20180903123530</FITID>
+                  <CHECKNUM>000000881393</CHECKNUM>
+                  <REFNUM>881.393</REFNUM>
+                  <MEMO>Compra com Cartão - 02/09 15:42 LIDER SUPERMERCADO E</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-1500.00</TRNAMT>
+                  <FITID>2018090311500000</FITID>
+                  <CHECKNUM>116510011028</CHECKNUM>
+                  <REFNUM>604.116.510.011.028</REFNUM>
+                  <MEMO>Transferido para Poupança - 03/09 4116  510011028-3 ESTEVAM SOUSA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-560.00</TRNAMT>
+                  <FITID>201809031560000</FITID>
+                  <CHECKNUM>655900836407</CHECKNUM>
+                  <REFNUM>655.900.836.407</REFNUM>
+                  <MEMO>Banco 24 Horas - 03/09 13:14 SUP LIDER A CACELA I</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-1000.00</TRNAMT>
+                  <FITID>2018090311000000</FITID>
+                  <CHECKNUM>000000090301</CHECKNUM>
+                  <REFNUM>90.301</REFNUM>
+                  <MEMO>Emissão de DOC - 341 9208 14895196291 MARIA DE LOURDES</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-10.15</TRNAMT>
+                  <FITID>20180903110150</FITID>
+                  <CHECKNUM>461300301166</CHECKNUM>
+                  <REFNUM>812.461.300.301.166</REFNUM>
+                  <MEMO>DOCinternet - Tarifa referente a 03/09/2018</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180903120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>3194.45</TRNAMT>
+                  <FITID>2018090303194450</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180904120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-9.49</TRNAMT>
+                  <FITID>2018090419490</FITID>
+                  <CHECKNUM>000000757840</CHECKNUM>
+                  <REFNUM>757.840</REFNUM>
+                  <MEMO>Compra com Cartão - 04/09 01:55 EXTRAFARMA AEROPORTO</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180904120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-34.00</TRNAMT>
+                  <FITID>20180904134000</FITID>
+                  <CHECKNUM>000000757884</CHECKNUM>
+                  <REFNUM>757.884</REFNUM>
+                  <MEMO>Compra com Cartão - 04/09 02:04 FLY CAFE</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180904120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-6.20</TRNAMT>
+                  <FITID>2018090416200</FITID>
+                  <CHECKNUM>000000761282</CHECKNUM>
+                  <REFNUM>761.282</REFNUM>
+                  <MEMO>Compra com Cartão - 04/09 06:15 VIENA EXPRESS PIER S</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180904120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>49.69</TRNAMT>
+                  <FITID>20180904049690</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180910120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-30.00</TRNAMT>
+                  <FITID>20180910130000</FITID>
+                  <CHECKNUM>000000148585</CHECKNUM>
+                  <REFNUM>148.585</REFNUM>
+                  <MEMO>Compra com Cartão - 07/09 13:29 RESTAURANTE DO GORDO</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180910120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>30.00</TRNAMT>
+                  <FITID>20180910030000</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180917120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>800.00</TRNAMT>
+                  <FITID>201809170800000</FITID>
+                  <CHECKNUM>116510011028</CHECKNUM>
+                  <REFNUM>4.116.510.011.028</REFNUM>
+                  <MEMO>Transferido da poupança - 15/09 4116      11028-0 ESTEVAM SOUSA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180917120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>200.00</TRNAMT>
+                  <FITID>201809170200000</FITID>
+                  <CHECKNUM>116510011028</CHECKNUM>
+                  <REFNUM>4.116.510.011.028</REFNUM>
+                  <MEMO>Transferido da poupança - 17/09 4116      11028-0 ESTEVAM SOUSA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180917120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-300.00</TRNAMT>
+                  <FITID>201809171300000</FITID>
+                  <CHECKNUM>919184507808</CHECKNUM>
+                  <REFNUM>170.919.184.507.808</REFNUM>
+                  <MEMO>Saque no TAA - 17/09 09:19 SAA-S.DOM.ARAGUAIA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180917120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-15.00</TRNAMT>
+                  <FITID>20180917115000</FITID>
+                  <CHECKNUM>610929012364</CHECKNUM>
+                  <REFNUM>991.610.929.012.364</REFNUM>
+                  <MEMO>Telefone Pre-Pago - 94991610929-Vivo AM,AP,MA,RR,PA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180917120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-685.00</TRNAMT>
+                  <FITID>201809171685000</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Aplicação Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180919120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-130.00</TRNAMT>
+                  <FITID>201809191130000</FITID>
+                  <CHECKNUM>000000131317</CHECKNUM>
+                  <REFNUM>131.317</REFNUM>
+                  <MEMO>Compra com Cartão - 19/09 08:41 GLORIA HOTEL</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180919120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>130.00</TRNAMT>
+                  <FITID>201809190130000</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180921120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-150.00</TRNAMT>
+                  <FITID>201809211150000</FITID>
+                  <CHECKNUM>371500622208</CHECKNUM>
+                  <REFNUM>2.371.500.622.208</REFNUM>
+                  <MEMO>Banco 24 Horas - 21/09 11:14 SUP PORTUGAL A CACELA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180921120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-565.73</TRNAMT>
+                  <FITID>201809211565730</FITID>
+                  <CHECKNUM>641000444685</CHECKNUM>
+                  <REFNUM>872.641.000.444.685</REFNUM>
+                  <MEMO>Pgto BB Consig Em Folha</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180921120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-125.98</TRNAMT>
+                  <FITID>201809211125980</FITID>
+                  <CHECKNUM>000000040939</CHECKNUM>
+                  <REFNUM>40.939</REFNUM>
+                  <MEMO>Vivo Celular</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180921120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>841.71</TRNAMT>
+                  <FITID>201809210841710</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>4600.00</TRNAMT>
+                  <FITID>2018092404600000</FITID>
+                  <CHECKNUM>074400055033</CHECKNUM>
+                  <REFNUM>523.074.400.055.033</REFNUM>
+                  <MEMO>Transferência recebida - 24/09 3074      55033-7 SOLIMAR SILVA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>100.00</TRNAMT>
+                  <FITID>201809240100000</FITID>
+                  <CHECKNUM>000000134699</CHECKNUM>
+                  <REFNUM>134.699</REFNUM>
+                  <MEMO>Estorno de Débito</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-100.00</TRNAMT>
+                  <FITID>201809241100000</FITID>
+                  <CHECKNUM>000000134699</CHECKNUM>
+                  <REFNUM>134.699</REFNUM>
+                  <MEMO>Compra com Cartão - 23/09 09:38 POSTO BELEM VIP</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-100.00</TRNAMT>
+                  <FITID>201809241100001</FITID>
+                  <CHECKNUM>000000334825</CHECKNUM>
+                  <REFNUM>334.825</REFNUM>
+                  <MEMO>Compra com Cartão - 23/09 09:40 POSTO BELEM VIP</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-2209.05</TRNAMT>
+                  <FITID>2018092412209050</FITID>
+                  <CHECKNUM>307400020129</CHECKNUM>
+                  <REFNUM>740.307.400.020.129</REFNUM>
+                  <MEMO>Pagto cartão crédito</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-2778.08</TRNAMT>
+                  <FITID>2018092412778080</FITID>
+                  <CHECKNUM>307400037808</CHECKNUM>
+                  <REFNUM>740.307.400.037.808</REFNUM>
+                  <MEMO>Pagto cartão crédito</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-150.00</TRNAMT>
+                  <FITID>201809241150000</FITID>
+                  <CHECKNUM>177800860808</CHECKNUM>
+                  <REFNUM>5.177.800.860.808</REFNUM>
+                  <MEMO>Banco 24 Horas - 23/09 07:54 AUTO POSTO CONSELHEIRO</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-42.04</TRNAMT>
+                  <FITID>20180924142040</FITID>
+                  <CHECKNUM>000000092401</CHECKNUM>
+                  <REFNUM>92.401</REFNUM>
+                  <MEMO>Pgto conta água - COSANPA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-24.13</TRNAMT>
+                  <FITID>20180924124130</FITID>
+                  <CHECKNUM>000000092402</CHECKNUM>
+                  <REFNUM>92.402</REFNUM>
+                  <MEMO>Pgto conta água - COSANPA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-344.63</TRNAMT>
+                  <FITID>201809241344630</FITID>
+                  <CHECKNUM>000000092403</CHECKNUM>
+                  <REFNUM>92.403</REFNUM>
+                  <MEMO>Pagamento de Título - BANCO BRADESCO S.A.</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180924120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>1047.93</TRNAMT>
+                  <FITID>2018092401047930</FITID>
+                  <CHECKNUM>000000000148</CHECKNUM>
+                  <REFNUM>148</REFNUM>
+                  <MEMO>Resgate Poupança</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180925120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-107.08</TRNAMT>
+                  <FITID>201809251107080</FITID>
+                  <CHECKNUM>000000041843</CHECKNUM>
+                  <REFNUM>41.843</REFNUM>
+                  <MEMO>TV por assinatura - Data balanc.: 25/09/2018</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20180925120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-450.81</TRNAMT>
+                  <FITID>201809251450810</FITID>
+                  <CHECKNUM>000000092501</CHECKNUM>
+                  <REFNUM>92.501</REFNUM>
+                  <MEMO>Pagamento conta luz - CELPA ARREC TAA/INTERNET</MEMO>
+               </STMTTRN>
+            </BANKTRANLIST>
+            <LEDGERBAL>
+               <BALAMT>-557.89</BALAMT>
+               <DTASOF>20180925120000[-3:BRT]</DTASOF>
+            </LEDGERBAL>
+         </STMTRS>
+      </STMTTRNRS>
+   </BANKMSGSRSV1>
+</OFX>

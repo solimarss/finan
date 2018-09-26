@@ -2,6 +2,7 @@ package br.com.solimar.finan.business;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.solimar.finan.entity.Conta;
 import br.com.solimar.finan.entity.ContaApp;
 import br.com.solimar.finan.entity.Lancamento;
 import br.com.solimar.finan.enums.LancamentoTipoEnum;
@@ -34,7 +36,7 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findByMemoAndTransactionIdAndContaApp(Lancamento lancamento) {
 		return lancamentoDAO.findByMemoAndTransactionIdAndContaApp(lancamento);
 	}
-	
+
 	public List<Lancamento> searchForDuplicityCreditCard(Lancamento lancamento) {
 		return lancamentoDAO.searchForDuplicityCreditCard(lancamento);
 	}
@@ -42,38 +44,65 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findNaoCategorizados(ContaApp contaApp, int mes, int ano) {
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
-		
+
 		return lancamentoDAO.findNaoCategorizados(contaApp, startDay, endDay);
 	}
 
 	public BigDecimal sumValorEntrada(ContaApp contaApp, int mes, int ano) {
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
+
 		return lancamentoDAO.sumValorLancamentos(LancamentoTipoEnum.E, contaApp, startDay, endDay);
 	}
 
+	public void saveTransfer(Lancamento lancamento, Conta conta) throws NoSuchAlgorithmException {
+		lancamento.setTransferConta(conta);
+		lancamento.setIsTransferencia(true);
+		lancamento.setValorConsiderado(false);
+		lancamento.setTipo(null);
+		lancamento.setUpdatedAt(new Date());
+		lancamento.setCategorizado(true);
+		
+		if (conta.isLancamentoManual()) {
+			lancamento.setTransferNumber(gerarIdTransferencia(lancamento));
+			//TODO Ajustar o metodo construtor para copiar todos os dados
+			Lancamento lancamentoReverso = new Lancamento(lancamento);
+			lancamentoReverso.setTransferConta(lancamento.getConta());
+			lancamentoReverso.setTransferNumber(lancamento.getTransferNumber());
+			lancamentoReverso.setValor(lancamento.getValor().multiply(new BigDecimal(-1)));
+			lancamentoReverso.setConta(conta);
+			this.save(lancamentoReverso);
+		}	
+		this.save(lancamento);
+	}
+
+	private static Long gerarIdTransferencia(Lancamento lancamento) throws NoSuchAlgorithmException {
+		StringBuilder codigoFormatado = new StringBuilder();
+		codigoFormatado.append(lancamento.getContaApp().getId().toString());
+		codigoFormatado.append(new Date().getTime());
+		return new Long(codigoFormatado.toString());
+	}
+
 	public List<Lancamento> findDuplicados(ContaApp contaApp, Lancamento lancamento, int mes, int ano) {
-		
-		
+
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
-		return lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento,  startDay, endDay);
+
+		return lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento, startDay, endDay);
 	}
 
 	public List<Lancamento> findDuplicados(ContaApp contaApp, int mes, int ano) {
-		
+
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
 
-		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp,  startDay, endDay);
+		List<Lancamento> lacamentosNaoCategorizados = lancamentoDAO.findNaoCategorizados(contaApp, startDay, endDay);
 
 		List<Lancamento> lacamentosDuplicados = new ArrayList<>();
 
 		for (Lancamento lancamento : lacamentosNaoCategorizados) {
-			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento,  startDay, endDay);
+			List<Lancamento> lancamentos = lancamentoDAO.findPossivelDuplicidade(contaApp, lancamento, startDay,
+					endDay);
 			if (lancamentos.size() > 1) {
 				for (Lancamento lanc : lancamentos) {
 
@@ -102,14 +131,14 @@ public class LancamentoRN implements Serializable {
 	public List<Lancamento> findSaidas(ContaApp contaApp, int mes, int ano) {
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
-		return lancamentoDAO.findSaidas(contaApp,  startDay, endDay);
+
+		return lancamentoDAO.findSaidas(contaApp, startDay, endDay);
 	}
 
 	public List<Lancamento> search(LancamentoFilters filters) {
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(filters.getContaApp(), filters.getMes(), filters.getAno());
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(filters.getContaApp(), filters.getMes(), filters.getAno());
-		
+
 		return lancamentoDAO.search(filters, startDay, endDay);
 
 	}
@@ -123,16 +152,16 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<ValueByGroup> sumValorGroupByCategoria(LancamentoTipoEnum tipoES, ContaApp contaApp, int mes, int ano) {
-		
+
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
 
-		List<ValueByGroup> groupByCategoria = lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp,  startDay, endDay);
+		List<ValueByGroup> groupByCategoria = lancamentoDAO.sumValorGroupByCategoria(tipoES, contaApp, startDay,
+				endDay);
 
 		for (ValueByGroup groupCat : groupByCategoria) {
 			groupCat.setSubGroup((lancamentoDAO.sumValorGroupByTipoByCategoria(groupCat.getGroupName(), tipoES,
-					contaApp,  startDay, endDay)));
+					contaApp, startDay, endDay)));
 
 		}
 
@@ -140,11 +169,11 @@ public class LancamentoRN implements Serializable {
 	}
 
 	public List<ValueByGroup> sumValorGroupByTipo(LancamentoTipoEnum tipoEs, ContaApp contaApp, int mes, int ano) {
-		
+
 		Date startDay = PeriodoRN.getFirstDayOfThePeriod(contaApp, mes, ano);
 		Date endDay = PeriodoRN.getLastDayOfThePeriod(contaApp, mes, ano);
-		
-		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp,  startDay, endDay);
+
+		return lancamentoDAO.sumValorGroupByTipo(tipoEs, contaApp, startDay, endDay);
 	}
 
 	public void delete(Lancamento lancamento) {

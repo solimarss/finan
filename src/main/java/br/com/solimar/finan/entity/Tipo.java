@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,6 +25,7 @@ public class Tipo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
+	@JoinColumn( name = "ID" )
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -34,6 +36,7 @@ public class Tipo implements Serializable {
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn( name = "CONTEGORIA_ID" )
 	private Categoria categoria;
 
 	@Column(name = "CREATED_AT")
@@ -45,6 +48,7 @@ public class Tipo implements Serializable {
 	private Date updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn( name = "CONTAAPP_ID" )
 	private ContaApp contaApp;
 	
 	

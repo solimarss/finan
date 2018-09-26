@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,6 +26,7 @@ public class Lancamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -65,45 +67,55 @@ public class Lancamento implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TIPOES", nullable = false, length = 1)
 	private LancamentoTipoEnum tipoES;
-	
+
 	@Column(name = "IS_TRANSFERENCIA")
 	private Boolean isTransferencia;
 
+	// Numero de tranferencia
+	@Column(name = "TRANSFER_NUMBER")
+	private Long transferNumber;
+
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "TRANSFER_CONTA_ID")
+	private Conta transferConta;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CONTA_ID")
 	private Conta conta;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "FATURA_ID")
 	private Fatura cartaoCreditoFatura;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "TIPO_ID")
 	private Tipo tipo;
 
 	@Column(name = "IS_ABASTECIMENTO")
 	private Boolean isAbastecimento = false;
-	
+
 	@Column(name = "KILOMETRAGEM", length = 300)
 	private Integer kilometragem;
-	
+
 	@Column(name = "CATEGORIZADO")
 	private boolean categorizado = true;
 
 	@Column(name = "CREATED_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdAt;
-	
+
 	@Column(name = "UPDATE_AT")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CONTAAPP_ID")
 	private ContaApp contaApp;
-	
-	
-	
+
 	public Lancamento() {
-		
+
 	}
-	
+
 	public Lancamento(Lancamento lancamento) {
 		this.codigo = lancamento.getCodigo();
 		this.descricao = lancamento.getDescricao();
@@ -124,6 +136,20 @@ public class Lancamento implements Serializable {
 		this.createdAt = lancamento.getCreatedAt();
 		this.updatedAt = lancamento.getUpdatedAt();
 		this.contaApp = lancamento.getContaApp();
+	}
+
+	public String getTipoCategoriaAsString() {
+
+		if (isTransferencia) {
+			return "Transferência - " + transferConta.getNome() + " - " + transferNumber;
+		}
+
+		if (tipo != null) {
+			return tipo.getNome() + " - " + tipo.getCategoria().getNome();
+		}
+
+		return "";
+
 	}
 
 	public Long getId() {
@@ -214,7 +240,6 @@ public class Lancamento implements Serializable {
 		this.cartaoCreditoFatura = cartaoCreditoFatura;
 	}
 
-	
 	public Tipo getTipo() {
 		return tipo;
 	}
@@ -285,6 +310,22 @@ public class Lancamento implements Serializable {
 
 	public void setIsTransferencia(Boolean isTransferencia) {
 		this.isTransferencia = isTransferencia;
+	}
+
+	public Long getTransferNumber() {
+		return transferNumber;
+	}
+
+	public void setTransferNumber(Long transferNumber) {
+		this.transferNumber = transferNumber;
+	}
+
+	public Conta getTransferConta() {
+		return transferConta;
+	}
+
+	public void setTransferConta(Conta transferConta) {
+		this.transferConta = transferConta;
 	}
 
 }

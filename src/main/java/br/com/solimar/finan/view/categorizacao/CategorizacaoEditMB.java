@@ -38,7 +38,7 @@ public class CategorizacaoEditMB implements Serializable {
 
 	@Inject
 	private CategoriaRN categoriaRN;
-	
+
 	@Inject
 	private PadraoRN padraoRN;
 
@@ -55,7 +55,6 @@ public class CategorizacaoEditMB implements Serializable {
 	private boolean enableDesconsiderarValor = true;
 	private Long categoriaIdSelected;
 	private Long tipoIdSelected;
-	
 
 	@Inject
 	@On("categorizacao.save")
@@ -101,7 +100,7 @@ public class CategorizacaoEditMB implements Serializable {
 
 	public void onSelectDesconsiderarValor() {
 		categoriaIdSelected = null;
-		
+
 		lancamento.setTipo(null);
 
 	}
@@ -109,31 +108,30 @@ public class CategorizacaoEditMB implements Serializable {
 	public void abrirDialog(Lancamento lancamento) {
 		this.lancamento = lancamento;
 		lancamento.setDescricao(lancamento.getMemo());
-		
-		
-		if(lancamento.isValorConsiderado()){
+
+		if (lancamento.isValorConsiderado()) {
 			desconsiderarValor = false;
 			enableDesconsiderarValor = true;
-		}else{
+		} else {
 			desconsiderarValor = true;
 			enableDesconsiderarValor = false;
 		}
-		
-		if(lancamento.getTipo() != null){
+
+		if (lancamento.getTipo() != null) {
 			categoriaIdSelected = lancamento.getTipo().getCategoria().getId();
 			tipoIdSelected = lancamento.getTipo().getId();
-		}else{
+		} else {
 			categoriaIdSelected = null;
 			tipoIdSelected = null;
 		}
-		
+
 		if (lancamento.getTipoES().equals(LancamentoTipoEnum.E)) {
 			categorias = categoriasReceita;
 		} else {
 			categorias = categoriasDespesa;
 		}
 		onSelectCategoria();
-		
+
 		UIService.update("categorizacao_edit_form_id");
 		UIService.show("categorizacao_edit_wvar");
 	}
@@ -142,33 +140,31 @@ public class CategorizacaoEditMB implements Serializable {
 
 		try {
 
-			if(desconsiderarValor){
+			if (desconsiderarValor) {
 				lancamento.setValorConsiderado(false);
 				lancamento.setTipo(null);
-			}else{
+			} else {
 				lancamento.setValorConsiderado(true);
 				lancamento.setTipo(findTipo(tipoIdSelected));
 			}
-			
+
 			lancamento.setContaApp(userSession.getContaApp());
 			lancamento.setUpdatedAt(new Date());
 			lancamento.setCategorizado(true);
-			
-			
+			lancamento.setIsTransferencia(false);
 
 			lancamentoRN.save(lancamento);
-			
+
 			List<Padrao> padroes = padraoRN.findByMemo(lancamento.getMemo(), userSession.getContaApp());
-			if(padroes.isEmpty()){
-				
+			if (padroes.isEmpty()) {
+
 				Padrao padrao = new Padrao();
-				if(lancamento.isValorConsiderado()){
+				if (lancamento.isValorConsiderado()) {
 					padrao.setTipo(lancamento.getTipo());
-				}else{
+				} else {
 					padrao.setTipo(null);
 				}
-				
-				
+
 				padrao.setCodigo(GeradorCodigo.gerar());
 				padrao.setContaApp(userSession.getContaApp());
 				padrao.setCreatedAt(new Date());
@@ -177,7 +173,7 @@ public class CategorizacaoEditMB implements Serializable {
 				padrao.setValorConsiderado(lancamento.isValorConsiderado());
 				padraoRN.insert(padrao);
 			}
-			
+
 			eventoCategorizacao.fire(lancamento);
 
 			UIService.hide("categorizacao_edit_wvar");
@@ -189,14 +185,15 @@ public class CategorizacaoEditMB implements Serializable {
 
 	}
 
-	private Tipo findTipo(Long id){
+	private Tipo findTipo(Long id) {
 		for (Tipo tipo : itensAll) {
-			if(tipo.getId().equals(id)){
+			if (tipo.getId().equals(id)) {
 				return tipo;
 			}
 		}
 		return null;
 	}
+
 	public Lancamento getLancamento() {
 		return lancamento;
 	}

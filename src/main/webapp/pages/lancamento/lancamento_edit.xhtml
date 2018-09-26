@@ -109,7 +109,7 @@
 				<p:selectBooleanCheckbox id="ck_desc_valor"
 					rendered="#{lancamentoEditMB.edicao}"
 					value="#{lancamentoEditMB.desconsiderarValor}"
-					disabled="#{!lancamentoEditMB.enableDesconsiderarValor}">
+					disabled="#{lancamentoEditMB.disableCampoDesconsiderarValor()}">
 
 					<p:ajax event="change" update="lancamento_edit_body_id"
 						listener="#{lancamentoEditMB.onSelectDesconsiderarValor}" />

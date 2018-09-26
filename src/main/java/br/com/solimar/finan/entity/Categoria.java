@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,6 +25,7 @@ public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column( name = "ID" )
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -46,6 +48,7 @@ public class Categoria implements Serializable {
 	private LancamentoTipoEnum tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn( name = "CONTAAPP_ID" )
 	private ContaApp contaApp;
 
 	public Categoria() {

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,6 +22,7 @@ public class Padrao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column( name = "ID" )
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -42,9 +44,11 @@ public class Padrao implements Serializable {
 	private Date updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn( name = "TIPO_ID" )
 	private Tipo tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn( name = "CONTAAPP_ID" )
 	private ContaApp contaApp;
 
 	public Long getId() {

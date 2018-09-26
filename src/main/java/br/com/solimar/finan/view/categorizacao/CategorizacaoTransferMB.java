@@ -3,6 +3,7 @@ package br.com.solimar.finan.view.categorizacao;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -48,16 +49,30 @@ public class CategorizacaoTransferMB implements Serializable {
 	private void init() {
 
 		lancamento = new Lancamento();
-		contas = contaRN.findLancamentoManual(userSession.getContaApp());
+		contas = contaRN.listAll(userSession.getContaApp());
+		
+		
 
 	}
 
 	public void abrirDialog(Lancamento lancamento) {
 		this.lancamento = lancamento;
 		lancamento.setDescricao(lancamento.getMemo());
+		excluirContaDoLancamento(lancamento);
 		UIService.update("categorizacao_transfer_form_id");
 		UIService.show("categorizacao_transfer_wvar");
 	}
+	
+	public void excluirContaDoLancamento(Lancamento lancamento) {
+		contas = contaRN.listAll(userSession.getContaApp());
+		for (Iterator<Conta> iterator = contas.iterator(); iterator.hasNext();) {
+			Conta conta = (Conta) iterator.next();
+			if(conta.getId().equals(lancamento.getConta().getId())) {
+				iterator.remove();
+			}
+		}
+	}
+	
 	
 	
 	private Conta findConta(Long idConta) {
@@ -72,20 +87,10 @@ public class CategorizacaoTransferMB implements Serializable {
 	public void save() {
 
 		try {
-			lancamento.setValorConsiderado(false);
-			lancamento.setIsTransferencia(true);
-			lancamento.setTipo(null);
+			
 			lancamento.setContaApp(userSession.getContaApp());
-			lancamento.setUpdatedAt(new Date());
-			lancamento.setCategorizado(true);
-			
-			
-			Lancamento lancamentoReverso = new Lancamento(lancamento);
-			lancamentoReverso.setValor(lancamento.getValor().multiply(new BigDecimal(-1)));
-			lancamentoReverso.setConta(findConta(contaIdSelected));
-
-			lancamentoRN.save(lancamento);
-			lancamentoRN.save(lancamentoReverso);
+			lancamentoRN.saveTransfer(lancamento, findConta(contaIdSelected));
+		
 
 			// TODO criar padrão para tranferencia
 			/*

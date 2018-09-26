@@ -87,7 +87,7 @@ public class LancamentoEditMB implements Serializable {
 	}
 
 	public void onSelectCategoria() {
-		
+
 		itens = new ArrayList<>();
 		if (categoriaIdSelected != null) {
 
@@ -98,8 +98,8 @@ public class LancamentoEditMB implements Serializable {
 			}
 			enableDesconsiderarValor = false;
 			desconsiderarValor = false;
-			
-			if(lancamento.getTipo() == null){
+
+			if (lancamento.getTipo() == null) {
 				lancamento.setTipo(new Tipo());
 			}
 
@@ -122,6 +122,14 @@ public class LancamentoEditMB implements Serializable {
 
 		}
 
+	}
+	
+	public boolean disableCampoDesconsiderarValor() {
+		if (enableDesconsiderarValor || lancamento.getIsTransferencia()) {
+			return true;
+		}
+		return false;
+		
 	}
 
 	public void abrirDialog(Lancamento lancamento) {
@@ -176,33 +184,39 @@ public class LancamentoEditMB implements Serializable {
 
 		try {
 
-			if (!edicao) {
-				lancamento.setCategorizado(true);
-				lancamento.setConta(new Conta(contaIdSelected));
-				lancamento.setCodigo(GeradorCodigo.gerar());
-				lancamento.setDataPagamento(lancamento.getData());
+			if (lancamento.getIsTransferencia()) {
+
+			} else {
+
+				if (!edicao) {
+					lancamento.setCategorizado(true);
+					lancamento.setConta(new Conta(contaIdSelected));
+					lancamento.setCodigo(GeradorCodigo.gerar());
+					lancamento.setDataPagamento(lancamento.getData());
+					lancamento.setUpdatedAt(new Date());
+					lancamento.setCreatedAt(new Date());
+
+					System.out.println("data pagto; " + lancamento.getDataPagamento());
+
+					if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
+						lancamento.setValor(turnToNegative(lancamento.getValor()));
+					}
+
+				}
+
+				lancamento.setContaApp(userSession.getContaApp());
 				lancamento.setUpdatedAt(new Date());
-				lancamento.setCreatedAt(new Date());
+				lancamento.setCategorizado(true);
+				lancamento.setValorConsiderado(!desconsiderarValor);
+				lancamento.setIsTransferencia(false);
 
-				System.out.println("data pagto; " + lancamento.getDataPagamento());
-
-				if (lancamento.getTipoES().equals(LancamentoTipoEnum.S)) {
-					lancamento.setValor(turnToNegative(lancamento.getValor()));
+				if (desconsiderarValor) {
+					lancamento.setTipo(null);
 				}
 
 			}
 
-			lancamento.setContaApp(userSession.getContaApp());
-			lancamento.setUpdatedAt(new Date());
-			lancamento.setCategorizado(true);
-			lancamento.setValorConsiderado(!desconsiderarValor);
-			lancamento.setIsTransferencia(false);
-
-			if (desconsiderarValor) {
-				lancamento.setTipo(null);
-			}
-
-			System.out.println("Valor: " + lancamento.getValor());
+			
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 

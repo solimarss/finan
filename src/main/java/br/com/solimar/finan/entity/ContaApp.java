@@ -14,11 +14,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="CONTA_APP")
+@Table(name="CONTAAPP")
 public class ContaApp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column( name = "ID" )
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

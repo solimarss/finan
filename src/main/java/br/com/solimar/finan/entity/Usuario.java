@@ -22,6 +22,7 @@ public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column( name = "ID" )
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -50,7 +51,7 @@ public class Usuario implements Serializable {
 	
 
 	@ManyToMany
-    @JoinTable(name = "USUARIO_TEM_CONTA_APP", joinColumns = { @JoinColumn(name = "USUARIO_ID") }, inverseJoinColumns = { @JoinColumn(name = "CONTA_APP_ID") })
+    @JoinTable(name = "USUARIO_HAS_CONTAAPP", joinColumns = { @JoinColumn(name = "USUARIO_ID") }, inverseJoinColumns = { @JoinColumn(name = "CONTAAPP_ID") })
     private List<ContaApp> contas;
 
 	public Long getId() {

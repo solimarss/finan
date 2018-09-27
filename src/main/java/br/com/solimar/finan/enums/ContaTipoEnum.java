@@ -3,8 +3,8 @@ package br.com.solimar.finan.enums;
 public enum ContaTipoEnum {
 	
 	CHECKING_ACCOUNT("Conta Corrente"), 
-	SAVINGS_ACCOUNT("Conta poupanÁa"),
-	CREDIT_CARD("Cart„o de Credito"),
+	SAVINGS_ACCOUNT("Conta poupan√ßa"),
+	CREDIT_CARD("Cart√£o de Credito"),
 	WALLET("Dinheiro");
 
 	private ContaTipoEnum(String descricao) {

@@ -37,7 +37,8 @@ public class UserSession implements Serializable {
 		contaApp = new ContaApp();
 		contaApp.setId(1L);
 		contaApp.setStartDay(20);
-		contaApp.setUseStartDay(true);
+		contaApp.setUseStartDay(false);
+		System.out.println("init: contaApp.getUseStartDay(): " + contaApp.getUseStartDay());
 	}
 
 	public Usuario getUsuario() {

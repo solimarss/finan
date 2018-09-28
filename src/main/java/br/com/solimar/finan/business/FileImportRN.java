@@ -29,6 +29,7 @@ import net.sf.ofx4j.domain.data.ResponseMessageSet;
 import net.sf.ofx4j.domain.data.banking.BankStatementResponseTransaction;
 import net.sf.ofx4j.domain.data.banking.BankingResponseMessageSet;
 import net.sf.ofx4j.domain.data.common.Transaction;
+import net.sf.ofx4j.domain.data.common.TransactionType;
 import net.sf.ofx4j.domain.data.creditcard.CreditCardResponseMessageSet;
 import net.sf.ofx4j.domain.data.creditcard.CreditCardStatementResponse;
 import net.sf.ofx4j.domain.data.creditcard.CreditCardStatementResponseTransaction;
@@ -175,6 +176,15 @@ public class FileImportRN implements Serializable {
 				lancamento.setTransactionId(transaction.getId());
 				lancamento.setValor(transaction.getBigDecimalAmount());
 
+				// TODO mudar o sinal do registro de pagamento para positivo
+				if (transaction.getTransactionType().equals(TransactionType.CREDIT)) {
+					// o método signum, retorna um int com -1, 0 ou 1 se o BigDecimal for negativo,
+					// zero ou positivo.
+					if (transaction.getBigDecimalAmount().signum() == -1) {
+						lancamento.setValor(transaction.getBigDecimalAmount().multiply(new BigDecimal("-1")));
+					}
+				}
+
 				if (transaction.getBigDecimalAmount().signum() == -1) {
 					lancamento.setTipoES(LancamentoTipoEnum.S);
 				} else {
@@ -195,16 +205,15 @@ public class FileImportRN implements Serializable {
 					qtdRegistros++;
 					System.out.println("==> LANÇAMENTO INSERIDO");
 				} else {
-					
+
 					if (possueValoresIguais(transactions, lancamento)) {
 						lancamentoRN.insert(lancamento);
 						qtdRegistros++;
 						System.out.println("==> LANÇAMENTO INSERIDO");
-					}else{
+					} else {
 						System.out.println("==> LANÇAMENTO NÃO INSERIDO");
 					}
 
-					
 				}
 				System.out.println("-------------------------------------------------------------- ");
 

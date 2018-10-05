@@ -123,13 +123,13 @@ public class LancamentoEditMB implements Serializable {
 		}
 
 	}
-	
+
 	public boolean disableCampoDesconsiderarValor() {
 		if (enableDesconsiderarValor || lancamento.getIsTransferencia()) {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	public void abrirDialog(Lancamento lancamento) {
@@ -184,9 +184,7 @@ public class LancamentoEditMB implements Serializable {
 
 		try {
 
-			if (lancamento.getIsTransferencia()) {
-
-			} else {
+			if (lancamento.getIsTransferencia() == null || !lancamento.getIsTransferencia()) {
 
 				if (!edicao) {
 					lancamento.setCategorizado(true);
@@ -216,7 +214,6 @@ public class LancamentoEditMB implements Serializable {
 
 			}
 
-			
 			lancamentoRN.save(lancamento);
 			eventoCategorizacao.fire(lancamento);
 
